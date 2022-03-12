@@ -1,0 +1,19 @@
+.examListWrapper {
+  height: 100%;
+  background-color: #fff;
+  border-radius: 6px;
+  padding: 20px 30px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+
+  .cardWrapper {
+    @apply flex flex-wrap justify-evenly overflow-auto;
+    height: calc(100% - 83px);
+  }
+}
+
+:global {
+  .el-input__suffix-inner {
+    align-items: center;
+  }
+}

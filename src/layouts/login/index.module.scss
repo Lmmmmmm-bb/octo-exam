@@ -1,0 +1,17 @@
+.loginWrapper {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  .loginCard {
+    padding: 30px 50px;
+    min-width: 580px;
+  }
+
+  .loginLoginBtn {
+    width: 100%;
+    margin-top: 10px;
+  }
+}

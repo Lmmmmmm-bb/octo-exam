@@ -1,0 +1,8 @@
+.spaceWrapper {
+  height: 100%;
+
+  .spaceMain {
+    @apply bg-gray-50;
+    min-width: 800px;
+  }
+}
