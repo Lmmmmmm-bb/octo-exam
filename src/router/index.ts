@@ -1,8 +1,16 @@
 import { useTitle } from '@/common/hooks';
-import { createRouter, createWebHistory } from 'vue-router';
+import {
+  createRouter,
+  createWebHashHistory,
+  createWebHistory
+} from 'vue-router';
+
+const history = import.meta.env.DEV
+  ? createWebHistory()
+  : createWebHashHistory('/Octo-Exam/');
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.DEV ? '.' : '/Octo-Exam/'),
+  history,
   routes: [
     {
       path: '/',
