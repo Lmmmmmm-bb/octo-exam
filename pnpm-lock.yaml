@@ -20,6 +20,7 @@ specifiers:
   husky: ^7.0.4
   lint-staged: ^12.3.3
   pinia: ^2.0.11
+  pinia-plugin-persist: ^1.0.0
   postcss: ^8.4.6
   prettier: 2.5.1
   sass: ^1.49.7
@@ -37,6 +38,7 @@ dependencies:
   axios: 0.25.0
   element-plus: 2.0.1_vue@3.2.30
   pinia: 2.0.11_typescript@4.5.5+vue@3.2.30
+  pinia-plugin-persist: 1.0.0_pinia@2.0.11+vue@3.2.30
   vue: 3.2.30
   vue-router: 4.0.12_vue@3.2.30
 
@@ -2920,6 +2922,21 @@ packages:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
     dev: true
+
+  /pinia-plugin-persist/1.0.0_pinia@2.0.11+vue@3.2.30:
+    resolution: {integrity: sha512-M4hBBd8fz/GgNmUPaaUsC29y1M09lqbXrMAHcusVoU8xlQi1TqgkWnnhvMikZwr7Le/hVyMx8KUcumGGrR6GVw==}
+    peerDependencies:
+      '@vue/composition-api': ^1.0.0
+      pinia: ^2.0.0
+      vue: ^2.0.0 || >=3.0.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+    dependencies:
+      pinia: 2.0.11_typescript@4.5.5+vue@3.2.30
+      vue: 3.2.30
+      vue-demi: 0.12.1_vue@3.2.30
+    dev: false
 
   /pinia/2.0.11_typescript@4.5.5+vue@3.2.30:
     resolution: {integrity: sha512-JzcmnMqu28PNWOjDgEDK6fTrIzX8eQZKPPKvu/fpHdpXARUj1xeVdFi3YFIMOWswqaBd589cpmAMdSSTryI9iw==}
