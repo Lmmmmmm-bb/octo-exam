@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { VueQueryDevTools } from 'vue-query/devtools';
 import {
   ButtonConfigContext,
   ElConfigProvider,
@@ -14,5 +13,4 @@ const elMessageConfig: MessageConfigContext = { max: 3 };
   <ElConfigProvider :button="elButtonConfig" :message="elMessageConfig">
     <router-view />
   </ElConfigProvider>
-  <VueQueryDevTools />
 </template>

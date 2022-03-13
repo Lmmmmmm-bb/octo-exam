@@ -1,5 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useUserConfig } from '@/store';
+
+const userConfigStore = useUserConfig();
+</script>
 
 <template>
-  <div>Home</div>
+  <div>{{ userConfigStore.userConfig.studentName }}</div>
 </template>

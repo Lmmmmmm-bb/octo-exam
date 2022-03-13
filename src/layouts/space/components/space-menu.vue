@@ -2,9 +2,12 @@
 import { ElMenu, ElMenuItem } from 'element-plus';
 import { ref, watchEffect } from 'vue';
 import { useRouter } from 'vue-router';
-import { MenuItemEnum, MenuNavList } from '../constant';
+import { MenuItemEnum } from '../types';
+import { MenuNavList } from '../config';
+// import { useUserConfig } from '@/store';
 
 const router = useRouter();
+// const userConfigStore = useUserConfig();
 const activeKey = ref<string>(MenuItemEnum.Home);
 
 watchEffect(() => {

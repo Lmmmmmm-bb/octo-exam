@@ -9,7 +9,7 @@ import SpaceAvatar from './components/space-avatar.vue';
   <ElContainer :class="styles.spaceWrapper">
     <ElHeader class="flex justify-between items-center">
       <SpaceMenu />
-      <SpaceAvatar class="cursor-pointer" />
+      <SpaceAvatar />
     </ElHeader>
     <ElMain :class="styles.spaceMain">
       <router-view />

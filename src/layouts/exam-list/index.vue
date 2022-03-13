@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { Search } from '@element-plus/icons-vue';
 import {
   ElInput,
@@ -15,10 +15,17 @@ import { IBreadcrumnInfo } from '@/components/breadcrumb/type';
 import Breadcrumb from '@/components/breadcrumb/index.vue';
 import ExamCard from './components/exam-card.vue';
 import { SelectExamEnum } from './type';
+import { http } from '@/common/utils/http';
 
 const path = ref<IBreadcrumnInfo[]>([{ text: '试卷列表' }]);
 const searchInput = ref('');
 const selectType = ref<SelectExamEnum>(SelectExamEnum.All);
+
+const handleFetchExamList = async () => {
+  try {
+    const res = await http.postRequest;
+  } catch (error) {}
+};
 
 const handleSearchClick = () => {
   console.log(searchInput.value);
@@ -27,6 +34,8 @@ const handleSearchClick = () => {
 const handleExamCardClick = () => {
   console.log('card click');
 };
+
+// onMounted(async () => {});
 </script>
 
 <template>

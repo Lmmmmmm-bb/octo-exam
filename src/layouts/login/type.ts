@@ -1,17 +1,7 @@
-import { ElForm } from 'element-plus';
-import { FormRulesMap } from 'element-plus/es/components/form/src/form.type';
+import { UserRoleEnum } from '@/common/models/user-config';
 
-export type FormInstanceType = InstanceType<typeof ElForm>;
-
-export const formRules: FormRulesMap<'username' | 'password'> = {
-  username: {
-    message: '请输入用户名',
-    required: true,
-    trigger: 'change'
-  },
-  password: {
-    message: '请输入密码',
-    required: true,
-    trigger: 'change'
-  }
+export const roleMap = {
+  管理员: UserRoleEnum.Admin,
+  老师: UserRoleEnum.Teacher,
+  学生: UserRoleEnum.Student
 };
