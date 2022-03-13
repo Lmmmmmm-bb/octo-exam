@@ -13,7 +13,7 @@ import {
 import styles from './index.module.scss';
 import { FormInstanceType, formRules } from './config';
 import { roleMap } from './type';
-import { useUserConfig } from '@/store';
+import { useUserConfigStore } from '@/store';
 import {
   IAdminConfig,
   IStudentConfig,
@@ -24,7 +24,7 @@ import { ILoginData, Login } from '@/services/login';
 import { useToggle } from '@/common/hooks';
 
 const router = useRouter();
-const userConfigStore = useUserConfig();
+const userConfigStore = useUserConfigStore();
 const formRef = ref<FormInstanceType | null>(null);
 const { isActive: isLoading, onToggle: onLoadingToggle } = useToggle();
 const info = reactive<ILoginData>({
@@ -42,7 +42,7 @@ const handleLogin = async () => {
       IAdminConfig & IStudentConfig
     >(Login, info);
     if (status) {
-      userConfigStore.$patch({ userConfig: data });
+      userConfigStore.userConfig = data;
       router.push('/space');
     }
   } catch (error) {

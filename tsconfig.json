@@ -14,8 +14,7 @@
     "noImplicitAny": false,
     "paths": {
       "@/*": ["src/*"]
-    },
-    "types": ["node", "pinia-plugin-persist"]
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "references": [{ "path": "./tsconfig.node.json" }]

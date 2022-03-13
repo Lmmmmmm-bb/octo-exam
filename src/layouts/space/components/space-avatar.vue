@@ -10,6 +10,7 @@ import { Back, Key, Document } from '@element-plus/icons-vue';
 import { useToggle } from '@/common/hooks';
 import ModifyDrawer from './modify-drawer.vue';
 import InfoDrawer from './info-drawer.vue';
+import { resetStore } from '@/store';
 
 const router = useRouter();
 const { isActive: isModifyDrawerVisible, onToggle: onToggleModifyVisible } =
@@ -18,6 +19,7 @@ const { isActive: isInfoDrawerVisible, onToggle: onToggleInfoVisible } =
   useToggle();
 
 const handleLogout = () => {
+  resetStore();
   router.push('/login');
 };
 </script>

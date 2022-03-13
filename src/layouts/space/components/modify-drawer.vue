@@ -60,14 +60,15 @@ const handleConfirmClick = async () => {
     onUnLoading();
   }
 };
+
+const handleDrawerClose = () => {
+  emits('onClose');
+  formRef.value && formRef.value.resetFields();
+};
 </script>
 
 <template>
-  <ElDrawer
-    :model-value="props.visible"
-    :before-close="() => emits('onClose')"
-    destroy-on-close
-  >
+  <ElDrawer :model-value="props.visible" :before-close="handleDrawerClose">
     <template #title>
       <h4 class="text-lg">修改密码</h4>
     </template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useUserConfig } from '@/store';
+import { useUserConfigStore } from '@/store';
 
-const userConfigStore = useUserConfig();
+const userConfigStore = useUserConfigStore();
 </script>
 
 <template>

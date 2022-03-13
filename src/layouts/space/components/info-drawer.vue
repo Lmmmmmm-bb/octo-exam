@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { computed, defineProps, defineEmits } from 'vue';
-import { UserRoleEnum } from '@/common/models/user-config';
-import { useUserConfig } from '@/store';
 import {
   ElDrawer,
   ElDescriptions,
   ElDescriptionsItem,
   ElTag
 } from 'element-plus';
+import { UserRoleEnum } from '@/common/models/user-config';
+import { useUserConfigStore } from '@/store';
 import {
   AdminUserInfoMap,
   BasicUserInfoMap,
@@ -20,7 +20,7 @@ const emits = defineEmits<{
   (e: 'onClose'): void;
 }>();
 
-const userConfigStore = useUserConfig();
+const userConfigStore = useUserConfigStore();
 
 const extraInfo = computed(() => {
   const { userConfig } = userConfigStore;
@@ -34,11 +34,7 @@ const extraInfo = computed(() => {
 </script>
 
 <template>
-  <ElDrawer
-    :model-value="props.visible"
-    :before-close="() => emits('onClose')"
-    destroy-on-close
-  >
+  <ElDrawer :model-value="props.visible" :before-close="() => emits('onClose')">
     <template #title>
       <h4 class="text-lg">个人信息</h4>
     </template>
@@ -55,7 +51,7 @@ const extraInfo = computed(() => {
         {{ userConfigStore.userConfig[key] || '-' }}
       </ElDescriptionsItem>
     </ElDescriptions>
-    <ElDescriptions class="mt-5" title="其他信息">
+    <ElDescriptions class="mt-5" title="其他信息" :column="2">
       <ElDescriptionsItem
         v-for="[key, name] in extraInfo"
         :key="key"
