@@ -95,7 +95,12 @@ const handleConfirmClick = async () => {
         />
       </ElFormItem>
     </ElForm>
-    <ElButton :loading="isLoading" @click="handleConfirmClick">
+    <ElButton
+      type="primary"
+      :loading="isLoading"
+      plain
+      @click="handleConfirmClick"
+    >
       确认修改
     </ElButton>
   </ElDrawer>
