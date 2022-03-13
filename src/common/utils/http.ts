@@ -3,7 +3,7 @@ import { ElMessage } from 'element-plus';
 import { IBaseResponse } from '../models/base-response';
 
 const instance = axios.create({
-  baseURL: 'http://xujingling.xyz:8080',
+  baseURL: 'https://exam.xujingling.xyz',
   timeout: 10000
 });
 
