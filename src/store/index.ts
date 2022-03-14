@@ -11,8 +11,8 @@ if (metaHot) {
 }
 
 export const resetStore = () => {
-  stores.forEach((_) => _().$reset());
   clearLocal();
+  stores.forEach((_) => _().$reset());
 };
 
 export * from './user-config';
