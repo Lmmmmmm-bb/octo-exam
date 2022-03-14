@@ -10,9 +10,10 @@ import { Back, Key, Document } from '@element-plus/icons-vue';
 import { useToggle } from '@/common/hooks';
 import ModifyDrawer from './modify-drawer.vue';
 import InfoDrawer from './info-drawer.vue';
-import { resetStore } from '@/store';
+import { resetStore, useUserConfigStore } from '@/store';
 
 const router = useRouter();
+const userConfigStore = useUserConfigStore();
 const { isActive: isModifyDrawerVisible, onToggle: onToggleModifyVisible } =
   useToggle();
 const { isActive: isInfoDrawerVisible, onToggle: onToggleInfoVisible } =
@@ -36,7 +37,11 @@ const handleLogout = () => {
         <ElDropdownItem :icon="Document" @click="onToggleInfoVisible">
           个人信息
         </ElDropdownItem>
-        <ElDropdownItem :icon="Key" @click="onToggleModifyVisible">
+        <ElDropdownItem
+          v-if="!userConfigStore.isAdminAccount"
+          :icon="Key"
+          @click="onToggleModifyVisible"
+        >
           修改密码
         </ElDropdownItem>
         <ElDropdownItem :icon="Back" divided @click="handleLogout">

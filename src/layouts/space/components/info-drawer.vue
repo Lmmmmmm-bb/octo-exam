@@ -24,12 +24,9 @@ const userConfigStore = useUserConfigStore();
 
 const extraInfo = computed(() => {
   const { userConfig } = userConfigStore;
-  if (userConfig.role === UserRoleEnum.Admin) {
-    return AdminUserInfoMap;
-  } else if (userConfig.role === UserRoleEnum.Student) {
-    return StudentUserInfoMap;
-  }
-  return StudentUserInfoMap;
+  return userConfig.role === UserRoleEnum.Admin
+    ? AdminUserInfoMap
+    : StudentUserInfoMap;
 });
 </script>
 
