@@ -38,7 +38,7 @@ watchEffect(() => {
           {{ item.label }}
         </ElMenuItem>
       </ElSubMenu>
-      <ElMenuItem v-if="!val.children" :index="key" :route="{ name: key }">
+      <ElMenuItem v-else :index="key" :route="{ name: key }">
         {{ val.label }}
       </ElMenuItem>
     </template>
