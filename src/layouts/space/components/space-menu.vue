@@ -1,14 +1,22 @@
 <script setup lang="ts">
-import { ElMenu, ElMenuItem } from 'element-plus';
-import { ref, watchEffect } from 'vue';
+import { computed, ref, watchEffect } from 'vue';
 import { useRouter } from 'vue-router';
-import { MenuItemEnum } from '../types';
-import { MenuNavList } from '../config';
-// import { useUserConfig } from '@/store';
+import { ElMenu, ElMenuItem, ElSubMenu } from 'element-plus';
+import { AdminMenuNavList, StudentMenuNavList } from '../config';
+import { useUserConfigStore } from '@/store';
+import { UserRoleEnum } from '@/common/models/user-config';
+import { RouterNameEnum } from '@/router/type';
 
 const router = useRouter();
-// const userConfigStore = useUserConfig();
-const activeKey = ref<string>(MenuItemEnum.Home);
+const userConfigStore = useUserConfigStore();
+const activeKey = ref<string>(RouterNameEnum.Home);
+
+const userNav = computed(() => {
+  const { userConfig } = userConfigStore;
+  return userConfig.role === UserRoleEnum.Admin
+    ? AdminMenuNavList
+    : StudentMenuNavList;
+});
 
 watchEffect(() => {
   const routeName = router.currentRoute.value.name as string;
@@ -18,13 +26,21 @@ watchEffect(() => {
 
 <template>
   <ElMenu class="w-2/3" mode="horizontal" :default-active="activeKey" router>
-    <ElMenuItem
-      v-for="[key, name] in MenuNavList"
-      :key="key"
-      :index="key"
-      :route="{ name: key }"
-    >
-      {{ name }}
-    </ElMenuItem>
+    <template v-for="[key, val] in Object.entries(userNav)" :key="key">
+      <ElSubMenu v-if="val.children" :index="key">
+        <template #title>{{ val.label }}</template>
+        <ElMenuItem
+          v-for="item in val.children"
+          :key="item.key"
+          :index="item.key"
+          :route="{ name: item.key }"
+        >
+          {{ item.label }}
+        </ElMenuItem>
+      </ElSubMenu>
+      <ElMenuItem v-else :index="key" :route="{ name: key }">
+        {{ val.label }}
+      </ElMenuItem>
+    </template>
   </ElMenu>
 </template>

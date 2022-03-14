@@ -1,15 +1,28 @@
 import { UserRoleEnum } from '@/common/models/user-config';
+import { RouterNameEnum } from '@/router/type';
 import { ElForm } from 'element-plus';
-import { MenuItemEnum } from './types';
+import { IMenuItem } from './type';
 
 export type FormInstanceType = InstanceType<typeof ElForm>;
 
-export const MenuNavList = new Map([
-  [MenuItemEnum.Home, '主页'],
-  [MenuItemEnum.Exam, '我的考试'],
-  [MenuItemEnum.Test, '试卷列表'],
-  [MenuItemEnum.Manage, '考试管理']
-]);
+export const StudentMenuNavList: Record<string, IMenuItem> = {
+  [RouterNameEnum.Home]: { label: '主页' },
+  [RouterNameEnum.Exam]: { label: '我的考试' }
+};
+
+export const AdminMenuNavList: Record<string, IMenuItem> = {
+  [RouterNameEnum.Home]: { label: '主页' },
+  [RouterNameEnum.ExamManage]: { label: '考试管理' },
+  [RouterNameEnum.QuestionManage]: { label: '题库管理' },
+  [RouterNameEnum.ScoreManage]: { label: '成绩管理' },
+  [RouterNameEnum.StudentManage]: {
+    label: '学生管理',
+    children: [
+      { key: RouterNameEnum.StudentManageList, label: '学生列表' },
+      { key: RouterNameEnum.StudentManageEnroll, label: '录入学生' }
+    ]
+  }
+};
 
 export const RoleMap = new Map([
   [UserRoleEnum.Admin, '管理员'],

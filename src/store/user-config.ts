@@ -1,6 +1,10 @@
 import { defineStore } from 'pinia';
 import { reactive } from 'vue';
-import { IAdminConfig, IStudentConfig } from '@/common/models/user-config';
+import {
+  IAdminConfig,
+  IStudentConfig,
+  UserRoleEnum
+} from '@/common/models/user-config';
 import { getLocalItem, setLocalItem } from '@/common/utils/local-storage';
 import { LocalUserInfoKey } from '@/common/models/store-keys';
 
@@ -20,6 +24,14 @@ export const useUserConfigStore = defineStore('user-config', {
     return {
       userConfig
     };
+  },
+  getters: {
+    isAdminAccount: ({ userConfig }) => userConfig.role === UserRoleEnum.Admin
+  },
+  actions: {
+    patchUserConfig(userConfig: UserConfigType) {
+      this.userConfig = userConfig;
+    }
   }
 });
 

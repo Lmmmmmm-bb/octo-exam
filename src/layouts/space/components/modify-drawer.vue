@@ -6,22 +6,20 @@ import { useToggle } from '@/common/hooks';
 import { FormInstanceType } from '../config';
 import { http } from '@/common/utils/http';
 import { StudentPwdModify } from '@/services/student';
+import { useUserConfigStore } from '@/store';
 
 const props = defineProps<{ visible: boolean }>();
 const emits = defineEmits<{
   (e: 'onClose'): void;
 }>();
 
+const { userConfig } = useUserConfigStore();
 const formRef = ref<FormInstanceType | null>(null);
 const confirmPwd = reactive({
   pwd: '',
   confirmPwd: ''
 });
-const {
-  isActive: isLoading,
-  onActive: onLoading,
-  onUnActive: onUnLoading
-} = useToggle();
+const { isActive: isLoading, onToggle: onToggleLoading } = useToggle();
 
 const formRules: FormRulesMap<'pwd' | 'confirmPwd'> = {
   pwd: {
@@ -33,37 +31,34 @@ const formRules: FormRulesMap<'pwd' | 'confirmPwd'> = {
     trigger: 'change',
     required: true,
     validator: (_, val: string, cb) => {
-      if (val.length === 0) {
-        cb('请再次输入密码');
-      } else if (val !== confirmPwd.pwd) {
-        cb('双次输入的密码不一致');
-      }
+      val.length === 0 && cb('请再次输入密码');
+      val !== confirmPwd.pwd && cb('双次输入的密码不一致');
       return true;
     }
-  }
-};
-
-const handleConfirmClick = async () => {
-  try {
-    formRef.value && (await formRef.value.validate());
-    onLoading();
-    const { data } = await http.putRequest(StudentPwdModify, null, {
-      params: {
-        pwd: 1234,
-        studentId: 20155012
-      }
-    });
-    console.log(data);
-  } catch (error) {
-    // no-console
-  } finally {
-    onUnLoading();
   }
 };
 
 const handleDrawerClose = () => {
   emits('onClose');
   formRef.value && formRef.value.resetFields();
+};
+
+const handleConfirmClick = async () => {
+  try {
+    onToggleLoading();
+    formRef.value && (await formRef.value.validate());
+    await http.putRequest(StudentPwdModify, null, {
+      params: {
+        pwd: confirmPwd.confirmPwd,
+        studentId: userConfig.studentId
+      }
+    });
+    handleDrawerClose();
+  } catch (error) {
+    // no-console
+  } finally {
+    onToggleLoading();
+  }
 };
 </script>
 

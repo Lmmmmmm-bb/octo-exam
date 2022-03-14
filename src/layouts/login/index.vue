@@ -35,14 +35,14 @@ const info = reactive<ILoginData>({
 
 const handleLogin = async () => {
   try {
-    formRef.value && (await formRef.value.validate());
     onLoadingToggle();
-    const { status, data } = await http.postRequest<
+    formRef.value && (await formRef.value.validate());
+    const { status, data: userConfig } = await http.postRequest<
       ILoginData,
       IAdminConfig & IStudentConfig
     >(Login, info);
     if (status) {
-      userConfigStore.userConfig = data;
+      userConfigStore.patchUserConfig(userConfig);
       router.push('/space');
     }
   } catch (error) {

@@ -22,7 +22,7 @@ instance.interceptors.response.use(
       const { error: message, status } = error.response.data;
       ElMessage.error(`[${status}] ${message}`);
     } else {
-      ElMessage.error(error);
+      ElMessage.error('服务不可用');
     }
     // return error.response;
   }
