@@ -51,8 +51,16 @@ async function putRequest<T = any, R = IBaseResponse<T>>(
   return instance.put<T, IBaseResponse<R>>(url, data, config);
 }
 
+async function deleteRequest<T = any, R = IBaseResponse<T>>(
+  url: string,
+  config?: AxiosRequestConfig<T>
+) {
+  return instance.delete<T, IBaseResponse<R>>(url, config);
+}
+
 export const http = {
   getRequest,
   postRequest,
-  putRequest
+  putRequest,
+  deleteRequest
 };

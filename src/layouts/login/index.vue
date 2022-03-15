@@ -20,7 +20,7 @@ import {
   UserRoleEnum
 } from '@/common/models/user-config';
 import { http } from '@/common/utils/http';
-import { ILoginData, Login } from '@/services/login';
+import { ILoginData, LoginApi } from '@/services/login';
 import { useToggle } from '@/common/hooks';
 
 const router = useRouter();
@@ -40,7 +40,7 @@ const handleLogin = async () => {
     const { status, data: userConfig } = await http.postRequest<
       ILoginData,
       IAdminConfig & IStudentConfig
-    >(Login, info);
+    >(LoginApi, info);
     if (status) {
       userConfigStore.patchUserConfig(userConfig);
       router.push('/space');
