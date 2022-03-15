@@ -5,7 +5,7 @@ import { FormRulesMap } from 'element-plus/es/components/form/src/form.type';
 import { useToggle } from '@/common/hooks';
 import { FormInstanceType } from '../config';
 import { http } from '@/common/utils/http';
-import { StudentPwdModify } from '@/services/student';
+import { StudentPwdModifyApi } from '@/services/student';
 import { useUserConfigStore } from '@/store';
 
 const props = defineProps<{ visible: boolean }>();
@@ -47,7 +47,7 @@ const handleConfirmClick = async () => {
   try {
     onToggleLoading();
     formRef.value && (await formRef.value.validate());
-    await http.putRequest(StudentPwdModify, null, {
+    await http.putRequest(StudentPwdModifyApi, null, {
       params: {
         pwd: confirmPwd.confirmPwd,
         studentId: userConfig.studentId

@@ -1,0 +1,24 @@
+.studentTableWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .viewIcon {
+    cursor: pointer;
+    :hover {
+      color: #409eff;
+    }
+  }
+
+  .tablePagination {
+    margin-top: 16px;
+  }
+}
+
+:global {
+  .el-input__suffix-inner {
+    align-items: center;
+  }
+}

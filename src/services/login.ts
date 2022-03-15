@@ -1,6 +1,6 @@
 import { UserRoleEnum } from '@/common/models/user-config';
 
-export const Login = '/login';
+export const LoginApi = '/login';
 
 export interface ILoginData {
   role: UserRoleEnum;

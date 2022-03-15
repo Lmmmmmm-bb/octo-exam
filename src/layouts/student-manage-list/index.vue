@@ -1,5 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import StudentTable from './components/student-table.vue';
+</script>
 
 <template>
-  <div>Student Manage List</div>
+  <div>
+    <StudentTable />
+  </div>
 </template>
