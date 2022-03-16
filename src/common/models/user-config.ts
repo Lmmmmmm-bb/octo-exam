@@ -7,7 +7,6 @@ export enum UserRoleEnum {
 interface IBaseUserConfig {
   cardId: string;
   email: string;
-  pwd: string;
   role: UserRoleEnum;
   sex: string;
   tel: string;
