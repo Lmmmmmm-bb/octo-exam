@@ -67,6 +67,12 @@ const handleDeleteStudent = async (row: IStudentConfig) => {
   return true;
 };
 
+const handlePageSizeChange = (pageSize: number) => {
+  pageState.current = 1;
+  pageState.pageSize = pageSize;
+  fetchTableData();
+};
+
 onMounted(() => {
   fetchTableData();
 });
@@ -171,8 +177,8 @@ onMounted(() => {
       :page-sizes="[10, 20, 50]"
       :total="tableState.total"
       background
-      @current-change="fetchTableData"
-      @size-change="fetchTableData"
+      @current-change="() => fetchTableData()"
+      @size-change="handlePageSizeChange"
     />
   </div>
 </template>
