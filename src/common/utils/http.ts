@@ -1,10 +1,20 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { ElMessage } from 'element-plus';
 import { IBaseResponse } from '../models/base-response';
+import { LocalTokenKey } from '../models/store-keys';
+import { getLocalItem } from './local-storage';
 
 const instance = axios.create({
   baseURL: 'https://exam.xujingling.xyz',
   timeout: 10000
+});
+
+instance.interceptors.request.use((request) => {
+  if (request.headers) {
+    const token = getLocalItem(LocalTokenKey);
+    request.headers['Authorization'] = token || '';
+  }
+  return request;
 });
 
 instance.interceptors.response.use(

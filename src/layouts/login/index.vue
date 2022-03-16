@@ -22,6 +22,8 @@ import {
 import { http } from '@/common/utils/http';
 import { ILoginData, LoginApi } from '@/services/login';
 import { useToggle } from '@/common/hooks';
+import { setLocalItem } from '@/common/utils/local-storage';
+import { LocalTokenKey } from '@/common/models/store-keys';
 
 const router = useRouter();
 const userConfigStore = useUserConfigStore();
@@ -37,11 +39,13 @@ const handleLogin = async () => {
   try {
     onLoadingToggle();
     formRef.value && (await formRef.value.validate());
-    const { status, data: userConfig } = await http.postRequest<
+    const { status, data } = await http.postRequest<
       ILoginData,
-      IAdminConfig & IStudentConfig
+      { res: IAdminConfig & IStudentConfig; token: string }
     >(LoginApi, info);
     if (status) {
+      const { res: userConfig, token } = data;
+      setLocalItem(LocalTokenKey, token);
       userConfigStore.patchUserConfig(userConfig);
       router.push('/space');
     }
