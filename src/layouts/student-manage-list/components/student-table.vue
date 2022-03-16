@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref } from 'vue';
+import { onMounted, reactive, ref, defineEmits } from 'vue';
 import {
   ElTable,
   ElTableColumn,
@@ -10,27 +10,35 @@ import {
   ElTag,
   ElPagination
 } from 'element-plus';
-import { View, Warning } from '@element-plus/icons-vue';
+import { View, Warning, Refresh } from '@element-plus/icons-vue';
 import { IStudentConfig } from '@/common/models/user-config';
 import { http } from '@/common/utils/http';
 import { StudentListApi, StudentApi } from '@/services/student';
 import styles from './index.module.scss';
 
+const emits = defineEmits<{
+  (e: 'onEnroll'): void;
+}>();
+
 const isLoading = ref(false);
 const sourceData = ref<IStudentConfig[]>([]);
 const tableState = reactive({
   data: [] as IStudentConfig[],
-  current: 1,
   total: 0
 });
-const currentPage = ref(1);
+const pageState = reactive({
+  current: 1,
+  pageSize: 10
+});
 
-const fetchTableData = async (page = currentPage.value) => {
+const fetchTableData = async () => {
   try {
     isLoading.value = true;
-    currentPage.value = page;
     const { data } = await http.getRequest(StudentListApi, {
-      params: { page }
+      params: {
+        page: pageState.current,
+        pageSize: pageState.pageSize
+      }
     });
     const { list, total } = data;
     sourceData.value = list;
@@ -59,10 +67,6 @@ const handleDeleteStudent = async (row: IStudentConfig) => {
   return true;
 };
 
-const handlePageChange = (page: number) => {
-  fetchTableData(page);
-};
-
 onMounted(() => {
   fetchTableData();
 });
@@ -70,8 +74,23 @@ onMounted(() => {
 
 <template>
   <div :class="styles.studentTableWrapper">
+    <div :class="styles.tableHeader">
+      <ElButton type="primary" plain @click="emits('onEnroll')">
+        录入学生信息
+      </ElButton>
+      <ElTooltip effect="light" content="点击刷新" placement="left">
+        <ElTag
+          class="cursor-pointer"
+          effect="dark"
+          @click="() => fetchTableData()"
+        >
+          <ElIcon :class="styles.headerRefreshIcon"><Refresh /></ElIcon>
+        </ElTag>
+      </ElTooltip>
+    </div>
     <ElTable
       v-loading="isLoading"
+      style="height: 100%"
       empty-text="暂无学生数据"
       size="large"
       row-key="studentId"
@@ -83,7 +102,7 @@ onMounted(() => {
       <ElTableColumn label="个人信息">
         <ElTableColumn label="学号" prop="studentId" sortable />
         <ElTableColumn label="基本信息">
-          <ElTableColumn label="性别" prop="sex" width="70">
+          <ElTableColumn label="性别" prop="sex" width="70" align="center">
             <template #default="scope">
               <ElTag v-if="scope.row.sex === '男'" effect="plain">
                 {{ scope.row.sex }}
@@ -120,7 +139,7 @@ onMounted(() => {
         <ElTableColumn label="班级信息">
           <ElTableColumn label="学院" prop="institute" />
           <ElTableColumn label="专业" prop="major" />
-          <ElTableColumn label="年级" prop="grade" width="80" />
+          <ElTableColumn label="年级" prop="grade" width="80" align="center" />
           <ElTableColumn label="班级" prop="clazz" width="100" />
         </ElTableColumn>
       </ElTableColumn>
@@ -145,13 +164,15 @@ onMounted(() => {
       </ElTableColumn>
     </ElTable>
     <ElPagination
+      v-model:currentPage="pageState.current"
+      v-model:page-size="pageState.pageSize"
       :class="styles.tablePagination"
-      layout="total, prev, pager, next"
-      :page-sizes="[100, 200, 300, 400]"
+      layout="total, sizes, prev, pager, next"
+      :page-sizes="[10, 20, 50]"
       :total="tableState.total"
       background
-      hide-on-single-page
-      @current-change="handlePageChange"
+      @current-change="fetchTableData"
+      @size-change="fetchTableData"
     />
   </div>
 </template>
