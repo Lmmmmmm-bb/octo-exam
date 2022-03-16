@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import { Search } from '@element-plus/icons-vue';
 import {
   ElInput,
@@ -15,17 +15,10 @@ import { IBreadcrumnInfo } from '@/components/breadcrumb/type';
 import Breadcrumb from '@/components/breadcrumb/index.vue';
 import ExamCard from './components/exam-card.vue';
 import { SelectExamEnum } from './type';
-import { http } from '@/common/utils/http';
 
 const path = ref<IBreadcrumnInfo[]>([{ text: '试卷列表' }]);
 const searchInput = ref('');
 const selectType = ref<SelectExamEnum>(SelectExamEnum.All);
-
-const handleFetchExamList = async () => {
-  try {
-    const res = await http.postRequest;
-  } catch (error) {}
-};
 
 const handleSearchClick = () => {
   console.log(searchInput.value);
@@ -39,7 +32,7 @@ const handleExamCardClick = () => {
 </script>
 
 <template>
-  <div id="exam-list-wrapper" :class="styles.examListWrapper">
+  <div :class="styles.examListWrapper">
     <div class="flex justify-between items-center">
       <Breadcrumb :path="path" />
       <div class="flex justify-center items-center">
@@ -65,7 +58,7 @@ const handleExamCardClick = () => {
       </div>
     </div>
     <ElDivider />
-    <div id="card-wrapper" :class="styles.cardWrapper">
+    <div :class="styles.cardWrapper">
       <ElTooltip
         v-for="(_, index) in [, , , , , , , , , , , , , , , , ,]"
         :key="index"
