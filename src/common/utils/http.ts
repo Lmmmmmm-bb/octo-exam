@@ -3,6 +3,8 @@ import { ElMessage } from 'element-plus';
 import { IBaseResponse } from '../models/base-response';
 import { LocalTokenKey } from '../models/store-keys';
 import { getLocalItem } from './local-storage';
+import router from '@/router';
+import { RouterNameEnum } from '@/router/type';
 
 const instance = axios.create({
   baseURL: 'https://exam.xujingling.xyz',
@@ -28,13 +30,16 @@ instance.interceptors.response.use(
     return data;
   },
   (error) => {
-    if (error.response && error.response.data) {
+    if (error.response.status === 401) {
+      ElMessage.warning('登陆超时，请重新登陆');
+      router.push({ name: RouterNameEnum.Login });
+    } else if (error.response && error.response.data) {
       const { error: message, status } = error.response.data;
       ElMessage.error(`[${status}] ${message}`);
     } else {
       ElMessage.error('服务不可用');
     }
-    // return error.response;
+    return error.response;
   }
 );
 
