@@ -1,5 +1,12 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref, defineEmits } from 'vue';
+import {
+  onMounted,
+  reactive,
+  ref,
+  defineEmits,
+  defineExpose,
+  watch
+} from 'vue';
 import {
   ElTable,
   ElTableColumn,
@@ -10,21 +17,23 @@ import {
   ElTag,
   ElPagination
 } from 'element-plus';
-import { View, Warning, Refresh } from '@element-plus/icons-vue';
+import { View, Warning } from '@element-plus/icons-vue';
 import { IStudentConfig } from '@/common/models/user-config';
 import { http } from '@/common/utils/http';
 import { StudentListApi, StudentApi } from '@/services/student';
 import styles from './index.module.scss';
 
 const emits = defineEmits<{
-  (e: 'onEnroll'): void;
+  (e: 'onCellDbClick', row: IStudentConfig): void;
 }>();
 
+const tableRef = ref<InstanceType<typeof ElTable>>();
 const isLoading = ref(false);
+const selectedRows = ref<IStudentConfig[]>([]);
 const sourceData = ref<IStudentConfig[]>([]);
 const tableState = reactive({
-  data: [] as IStudentConfig[],
-  total: 0
+  total: 0,
+  data: [] as IStudentConfig[]
 });
 const pageState = reactive({
   current: 1,
@@ -47,18 +56,15 @@ const fetchTableData = async () => {
   } catch (error) {
     // no-console
   } finally {
+    selectedRows.value = [];
     isLoading.value = false;
   }
-};
-
-const handleCardIdViewClick = (row: IStudentConfig & { isView: boolean }) => {
-  row.isView = !row.isView;
 };
 
 const handleDeleteStudent = async (row: IStudentConfig) => {
   try {
     await http.deleteRequest(StudentApi, {
-      params: { studentId: row.studentId }
+      params: { list: `${row.studentId}` }
     });
     await fetchTableData();
   } catch (error) {
@@ -67,11 +73,27 @@ const handleDeleteStudent = async (row: IStudentConfig) => {
   return true;
 };
 
-const handlePageSizeChange = (pageSize: number) => {
-  pageState.current = 1;
-  pageState.pageSize = pageSize;
-  fetchTableData();
-};
+const handleSelectedRow = (rows: IStudentConfig[]) =>
+  (selectedRows.value = rows);
+
+const handleDbClickCell = (row: IStudentConfig) => emits('onCellDbClick', row);
+
+watch(
+  () => [pageState.pageSize, pageState.current],
+  (next, prev) => {
+    const [nextPageSize] = next;
+    const [prevPageSize, prevCurrent] = prev;
+    if (nextPageSize !== prevPageSize && prevCurrent !== 1) {
+      return;
+    }
+    fetchTableData();
+  }
+);
+
+defineExpose({
+  selectedRows,
+  onFetchTable: fetchTableData
+});
 
 onMounted(() => {
   fetchTableData();
@@ -80,21 +102,8 @@ onMounted(() => {
 
 <template>
   <div :class="styles.studentTableWrapper">
-    <div :class="styles.tableHeader">
-      <ElButton type="primary" plain @click="emits('onEnroll')">
-        录入学生信息
-      </ElButton>
-      <ElTooltip effect="light" content="点击刷新" placement="left">
-        <ElTag
-          class="cursor-pointer"
-          effect="dark"
-          @click="() => fetchTableData()"
-        >
-          <ElIcon :class="styles.headerRefreshIcon"><Refresh /></ElIcon>
-        </ElTag>
-      </ElTooltip>
-    </div>
     <ElTable
+      ref="tableRef"
       v-loading="isLoading"
       style="height: 100%"
       empty-text="暂无学生数据"
@@ -103,7 +112,10 @@ onMounted(() => {
       :data="tableState.data"
       :default-sort="{ prop: 'date', order: 'descending' }"
       highlight-current-row
+      @selection-change="handleSelectedRow"
+      @cell-dblclick="handleDbClickCell"
     >
+      <ElTableColumn type="selection" width="40" align="center" />
       <ElTableColumn label="姓名" prop="studentName" width="120" />
       <ElTableColumn label="个人信息">
         <ElTableColumn label="学号" prop="studentId" sortable />
@@ -134,7 +146,7 @@ onMounted(() => {
                 </ElTooltip>
                 <ElIcon
                   :class="styles.viewIcon"
-                  @click="() => handleCardIdViewClick(scope.row)"
+                  @click="scope.row.isView = !scope.row.isView"
                 >
                   <View />
                 </ElIcon>
@@ -152,7 +164,13 @@ onMounted(() => {
       <ElTableColumn label="操作">
         <template #default="scope">
           <div style="text-align: center">
-            <ElButton size="small" type="primary" plain>编 辑</ElButton>
+            <ElButton
+              size="small"
+              type="primary"
+              plain
+              @click="emits('onCellDbClick', scope.row)"
+              >编 辑</ElButton
+            >
             <ElPopconfirm
               :icon="Warning"
               icon-color="red"
@@ -162,7 +180,7 @@ onMounted(() => {
               @confirm="handleDeleteStudent(scope.row)"
             >
               <template #reference>
-                <ElButton size="small" type="danger" plain> 删 除 </ElButton>
+                <ElButton size="small" type="danger" plain>删 除</ElButton>
               </template>
             </ElPopconfirm>
           </div>
@@ -177,8 +195,6 @@ onMounted(() => {
       :page-sizes="[10, 20, 50]"
       :total="tableState.total"
       background
-      @current-change="() => fetchTableData()"
-      @size-change="handlePageSizeChange"
     />
   </div>
 </template>
