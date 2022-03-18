@@ -5,6 +5,7 @@ import { LocalTokenKey } from '../models/store-keys';
 import { getLocalItem } from './local-storage';
 import router from '@/router';
 import { RouterNameEnum } from '@/router/type';
+import { resetStore } from '@/store';
 
 const instance = axios.create({
   baseURL: 'https://exam.xujingling.xyz',
@@ -33,6 +34,7 @@ instance.interceptors.response.use(
     if (error.response.status === 401) {
       ElMessage.warning('登陆超时，请重新登陆');
       router.push({ name: RouterNameEnum.Login });
+      resetStore();
     } else if (error.response && error.response.data) {
       const { error: message, status } = error.response.data;
       ElMessage.error(`[${status}] ${message}`);
