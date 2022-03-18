@@ -15,3 +15,9 @@
     margin-top: 10px;
   }
 }
+
+:global {
+  .el-input__prefix {
+    align-items: center;
+  }
+}
