@@ -5,14 +5,14 @@
 <a href="http://commitizen.github.io/cz-cli/"><img alt="Commitizen friendly" src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg"></a>
 <a href="https://github.com/Lmmmmmm-bb/Octo-Exam/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/Lmmmmmm-bb/Octo-Exam"></a>
 <a href="https://github.com/Lmmmmmm-bb/Octo-Exam/pulls"><img alt="GitHub PR" src="https://img.shields.io/badge/PR-Welcome-%2345A2FF"></a>
-<a href="https://github.com/Xujingling927/SpringBoot-Vue-OnlineExam"><img alt="Octo-Exam-BE" src="https://img.shields.io/badge/BE-Welcome-blue"></a>
+<a href="https://github.com/Xujingling927/OnlineExamSystem" target="_blank"><img alt="Octo-Exam-BE" src="https://img.shields.io/badge/BE-Xujingling927-blue"></a>
 </p>
 
 ## 技术栈
 
 - Vite
 - Vue3 + Vue-Router4 + Pinia
-- Axios + Vue-Query
+- Axios
 - ESLint + Prettier
 - Commit Lint + Husky
 - Element Plus + Tailwind CSS
