@@ -31,13 +31,15 @@ instance.interceptors.response.use(
     return data;
   },
   (error) => {
-    if (error.response.status === 401) {
-      ElMessage.warning('登陆超时，请重新登陆');
-      router.push({ name: RouterNameEnum.Login });
-      resetStore();
-    } else if (error.response && error.response.data) {
+    if (error.response && error.response.data) {
       const { error: message, status } = error.response.data;
-      ElMessage.error(`[${status}] ${message}`);
+      if (status === 401) {
+        ElMessage.warning('登陆超时，请重新登陆');
+        router.push({ name: RouterNameEnum.Login });
+        resetStore();
+      } else {
+        ElMessage.error(`[${status}] ${message}`);
+      }
     } else {
       ElMessage.error('服务不可用');
     }
