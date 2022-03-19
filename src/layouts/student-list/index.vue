@@ -5,7 +5,7 @@ import { Delete, Refresh } from '@element-plus/icons-vue';
 import { RouterNameEnum } from '@/router/type';
 import StudentTable from './components/student-table.vue';
 import Breadcrumb from '@/components/breadcrumb/index.vue';
-import TooltipIconButton from '@/components/TooltipIconButton/index.vue';
+import TooltipIconButton from '@/components/tooltip-icon-button/index.vue';
 import styles from './index.module.scss';
 import { computed, ref } from 'vue';
 import { IStudentConfig } from '@/common/models/user-config';
