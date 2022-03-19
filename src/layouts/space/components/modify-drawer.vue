@@ -3,10 +3,11 @@ import { ref, reactive, defineProps, defineEmits } from 'vue';
 import { ElDrawer, ElForm, ElFormItem, ElInput, ElButton } from 'element-plus';
 import { FormRulesMap } from 'element-plus/es/components/form/src/form.type';
 import { useToggle } from '@/common/hooks';
-import { FormInstanceType } from '../config';
 import { http } from '@/common/utils/http';
 import { StudentPwdModifyApi } from '@/services/student';
 import { useUserConfigStore } from '@/store';
+import { FormInstanceType } from '@/common/models/element';
+import { ModifyDrawerFormPropsType } from '../config';
 
 const props = defineProps<{ visible: boolean }>();
 const emits = defineEmits<{
@@ -14,14 +15,14 @@ const emits = defineEmits<{
 }>();
 
 const { userConfig } = useUserConfigStore();
-const formRef = ref<FormInstanceType | null>(null);
+const formRef = ref<FormInstanceType>();
 const confirmPwd = reactive({
   pwd: '',
   confirmPwd: ''
 });
 const { isActive: isLoading, onToggle: onToggleLoading } = useToggle();
 
-const formRules: FormRulesMap<'pwd' | 'confirmPwd'> = {
+const formRules: FormRulesMap<ModifyDrawerFormPropsType> = {
   pwd: {
     message: '请输入修改的密码',
     required: true,

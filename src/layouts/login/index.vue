@@ -11,7 +11,7 @@ import {
   ElCheckTag
 } from 'element-plus';
 import styles from './index.module.scss';
-import { FormInstanceType, formRules } from './config';
+import { formRules } from './config';
 import { roleMap } from './type';
 import { useUserConfigStore } from '@/store';
 import {
@@ -24,10 +24,11 @@ import { ILoginData, LoginApi } from '@/services/login';
 import { useToggle } from '@/common/hooks';
 import { setLocalItem } from '@/common/utils/local-storage';
 import { LocalTokenKey } from '@/common/models/store-keys';
+import { FormInstanceType } from '@/common/models/element';
 
 const router = useRouter();
 const userConfigStore = useUserConfigStore();
-const formRef = ref<FormInstanceType | null>(null);
+const formRef = ref<FormInstanceType>();
 const { isActive: isLoading, onToggle: onLoadingToggle } = useToggle();
 const info = reactive<ILoginData>({
   role: UserRoleEnum.Student,

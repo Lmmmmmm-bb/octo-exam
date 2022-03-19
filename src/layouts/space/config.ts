@@ -1,9 +1,6 @@
 import { UserRoleEnum } from '@/common/models/user-config';
 import { RouterNameEnum } from '@/router/type';
-import { ElForm } from 'element-plus';
 import { IMenuItem } from './type';
-
-export type FormInstanceType = InstanceType<typeof ElForm>;
 
 export const StudentMenuNavList: Record<string, IMenuItem> = {
   [RouterNameEnum.Home]: { label: '主页' },
@@ -50,3 +47,5 @@ export const StudentUserInfoMap = new Map([
   ['institute', '学院'],
   ['major', '专业']
 ]);
+
+export type ModifyDrawerFormPropsType = 'pwd' | 'confirmPwd';
