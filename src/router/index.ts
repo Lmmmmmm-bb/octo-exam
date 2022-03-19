@@ -56,20 +56,42 @@ const router = createRouter({
         {
           path: '/space/student-manage/list',
           name: RouterNameEnum.StudentManageList,
-          component: () => import('../layouts/student-manage-list/index.vue'),
+          component: () => import('../layouts/student-list/index.vue'),
           meta: { title: '在线考试系统 - 学生列表' }
         },
         {
           path: '/space/student-manage/enroll',
           name: RouterNameEnum.StudentManageEnroll,
-          component: () => import('../layouts/student-manage-enroll/index.vue'),
+          component: () => import('../layouts/student-enroll/index.vue'),
           meta: { title: '在线考试系统 - 录入学生信息' }
         },
         {
-          path: '/space/question-manage',
-          name: RouterNameEnum.QuestionManage,
-          component: () => import('../layouts/question-manage/index.vue'),
-          meta: { title: '在线考试系统 - 题库管理' }
+          path: '/space/question-manage/multiple-choice',
+          name: RouterNameEnum.QuestionMultipleChoice,
+          component: () =>
+            import('../layouts/question-multiple-choice/index.vue'),
+          meta: { title: '在线考试系统 - 选择题题库' }
+        },
+        {
+          path: '/space/question-manage/multiple-choice/:id',
+          name: RouterNameEnum.QuestionMultipleChoiceDetail,
+          component: () =>
+            import('../layouts/multiple-choice-detail/index.vue'),
+          meta: { title: '在线考试系统 - 选择题详情' }
+        },
+        {
+          path: '/space/question-manage/true-false',
+          name: RouterNameEnum.QuestionTrueFalse,
+          component: () =>
+            import('../layouts/question-multiple-choice/index.vue'),
+          meta: { title: '在线考试系统 - 判断题题库' }
+        },
+        {
+          path: '/space/question-manage/fill-blank',
+          name: RouterNameEnum.QuestionFillBlank,
+          component: () =>
+            import('../layouts/question-multiple-choice/index.vue'),
+          meta: { title: '在线考试系统 - 填空题题库' }
         },
         {
           path: '/space/scroll/list',
