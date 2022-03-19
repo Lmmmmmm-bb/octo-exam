@@ -83,5 +83,6 @@ const handleDeleteMultStudent = async () => {
     :visible="isDrawerVisible"
     :student="selectedStudent"
     @on-close="onDrawerVisibleToggle"
+    @on-update="handleRefreshTable"
   />
 </template>

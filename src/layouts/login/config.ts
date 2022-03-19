@@ -1,7 +1,4 @@
-import { ElForm } from 'element-plus';
 import { FormRulesMap } from 'element-plus/es/components/form/src/form.type';
-
-export type FormInstanceType = InstanceType<typeof ElForm>;
 
 export const formRules: FormRulesMap<'userId' | 'password'> = {
   userId: {
