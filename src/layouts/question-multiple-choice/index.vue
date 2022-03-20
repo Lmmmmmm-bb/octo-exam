@@ -13,7 +13,10 @@ import Breadcrumb from '@/components/breadcrumb/index.vue';
 import MultipleChoiceCard from './components/multiple-choice-card.vue';
 import styles from './index.module.scss';
 import { http } from '@/common/utils/http';
-import { MultiQuestionListApi } from '@/services/question';
+import {
+  MultiQuestionListApi,
+  MultiQuestionListResponseType
+} from '@/services/question';
 import { RouterNameEnum } from '@/router/type';
 import { useToggle } from '@/common/hooks';
 
@@ -29,7 +32,9 @@ const handleQuestionClick = (question: IMultiQuestion) => {
 };
 
 onMounted(async () => {
-  const { data } = await http.getRequest(MultiQuestionListApi);
+  const { data } = await http.getRequest<MultiQuestionListResponseType>(
+    MultiQuestionListApi
+  );
   multiQuestionsList.value = data;
   onUnLoading();
 });

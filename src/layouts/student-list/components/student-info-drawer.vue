@@ -13,7 +13,7 @@ import { IStudentConfig } from '@/common/models/user-config';
 import { FormInstanceType } from '@/common/models/element';
 import { infoDrawerFormRules } from '../config';
 import { http } from '@/common/utils/http';
-import { StudentApi } from '@/services/student';
+import { StudentApi, StudentDataType } from '@/services/student';
 
 const emits = defineEmits<{
   (e: 'onClose'): void;
@@ -30,7 +30,10 @@ const info = reactive({ student: { ...props.student } });
 
 const handleClickSave = async () => {
   if (formRef.value && (await formRef.value.validate())) {
-    await http.putRequest<IStudentConfig>(StudentApi, info.student);
+    await http.putRequest<Record<string, never>, StudentDataType>(
+      StudentApi,
+      info.student
+    );
     emits('onUpdate');
     emits('onClose');
   }

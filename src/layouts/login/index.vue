@@ -14,13 +14,9 @@ import styles from './index.module.scss';
 import { formRules } from './config';
 import { roleMap } from './type';
 import { useUserConfigStore } from '@/store';
-import {
-  IAdminConfig,
-  IStudentConfig,
-  UserRoleEnum
-} from '@/common/models/user-config';
+import { UserRoleEnum } from '@/common/models/user-config';
 import { http } from '@/common/utils/http';
-import { ILoginData, LoginApi } from '@/services/login';
+import { LoginApi, ILoginData, ILoginResponse } from '@/services/login';
 import { useToggle } from '@/common/hooks';
 import { setLocalItem } from '@/common/utils/local-storage';
 import { LocalTokenKey } from '@/common/models/store-keys';
@@ -40,10 +36,10 @@ const handleLogin = async () => {
   try {
     onLoadingToggle();
     formRef.value && (await formRef.value.validate());
-    const { status, data } = await http.postRequest<
-      ILoginData,
-      { res: IAdminConfig & IStudentConfig; token: string }
-    >(LoginApi, info);
+    const { status, data } = await http.postRequest<ILoginResponse, ILoginData>(
+      LoginApi,
+      info
+    );
     if (status) {
       const { res: userConfig, token } = data;
       setLocalItem(LocalTokenKey, token);
