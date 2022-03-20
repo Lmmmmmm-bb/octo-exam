@@ -9,11 +9,18 @@ export default defineConfig(({ mode }) => {
 
   return {
     base: env.APP_BASE_URL,
-    plugins: [vue(), ElementPlusUnplugin()],
+    plugins: [vue(), ElementPlusUnplugin({ useSource: true })],
     envDir: './env',
     envPrefix: 'APP_',
     resolve: {
       alias: [{ find: '@', replacement: resolve(__dirname, 'src') }]
+    },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@use "@/common/styles/theme.scss" as *;`
+        }
+      }
     }
   };
 });
