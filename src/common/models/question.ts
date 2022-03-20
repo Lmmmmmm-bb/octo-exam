@@ -1,3 +1,9 @@
+export enum QuestionLevelEnum {
+  Easy = '1',
+  Medium = '2',
+  Hard = '3'
+}
+
 export interface IMultiQuestion {
   questionId: number;
   subject: string;
@@ -7,7 +13,7 @@ export interface IMultiQuestion {
   answerC: string;
   answerD: string;
   question: string;
-  level: string;
+  level: QuestionLevelEnum;
   rightAnswer: string;
   analysis: null | string;
   score: number;

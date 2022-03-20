@@ -14,9 +14,9 @@ export const AdminMenuNavList: Record<string, IMenuItem> = {
   [RouterNameEnum.QuestionManage]: {
     label: '题库管理',
     children: [
-      { key: RouterNameEnum.QuestionMultipleChoice, label: '选择题' },
-      { key: RouterNameEnum.QuestionTrueFalse, label: '判断题' },
-      { key: RouterNameEnum.QuestionFillBlank, label: '填空题' }
+      { key: RouterNameEnum.QuestionMultipleChoice, label: '选择题题库' },
+      { key: RouterNameEnum.QuestionTrueFalse, label: '判断题题库' },
+      { key: RouterNameEnum.QuestionFillBlank, label: '填空题题库' }
     ]
   },
   [RouterNameEnum.StudentManage]: {
