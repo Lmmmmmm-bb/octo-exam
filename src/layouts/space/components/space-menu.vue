@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { computed, ref, watchEffect } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { ElMenu, ElMenuItem, ElSubMenu } from 'element-plus';
 import { AdminMenuNavList, StudentMenuNavList } from '../config';
 import { useUserConfigStore } from '@/store';
 import { UserRoleEnum } from '@/common/models/user-config';
 import { RouterNameEnum } from '@/router/type';
 
-const router = useRouter();
+const route = useRoute();
 const userConfigStore = useUserConfigStore();
-const activeKey = ref<string>(RouterNameEnum.Home);
+const activeKey = ref(RouterNameEnum.Home);
 
 const userNav = computed(() => {
   const { userConfig } = userConfigStore;
@@ -19,7 +19,7 @@ const userNav = computed(() => {
 });
 
 watchEffect(() => {
-  const routeName = router.currentRoute.value.name as string;
+  const routeName = route.meta.activeMenu;
   activeKey.value = routeName;
 });
 </script>
