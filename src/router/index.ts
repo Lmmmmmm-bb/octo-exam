@@ -68,7 +68,8 @@ const router = createRouter({
         {
           path: '/space/student-manage/list',
           name: RouterNameEnum.StudentManageList,
-          component: () => import('../layouts/student-list/index.vue'),
+          component: () =>
+            import('../layouts/student-manage/student-list/index.vue'),
           meta: {
             title: '在线考试系统 - 学生列表',
             activeMenu: RouterNameEnum.StudentManageList
@@ -77,7 +78,8 @@ const router = createRouter({
         {
           path: '/space/student-manage/enroll',
           name: RouterNameEnum.StudentManageEnroll,
-          component: () => import('../layouts/student-enroll/index.vue'),
+          component: () =>
+            import('../layouts/student-manage/student-enroll/index.vue'),
           meta: {
             title: '在线考试系统 - 录入学生信息',
             activeMenu: RouterNameEnum.StudentManageEnroll
@@ -87,7 +89,9 @@ const router = createRouter({
           path: '/space/question-manage/multiple-choice',
           name: RouterNameEnum.QuestionMultipleChoice,
           component: () =>
-            import('../layouts/question-multiple-choice/index.vue'),
+            import(
+              '../layouts/question-manage/multiple-choice-manage/index.vue'
+            ),
           meta: {
             title: '在线考试系统 - 选择题题库',
             activeMenu: RouterNameEnum.QuestionMultipleChoice
@@ -97,7 +101,9 @@ const router = createRouter({
           path: '/space/question-manage/multiple-choice/:id',
           name: RouterNameEnum.QuestionMultipleChoiceDetail,
           component: () =>
-            import('../layouts/multiple-choice-detail/index.vue'),
+            import(
+              '../layouts/question-manage/multiple-choice-detail/index.vue'
+            ),
           meta: {
             title: '在线考试系统 - 选择题详情',
             activeMenu: RouterNameEnum.QuestionMultipleChoice
@@ -107,7 +113,9 @@ const router = createRouter({
           path: '/space/question-manage/true-false',
           name: RouterNameEnum.QuestionTrueFalse,
           component: () =>
-            import('../layouts/question-multiple-choice/index.vue'),
+            import(
+              '../layouts/question-manage/multiple-choice-manage/index.vue'
+            ),
           meta: {
             title: '在线考试系统 - 判断题题库',
             activeMenu: RouterNameEnum.QuestionTrueFalse
@@ -117,7 +125,9 @@ const router = createRouter({
           path: '/space/question-manage/fill-blank',
           name: RouterNameEnum.QuestionFillBlank,
           component: () =>
-            import('../layouts/question-multiple-choice/index.vue'),
+            import(
+              '../layouts/question-manage/multiple-choice-manage/index.vue'
+            ),
           meta: {
             title: '在线考试系统 - 填空题题库',
             activeMenu: RouterNameEnum.QuestionFillBlank
