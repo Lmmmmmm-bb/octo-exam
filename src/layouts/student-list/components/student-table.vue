@@ -89,8 +89,9 @@ watch(
   () => [pageState.pageSize, pageState.current],
   (next, prev) => {
     const [nextPageSize] = next;
-    const [prevPageSize, prevCurrent] = prev;
-    if (nextPageSize !== prevPageSize && prevCurrent !== 1) {
+    const [prevPageSize, prevCurrentPage] = prev;
+    if (nextPageSize !== prevPageSize && prevCurrentPage !== 1) {
+      pageState.current = 1;
       return;
     }
     fetchTableData();
