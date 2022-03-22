@@ -113,9 +113,7 @@ const router = createRouter({
           path: '/space/question-manage/true-false',
           name: RouterNameEnum.QuestionTrueFalse,
           component: () =>
-            import(
-              '../layouts/question-manage/multiple-choice-manage/index.vue'
-            ),
+            import('../layouts/question-manage/ture-false-manage/index.vue'),
           meta: {
             title: '在线考试系统 - 判断题题库',
             activeMenu: RouterNameEnum.QuestionTrueFalse
@@ -125,9 +123,7 @@ const router = createRouter({
           path: '/space/question-manage/fill-blank',
           name: RouterNameEnum.QuestionFillBlank,
           component: () =>
-            import(
-              '../layouts/question-manage/multiple-choice-manage/index.vue'
-            ),
+            import('../layouts/question-manage/fill-blank-manage/index.vue'),
           meta: {
             title: '在线考试系统 - 填空题题库',
             activeMenu: RouterNameEnum.QuestionFillBlank

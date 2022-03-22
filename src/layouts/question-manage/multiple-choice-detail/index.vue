@@ -21,6 +21,8 @@ import {
 import { IMultiQuestion } from '@/common/models/question';
 import { getLevelTagType } from './utils';
 import { useToggle } from '@/common/hooks';
+import { RouterNameEnum } from '@/router/type';
+import EmptyLink from '@/components/empty-link/index.vue';
 
 const route = useRoute();
 const { isActive: isLoading, onUnActive: onUnLoading } = useToggle(true);
@@ -29,10 +31,7 @@ const question = ref({} as IMultiQuestion);
 onMounted(async () => {
   const { id } = route.params;
   const { data } = await http.getRequest<MultiQuestionResponseType>(
-    MultiQuestionApi,
-    {
-      params: { questionId: id }
-    }
+    `${MultiQuestionApi}/${id}`
   );
   question.value = data;
   onUnLoading();
@@ -40,14 +39,18 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div :class="styles.multipleChoiceDetailWrapper">
+  <div class="outerWrapper">
     <Breadcrumb :path="breadcrumbConfig" />
     <ElDivider />
     <ElSkeleton :loading="isLoading" animated>
       <template #template>
         <ElSkeletonItem :class="styles.cardSkeleton" variant="rect" />
       </template>
-      <ElCard :class="styles.detailCard" shadow="hover">
+      <ElCard
+        v-if="question.questionId"
+        :class="styles.detailCard"
+        shadow="hover"
+      >
         <ElDescriptions
           :column="2"
           size="large"
@@ -91,6 +94,13 @@ onMounted(async () => {
           </ElDescriptionsItem>
         </ElDescriptions>
       </ElCard>
+      <EmptyLink
+        v-else
+        :link-props="{
+          text: '返回题库',
+          to: { name: RouterNameEnum.QuestionMultipleChoice }
+        }"
+      />
     </ElSkeleton>
   </div>
 </template>

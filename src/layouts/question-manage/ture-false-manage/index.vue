@@ -1,7 +1,11 @@
 <script setup lang="ts">
+import { ElDivider } from 'element-plus';
 import Breadcrumb from '@/components/breadcrumb/index.vue';
 </script>
 
 <template>
-  <Breadcrumb :path="[{ text: '判断题' }]" />
+  <div class="outerWrapper">
+    <Breadcrumb :path="[{ text: '判断题题库' }]" />
+    <ElDivider />
+  </div>
 </template>

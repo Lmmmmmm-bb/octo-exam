@@ -1,14 +1,21 @@
 <script setup lang="ts">
 import { RouterNameEnum } from '@/router/type';
-import { ElEmpty, ElLink } from 'element-plus';
-import { useRouter } from 'vue-router';
+import EmptyLink from '@/components/empty-link/index.vue';
+import { resetStore } from '@/store';
 
-const router = useRouter();
-const handleReturnLogin = () => router.push({ name: RouterNameEnum.Login });
+const handleClickLink = () => {
+  resetStore();
+};
 </script>
 
 <template>
-  <ElEmpty style="height: 100%" description="Not Found">
-    <ElLink type="primary" @click="handleReturnLogin">返回登陆</ElLink>
-  </ElEmpty>
+  <EmptyLink
+    style="height: 100%"
+    desc="Not Found"
+    :link-props="{
+      to: { name: RouterNameEnum.Login },
+      text: '返回登陆',
+      onClick: handleClickLink
+    }"
+  />
 </template>
