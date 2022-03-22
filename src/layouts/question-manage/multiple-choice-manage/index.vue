@@ -41,7 +41,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div :class="styles.questionMultipleChoiceWrapper">
+  <div class="outerWrapper">
     <Breadcrumb :path="[{ text: '选择题题库' }]" />
     <ElDivider />
     <ElSkeleton :loading="isLoading" :count="3" animated>
