@@ -15,7 +15,7 @@ import Breadcrumb from '@/components/breadcrumb/index.vue';
 import { breadcrumbConfig, questionLevelMap } from './config';
 import styles from './index.module.scss';
 import {
-  MultiQuestionApi,
+  MultiQuestionByIdApi,
   MultiQuestionResponseType
 } from '@/services/question';
 import { IMultiQuestion } from '@/common/models/question';
@@ -31,7 +31,7 @@ const question = ref({} as IMultiQuestion);
 onMounted(async () => {
   const { id } = route.params;
   const { data } = await http.getRequest<MultiQuestionResponseType>(
-    `${MultiQuestionApi}/${id}`
+    `${MultiQuestionByIdApi}/${id}`
   );
   question.value = data;
   onUnLoading();

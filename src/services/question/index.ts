@@ -1,6 +1,6 @@
-// const MultiQuestionPrefixUrl = '/multiQuestion';
+const MultiQuestionPrefixUrl = '/multiQuestion';
 
-export const MultiQuestionApi = '/multiQuestion/';
+export const MultiQuestionByIdApi = `${MultiQuestionPrefixUrl}/question`;
 export const MultiQuestionListApi = '/multiQuestions';
 
 export * from './type';
