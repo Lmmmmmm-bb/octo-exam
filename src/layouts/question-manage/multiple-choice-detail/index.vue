@@ -33,7 +33,7 @@ onMounted(async () => {
   const { data } = await http.getRequest<MultiQuestionResponseType>(
     `${MultiQuestionByIdApi}/${id}`
   );
-  question.value = data;
+  question.value = data ?? {};
   onUnLoading();
 });
 </script>
