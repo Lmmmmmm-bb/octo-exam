@@ -5,7 +5,7 @@ import { Delete, Refresh } from '@element-plus/icons-vue';
 import { RouterNameEnum } from '@/router/type';
 import StudentTable from './components/student-table.vue';
 import Breadcrumb from '@/components/breadcrumb/index.vue';
-import TooltipIconButton from '@/components/TooltipIconButton/index.vue';
+import TooltipIconButton from '@/components/tooltip-icon-button/index.vue';
 import styles from './index.module.scss';
 import { computed, ref } from 'vue';
 import { IStudentConfig } from '@/common/models/user-config';
@@ -57,32 +57,34 @@ const handleDeleteMultStudent = async () => {
 </script>
 
 <template>
-  <Breadcrumb :path="[{ text: '学生管理' }, { text: '学生列表' }]" />
-  <div :class="styles.tableActions">
-    <ElButton type="primary" plain @click="handleEnroll">
-      录入学生信息
-    </ElButton>
-    <div>
-      <TooltipIconButton
-        type="danger"
-        content="批量删除"
-        :icon="Delete"
-        :disabled="isDeleteDisabled"
-        @on-click="handleDeleteMultStudent"
-      />
-      <TooltipIconButton
-        type="primary"
-        :icon="Refresh"
-        content="点击刷新"
-        @on-click="handleRefreshTable"
-      />
+  <div class="outerWrapper">
+    <Breadcrumb :path="[{ text: '学生管理' }, { text: '学生列表' }]" />
+    <div :class="styles.tableActions">
+      <ElButton type="primary" plain @click="handleEnroll">
+        录入学生信息
+      </ElButton>
+      <div>
+        <TooltipIconButton
+          type="danger"
+          content="批量删除"
+          :icon="Delete"
+          :disabled="isDeleteDisabled"
+          @on-click="handleDeleteMultStudent"
+        />
+        <TooltipIconButton
+          type="primary"
+          :icon="Refresh"
+          content="点击刷新"
+          @on-click="handleRefreshTable"
+        />
+      </div>
     </div>
+    <StudentTable ref="tableRef" @on-cell-db-click="handleDbClickCell" />
+    <StudentInfoDrawer
+      :visible="isDrawerVisible"
+      :student="selectedStudent"
+      @on-close="onDrawerVisibleToggle"
+      @on-update="handleRefreshTable"
+    />
   </div>
-  <StudentTable ref="tableRef" @on-cell-db-click="handleDbClickCell" />
-  <StudentInfoDrawer
-    :visible="isDrawerVisible"
-    :student="selectedStudent"
-    @on-close="onDrawerVisibleToggle"
-    @on-update="handleRefreshTable"
-  />
 </template>

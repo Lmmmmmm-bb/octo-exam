@@ -47,34 +47,34 @@ instance.interceptors.response.use(
   }
 );
 
-async function getRequest<T = any, R = IBaseResponse<T>>(
+async function getRequest<T = any, D = any>(
   url: string,
-  config?: AxiosRequestConfig<T>
+  config?: AxiosRequestConfig<D>
 ) {
-  return instance.get<T, R>(url, config);
+  return instance.get<T, IBaseResponse<T>, D>(url, config);
 }
 
-async function postRequest<T = any, R = IBaseResponse<T>>(
+async function postRequest<T = any, D = any>(
   url: string,
-  data: T,
-  config?: AxiosRequestConfig<T>
+  data: D,
+  config?: AxiosRequestConfig<D>
 ) {
-  return instance.post<T, IBaseResponse<R>>(url, data, config);
+  return instance.post<T, IBaseResponse<T>, D>(url, data, config);
 }
 
-async function putRequest<T = any, R = IBaseResponse<T>>(
+async function putRequest<T = any, D = any>(
   url: string,
-  data: T,
-  config?: AxiosRequestConfig<T>
+  data: D,
+  config?: AxiosRequestConfig<D>
 ) {
-  return instance.put<T, IBaseResponse<R>>(url, data, config);
+  return instance.put<T, IBaseResponse<T>, D>(url, data, config);
 }
 
-async function deleteRequest<T = any, R = IBaseResponse<T>>(
+async function deleteRequest<T = any, D = any>(
   url: string,
-  config?: AxiosRequestConfig<T>
+  config?: AxiosRequestConfig<D>
 ) {
-  return instance.delete<T, IBaseResponse<R>>(url, config);
+  return instance.delete<T, IBaseResponse<T>, D>(url, config);
 }
 
 export const http = {

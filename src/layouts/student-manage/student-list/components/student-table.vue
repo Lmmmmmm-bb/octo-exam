@@ -20,7 +20,11 @@ import {
 import { View, Warning } from '@element-plus/icons-vue';
 import { IStudentConfig } from '@/common/models/user-config';
 import { http } from '@/common/utils/http';
-import { StudentListApi, StudentApi } from '@/services/student';
+import {
+  StudentListApi,
+  StudentApi,
+  StudentListResponseType
+} from '@/services/student';
 import styles from './index.module.scss';
 
 const emits = defineEmits<{
@@ -43,12 +47,15 @@ const pageState = reactive({
 const fetchTableData = async () => {
   try {
     isLoading.value = true;
-    const { data } = await http.getRequest(StudentListApi, {
-      params: {
-        page: pageState.current,
-        pageSize: pageState.pageSize
+    const { data } = await http.getRequest<StudentListResponseType>(
+      StudentListApi,
+      {
+        params: {
+          page: pageState.current,
+          pageSize: pageState.pageSize
+        }
       }
-    });
+    );
     const { list, total } = data;
     sourceData.value = list;
     tableState.data = list;
@@ -82,8 +89,9 @@ watch(
   () => [pageState.pageSize, pageState.current],
   (next, prev) => {
     const [nextPageSize] = next;
-    const [prevPageSize, prevCurrent] = prev;
-    if (nextPageSize !== prevPageSize && prevCurrent !== 1) {
+    const [prevPageSize, prevCurrentPage] = prev;
+    if (nextPageSize !== prevPageSize && prevCurrentPage !== 1) {
+      pageState.current = 1;
       return;
     }
     fetchTableData();

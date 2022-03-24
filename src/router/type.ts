@@ -8,6 +8,11 @@ export const enum RouterNameEnum {
   ExamManage = 'space-exam-manage',
 
   QuestionManage = 'space-question-manage',
+  QuestionAdd = 'question-add',
+  QuestionMultipleChoice = 'question-multiple-choice',
+  QuestionTrueFalse = 'question-true-false',
+  QuestionFillBlank = 'question-fill-blank',
+  QuestionMultipleChoiceDetail = 'question-multiple-choice-detail',
 
   StudentManage = 'space-student-manage',
   StudentManageList = 'student-manage-list',

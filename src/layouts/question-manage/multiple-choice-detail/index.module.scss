@@ -1,0 +1,16 @@
+.cardSkeleton {
+  width: 50%;
+  height: 400px;
+}
+
+.detailCard {
+  width: 50%;
+  margin: 0 auto;
+}
+
+:global {
+  .el-skeleton {
+    display: flex;
+    justify-content: center;
+  }
+}

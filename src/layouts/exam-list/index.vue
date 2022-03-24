@@ -32,7 +32,7 @@ const handleExamCardClick = () => {
 </script>
 
 <template>
-  <div :class="styles.examListWrapper">
+  <div class="outerWrapper">
     <div class="flex justify-between items-center">
       <Breadcrumb :path="path" />
       <div class="flex justify-center items-center">

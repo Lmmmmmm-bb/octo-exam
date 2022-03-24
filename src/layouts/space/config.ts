@@ -10,8 +10,15 @@ export const StudentMenuNavList: Record<string, IMenuItem> = {
 export const AdminMenuNavList: Record<string, IMenuItem> = {
   [RouterNameEnum.Home]: { label: '主页' },
   [RouterNameEnum.ExamManage]: { label: '考试管理' },
-  [RouterNameEnum.QuestionManage]: { label: '题库管理' },
   [RouterNameEnum.ScoreManage]: { label: '成绩管理' },
+  [RouterNameEnum.QuestionManage]: {
+    label: '题库管理',
+    children: [
+      { key: RouterNameEnum.QuestionMultipleChoice, label: '选择题题库' },
+      { key: RouterNameEnum.QuestionTrueFalse, label: '判断题题库' },
+      { key: RouterNameEnum.QuestionFillBlank, label: '填空题题库' }
+    ]
+  },
   [RouterNameEnum.StudentManage]: {
     label: '学生管理',
     children: [

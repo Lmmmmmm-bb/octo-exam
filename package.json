@@ -12,7 +12,7 @@
     "lint:fix": "eslint --ext .tsx,.ts,.js,.vue --fix ./src --fix",
     "commit": "./node_modules/cz-customizable/standalone.js",
     "prepare": "husky install",
-    "style:watch": "./node_modules/.bin/typed-scss-modules src --watch --ignore \"**/index.scss\""
+    "style:watch": "./node_modules/.bin/typed-scss-modules src --watch --ignore \"**/index.scss\" \"**/styles/*.scss\""
   },
   "dependencies": {
     "axios": "^0.25.0",
