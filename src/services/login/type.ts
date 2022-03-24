@@ -14,3 +14,5 @@ export interface ILoginResponse {
   token: string;
   res: IAdminConfig & IStudentConfig;
 }
+
+export type LoginCheckDataType = Omit<ILoginData, 'password'>;
