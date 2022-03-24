@@ -1,9 +1,14 @@
-import { useTitle } from '@/common/hooks';
 import {
   createRouter,
   createWebHashHistory,
   createWebHistory
 } from 'vue-router';
+import { useTitle } from '@/common/hooks';
+import { LocalUserInfoKey } from '@/common/models/store-keys';
+import { http } from '@/common/utils/http';
+import { getLocalItem } from '@/common/utils/local-storage';
+import { LoginCheckDataType, LoginCheckApi } from '@/services/login';
+import { notSensitiveRoute } from './config';
 import { RouterNameEnum } from './type';
 
 const history = import.meta.env.DEV
@@ -153,8 +158,15 @@ const router = createRouter({
   ]
 });
 
-router.beforeEach((next) => {
+router.beforeEach(async (next) => {
   useTitle(next.meta.title);
+  if (!notSensitiveRoute.includes(next.name as RouterNameEnum)) {
+    const config = JSON.parse(getLocalItem(LocalUserInfoKey) || '{}');
+    await http.postRequest<null, LoginCheckDataType>(LoginCheckApi, {
+      ...config,
+      userId: config.studentId || config.adminId
+    });
+  }
 });
 
 export default router;
