@@ -26,13 +26,13 @@ import {
   StudentListResponseType
 } from '@/services/student';
 import styles from './index.module.scss';
+import { useToggle } from '@/common/hooks';
 
 const emits = defineEmits<{
   (e: 'onCellDbClick', row: IStudentConfig): void;
 }>();
 
-const tableRef = ref<InstanceType<typeof ElTable>>();
-const isLoading = ref(false);
+const { isActive: isLoading, onToggle: onToggleLoading } = useToggle();
 const selectedRows = ref<IStudentConfig[]>([]);
 const sourceData = ref<IStudentConfig[]>([]);
 const tableState = reactive({
@@ -46,7 +46,7 @@ const pageState = reactive({
 
 const fetchTableData = async () => {
   try {
-    isLoading.value = true;
+    onToggleLoading();
     const { data } = await http.getRequest<StudentListResponseType>(
       StudentListApi,
       {
@@ -64,7 +64,7 @@ const fetchTableData = async () => {
     // no-console
   } finally {
     selectedRows.value = [];
-    isLoading.value = false;
+    onToggleLoading();
   }
 };
 
@@ -111,7 +111,6 @@ onMounted(() => {
 <template>
   <div :class="styles.studentTableWrapper">
     <ElTable
-      ref="tableRef"
       v-loading="isLoading"
       style="height: 100%"
       empty-text="暂无学生数据"
@@ -177,8 +176,9 @@ onMounted(() => {
               type="primary"
               plain
               @click="emits('onCellDbClick', scope.row)"
-              >编 辑</ElButton
             >
+              编 辑
+            </ElButton>
             <ElPopconfirm
               :icon="Warning"
               icon-color="red"
