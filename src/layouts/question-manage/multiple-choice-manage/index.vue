@@ -19,6 +19,7 @@ import {
 } from '@/services/question';
 import { RouterNameEnum } from '@/router/type';
 import { useToggle } from '@/common/hooks';
+import { breadcrumbConfig } from './config';
 
 const router = useRouter();
 const { isActive: isLoading, onUnActive: onUnLoading } = useToggle(true);
@@ -42,7 +43,7 @@ onMounted(async () => {
 
 <template>
   <div class="outerWrapper">
-    <Breadcrumb :path="[{ text: '选择题题库' }]" />
+    <Breadcrumb :path="breadcrumbConfig" />
     <ElDivider />
     <ElSkeleton :loading="isLoading" :count="3" animated>
       <template #template>

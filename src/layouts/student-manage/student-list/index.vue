@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import { ElButton, ElMessageBox } from 'element-plus';
+import { ElButton, ElMessageBox, ElDivider } from 'element-plus';
 import { Delete, Refresh } from '@element-plus/icons-vue';
 import { RouterNameEnum } from '@/router/type';
 import StudentTable from './components/student-table.vue';
@@ -59,6 +59,7 @@ const handleDeleteMultStudent = async () => {
 <template>
   <div class="outerWrapper">
     <Breadcrumb :path="[{ text: '学生管理' }, { text: '学生列表' }]" />
+    <ElDivider />
     <div :class="styles.tableActions">
       <ElButton type="primary" plain @click="handleEnroll">
         录入学生信息

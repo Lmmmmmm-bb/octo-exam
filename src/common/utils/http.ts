@@ -43,7 +43,6 @@ instance.interceptors.response.use(
     } else {
       ElMessage.error('服务不可用');
     }
-    return error.response;
   }
 );
 

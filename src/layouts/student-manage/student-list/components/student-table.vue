@@ -11,13 +11,11 @@ import {
   ElTable,
   ElTableColumn,
   ElButton,
-  ElIcon,
-  ElTooltip,
   ElPopconfirm,
   ElTag,
   ElPagination
 } from 'element-plus';
-import { View, Warning } from '@element-plus/icons-vue';
+import { Warning } from '@element-plus/icons-vue';
 import { IStudentConfig } from '@/common/models/user-config';
 import { http } from '@/common/utils/http';
 import {
@@ -26,13 +24,13 @@ import {
   StudentListResponseType
 } from '@/services/student';
 import styles from './index.module.scss';
+import { useToggle } from '@/common/hooks';
 
 const emits = defineEmits<{
   (e: 'onCellDbClick', row: IStudentConfig): void;
 }>();
 
-const tableRef = ref<InstanceType<typeof ElTable>>();
-const isLoading = ref(false);
+const { isActive: isLoading, onToggle: onToggleLoading } = useToggle();
 const selectedRows = ref<IStudentConfig[]>([]);
 const sourceData = ref<IStudentConfig[]>([]);
 const tableState = reactive({
@@ -46,7 +44,7 @@ const pageState = reactive({
 
 const fetchTableData = async () => {
   try {
-    isLoading.value = true;
+    onToggleLoading();
     const { data } = await http.getRequest<StudentListResponseType>(
       StudentListApi,
       {
@@ -64,7 +62,7 @@ const fetchTableData = async () => {
     // no-console
   } finally {
     selectedRows.value = [];
-    isLoading.value = false;
+    onToggleLoading();
   }
 };
 
@@ -111,7 +109,6 @@ onMounted(() => {
 <template>
   <div :class="styles.studentTableWrapper">
     <ElTable
-      ref="tableRef"
       v-loading="isLoading"
       style="height: 100%"
       empty-text="暂无学生数据"
@@ -140,27 +137,7 @@ onMounted(() => {
           </ElTableColumn>
           <ElTableColumn label="电话" prop="tel" width="150" />
           <ElTableColumn label="邮箱" prop="email" />
-          <ElTableColumn label="身份证" width="240">
-            <template #default="scope">
-              <span class="flex justify-between items-center">
-                <span v-if="scope.row.isView">{{ scope.row.cardId }}</span>
-                <ElTooltip
-                  v-else
-                  effect="light"
-                  content="点击右方按钮查看"
-                  placement="right"
-                >
-                  ******
-                </ElTooltip>
-                <ElIcon
-                  :class="styles.viewIcon"
-                  @click="scope.row.isView = !scope.row.isView"
-                >
-                  <View />
-                </ElIcon>
-              </span>
-            </template>
-          </ElTableColumn>
+          <ElTableColumn label="身份证" prop="cardId" width="240" />
         </ElTableColumn>
         <ElTableColumn label="班级信息">
           <ElTableColumn label="学院" prop="institute" />
@@ -177,8 +154,9 @@ onMounted(() => {
               type="primary"
               plain
               @click="emits('onCellDbClick', scope.row)"
-              >编 辑</ElButton
             >
+              编 辑
+            </ElButton>
             <ElPopconfirm
               :icon="Warning"
               icon-color="red"
