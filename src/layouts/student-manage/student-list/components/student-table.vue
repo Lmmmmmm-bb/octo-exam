@@ -1,19 +1,11 @@
 <script setup lang="ts">
-import {
-  onMounted,
-  reactive,
-  ref,
-  defineEmits,
-  defineExpose,
-  watch
-} from 'vue';
+import { onMounted, reactive, ref, defineEmits, defineExpose } from 'vue';
 import {
   ElTable,
   ElTableColumn,
   ElButton,
   ElPopconfirm,
-  ElTag,
-  ElPagination
+  ElTag
 } from 'element-plus';
 import { Warning } from '@element-plus/icons-vue';
 import { IStudentConfig } from '@/common/models/user-config';
@@ -25,6 +17,7 @@ import {
 } from '@/services/student';
 import styles from './index.module.scss';
 import { useToggle } from '@/common/hooks';
+import Pagination from '@/components/pagination/index.vue';
 
 const emits = defineEmits<{
   (e: 'onCellDbClick', row: IStudentConfig): void;
@@ -82,19 +75,6 @@ const handleSelectedRow = (rows: IStudentConfig[]) =>
   (selectedRows.value = rows);
 
 const handleDbClickCell = (row: IStudentConfig) => emits('onCellDbClick', row);
-
-watch(
-  () => [pageState.pageSize, pageState.current],
-  (next, prev) => {
-    const [nextPageSize] = next;
-    const [prevPageSize, prevCurrentPage] = prev;
-    if (nextPageSize !== prevPageSize && prevCurrentPage !== 1) {
-      pageState.current = 1;
-      return;
-    }
-    fetchTableData();
-  }
-);
 
 defineExpose({
   selectedRows,
@@ -173,14 +153,12 @@ onMounted(() => {
         </template>
       </ElTableColumn>
     </ElTable>
-    <ElPagination
-      v-model:currentPage="pageState.current"
+    <Pagination
+      v-model:current-page="pageState.current"
       v-model:page-size="pageState.pageSize"
-      :class="styles.tablePagination"
-      layout="total, sizes, prev, pager, next"
-      :page-sizes="[10, 20, 50]"
+      class="mt-4"
       :total="tableState.total"
-      background
+      @page-change="fetchTableData"
     />
   </div>
 </template>
