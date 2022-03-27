@@ -11,6 +11,7 @@ import { IExam } from '@/common/models/exam';
 import Pagination from '@/components/pagination/index.vue';
 
 const examList = ref<IExam[]>([]);
+const totalExam = ref(0);
 const {
   isActive: isLoading,
   onActive: onLoading,
@@ -31,6 +32,7 @@ const fetchExamList = async () => {
       }
     });
     examList.value = data.list;
+    totalExam.value = data.total;
   } catch (error) {
     // no-console
   } finally {
@@ -66,7 +68,7 @@ onMounted(() => {
           v-model:currentPage="pageState.current"
           v-model:pageSize="pageState.pageSize"
           :class="styles.examPagination"
-          :total="examList.length"
+          :total="totalExam"
           @page-change="fetchExamList"
         />
       </div>
