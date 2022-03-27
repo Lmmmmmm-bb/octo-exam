@@ -12,17 +12,17 @@ import {
 } from 'element-plus';
 import { http } from '@/common/utils/http';
 import Breadcrumb from '@/components/breadcrumb/index.vue';
-import { breadcrumbConfig, questionLevelMap } from './config';
+import { breadcrumbConfig } from './config';
 import styles from './index.module.scss';
 import {
   MultiQuestionByIdApi,
   MultiQuestionResponseType
 } from '@/services/question';
 import { IMultiQuestion } from '@/common/models/question';
-import { getLevelTagType } from './utils';
 import { useToggle } from '@/common/hooks';
 import { RouterNameEnum } from '@/router/type';
 import EmptyLink from '@/components/empty-link/index.vue';
+import LevelTag from '@/components/level-tag/index.vue';
 
 const route = useRoute();
 const { isActive: isLoading, onUnActive: onUnLoading } = useToggle(true);
@@ -57,9 +57,7 @@ onMounted(async () => {
           :title="`题目 ID： ${question.questionId}`"
         >
           <template #extra>
-            <ElTag :type="getLevelTagType(question.level)">
-              {{ questionLevelMap[question.level] }}
-            </ElTag>
+            <LevelTag :level="question.level" />
           </template>
           <ElDescriptionsItem :span="2" label="题目">
             {{ question.question }}
