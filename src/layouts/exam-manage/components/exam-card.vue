@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, defineEmits, ref } from 'vue';
+import { defineProps, defineEmits } from 'vue';
 import {
   ElCard,
   ElIcon,
@@ -9,11 +9,11 @@ import {
   ElTag,
   ElMessageBox
 } from 'element-plus';
-import { CopyDocument, Check, Close } from '@element-plus/icons-vue';
+import { Close } from '@element-plus/icons-vue';
 import { IExam } from '@/common/models/exam';
-import { copyable } from '@/common/utils/copy';
 import { http } from '@/common/utils/http';
 import { ExamAddAndDelete } from '@/services/exam';
+import Copyable from '@/components/copyable/copyable.vue';
 
 const emits = defineEmits<{
   (e: 'onDelete'): void;
@@ -22,14 +22,6 @@ const emits = defineEmits<{
 const props = defineProps<{
   exam: IExam;
 }>();
-
-const hasCopy = ref(false);
-
-const handleCopyExamCode = () => {
-  copyable(props.exam.examCode.toString());
-  hasCopy.value = true;
-  setTimeout(() => (hasCopy.value = false), 3000);
-};
 
 const handleDeleteExam = async () => {
   try {
@@ -70,19 +62,10 @@ const handleDeleteExam = async () => {
         <ElTag class="mr-1">
           {{ props.exam.examCode }}
         </ElTag>
-        <ElTooltip effect="light" placement="top" content="点击复制考试码">
-          <ElIcon
-            v-if="!hasCopy"
-            color="#569cba"
-            class="cursor-pointer"
-            @click="handleCopyExamCode"
-          >
-            <CopyDocument />
-          </ElIcon>
-          <ElIcon v-else color="#46a655">
-            <Check />
-          </ElIcon>
-        </ElTooltip>
+        <Copyable
+          :copy-text="props.exam.examCode.toString()"
+          tip="点击复制考试码"
+        />
       </ElDescriptionsItem>
       <ElDescriptionsItem label="考试时间">
         {{ props.exam.examDate }}
