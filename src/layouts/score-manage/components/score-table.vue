@@ -1,22 +1,8 @@
 <script setup lang="ts">
-import {
-  reactive,
-  watch,
-  onMounted,
-  defineExpose,
-  defineProps,
-  ref
-} from 'vue';
-import {
-  ElTable,
-  ElTableColumn,
-  ElPagination,
-  ElButton,
-  ElPopconfirm
-} from 'element-plus';
+import { reactive, onMounted, defineExpose, defineProps, ref } from 'vue';
+import { ElTable, ElTableColumn, ElButton, ElPopconfirm } from 'element-plus';
 import { Warning } from '@element-plus/icons-vue';
 import { useToggle } from '@/common/hooks';
-import styles from './index.module.scss';
 import { IScore } from '@/common/models/score';
 import {
   ScoreListApi,
@@ -25,6 +11,7 @@ import {
 } from '@/services/score';
 import { http } from '@/common/utils/http';
 import { ScoreDeleteByIdApi } from '@/services/score';
+import Pagination from '@/components/pagination/index.vue';
 
 const props = defineProps<{ isHidePagination: boolean }>();
 
@@ -90,19 +77,6 @@ const handleDeleteScore = async (row: IScore) => {
   return true;
 };
 
-watch(
-  () => [pageState.pageSize, pageState.current],
-  (next, prev) => {
-    const [nextPageSize] = next;
-    const [prevPageSize, prevCurrentPage] = prev;
-    if (nextPageSize !== prevPageSize && prevCurrentPage !== 1) {
-      pageState.current = 1;
-      return;
-    }
-    fetchScoreList();
-  }
-);
-
 defineExpose({
   selectedRows,
   onFetchScore: fetchScoreList,
@@ -148,15 +122,13 @@ onMounted(() => {
         </template>
       </ElTableColumn>
     </ElTable>
-    <ElPagination
+    <Pagination
       v-show="props.isHidePagination"
-      v-model:currentPage="pageState.current"
+      v-model:current-page="pageState.current"
       v-model:page-size="pageState.pageSize"
-      :class="styles.tablePagination"
-      layout="total, sizes, prev, pager, next"
-      :page-sizes="[10, 20, 50]"
+      class="mt-4"
       :total="tableState.total"
-      background
+      @page-change="fetchScoreList"
     />
   </div>
 </template>
