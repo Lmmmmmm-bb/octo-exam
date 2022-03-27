@@ -14,7 +14,18 @@ export interface IMultiQuestion {
   answerD: string;
   question: string;
   level: QuestionLevelEnum;
-  rightAnswer: string;
+  rightAnswer: 'A' | 'B' | 'C' | 'D';
   analysis: null | string;
   score: number;
+}
+
+export interface IJudgeQuestion {
+  questionId: number;
+  subject: string;
+  question: string;
+  answer: 'T' | 'F';
+  score: number;
+  level: QuestionLevelEnum;
+  section?: string;
+  analysis?: string;
 }
