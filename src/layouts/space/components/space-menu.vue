@@ -1,11 +1,15 @@
 <script setup lang="ts">
-import { computed, ref, watchEffect } from 'vue';
+import { computed, ref, watchEffect, defineProps } from 'vue';
 import { useRoute } from 'vue-router';
 import { ElMenu, ElMenuItem, ElSubMenu } from 'element-plus';
 import { AdminMenuNavList, StudentMenuNavList } from '../config';
 import { useUserConfigStore } from '@/store';
 import { UserRoleEnum } from '@/common/models/user-config';
 import { RouterNameEnum } from '@/router/type';
+
+const props = defineProps<{
+  mode: 'vertical' | 'horizontal';
+}>();
 
 const route = useRoute();
 const userConfigStore = useUserConfigStore();
@@ -25,7 +29,12 @@ watchEffect(() => {
 </script>
 
 <template>
-  <ElMenu class="w-2/3" mode="horizontal" :default-active="activeKey" router>
+  <ElMenu
+    :class="{ 'w-2/3': props.mode === 'horizontal' }"
+    :mode="props.mode"
+    :default-active="activeKey"
+    router
+  >
     <template v-for="[key, val] in Object.entries(userNav)" :key="key">
       <ElSubMenu v-if="val.children" :index="key">
         <template #title>{{ val.label }}</template>
