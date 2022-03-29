@@ -1,15 +1,10 @@
 .loginWrapper {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  @apply relative overflow-hidden text-center flex items-center justify-center h-full;
 
   .loginCard {
-    position: relative;
+    @apply relative overflow-visible;
     padding: 30px 50px;
     min-width: 580px;
-    overflow: visible;
 
     .cardHeader {
       @apply text-5xl tracking-widest font-serif subpixel-antialiased font-semibold;
@@ -17,8 +12,7 @@
     }
 
     .loginLoginBtn {
-      @apply mt-12;
-      width: 100%;
+      @apply mt-12 w-full;
     }
 
     .cardBackground {
@@ -46,5 +40,9 @@
 :global {
   .el-input__prefix {
     align-items: center;
+  }
+
+  .el-badge__content {
+    letter-spacing: 0;
   }
 }
