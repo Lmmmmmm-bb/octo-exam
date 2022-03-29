@@ -6,14 +6,41 @@
   text-align: center;
 
   .loginCard {
+    position: relative;
     padding: 30px 50px;
     min-width: 580px;
-  }
+    overflow: visible;
 
-  .loginLoginBtn {
-    width: 100%;
-    margin-top: 10px;
+    .cardHeader {
+      @apply text-5xl tracking-widest font-serif subpixel-antialiased font-semibold;
+      color: #4a87a1;
+    }
+
+    .loginLoginBtn {
+      @apply mt-12;
+      width: 100%;
+    }
+
+    .cardBackground {
+      top: -150px;
+      left: -200px;
+      width: 400px;
+      height: 400px;
+      background-color: rgba(86, 156, 186, 0.8);
+    }
   }
+}
+
+.circleBackground {
+  @apply rounded-full absolute shadow-xl -z-10;
+}
+
+.wrapperBackground {
+  bottom: -300px;
+  right: -250px;
+  width: 600px;
+  height: 600px;
+  background-color: rgba(86, 156, 186, 0.6);
 }
 
 :global {
