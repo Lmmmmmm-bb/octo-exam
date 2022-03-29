@@ -1,38 +1,46 @@
 <script setup lang="ts">
-import { defineEmits } from 'vue';
+import { defineEmits, defineProps } from 'vue';
 import { Timer, Calendar, Reading } from '@element-plus/icons-vue';
 import { ElCard, ElIcon } from 'element-plus';
 import styles from './index.module.scss';
+import { IExam } from '@/common/models/exam';
 
 const emits = defineEmits<{
-  (e: 'click'): void;
+  (e: 'onClick'): void;
+}>();
+
+const props = defineProps<{
+  exam: IExam;
 }>();
 </script>
 
 <template>
-  <ElCard :class="styles.examCard" shadow="hover" @click="emits('click')">
+  <ElCard :class="styles.examCard" shadow="hover" @click="emits('onClick')">
     <template #header>
-      <h3 class="font-medium">计算机网络</h3>
+      <h3 class="font-medium">{{ props.exam.source }}</h3>
     </template>
-    <p class="text-gray-500">计算机网络 - 2019 上期期末考试</p>
-    <div class="flex items-center justify-evenly mt-20">
+    <p class="text-gray-500">
+      {{ props.exam.source }} - {{ props.exam.description }}
+    </p>
+    <p class="mt-2">{{ props.exam.tips }}</p>
+    <div class="flex items-center justify-evenly mt-16">
       <span class="text-sm flex items-center">
         <ElIcon color="#409EFF" style="margin-right: 4px">
           <Calendar />
         </ElIcon>
-        2022-03-10
+        <span>{{ props.exam.examDate }}</span>
       </span>
       <span class="text-sm flex items-center">
         <ElIcon color="#409EFF" style="margin-right: 4px">
           <Timer />
         </ElIcon>
-        120 分钟
+        <span>{{ props.exam.totalTime }} 分钟</span>
       </span>
       <span class="text-sm flex items-center">
         <ElIcon color="#409EFF" style="margin-right: 4px">
           <Reading />
         </ElIcon>
-        满分 100 分
+        <span>满分 {{ props.exam.totalScore }} 分</span>
       </span>
     </div>
   </ElCard>

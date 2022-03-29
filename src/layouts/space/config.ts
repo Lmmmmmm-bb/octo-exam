@@ -4,7 +4,7 @@ import { IMenuItem } from './type';
 
 export const StudentMenuNavList: Record<string, IMenuItem> = {
   [RouterNameEnum.Home]: { label: '主页' },
-  [RouterNameEnum.Exam]: { label: '我的考试' }
+  [RouterNameEnum.ExamList]: { label: '我的考试' }
 };
 
 export const AdminMenuNavList: Record<string, IMenuItem> = {

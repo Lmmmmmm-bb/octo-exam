@@ -12,7 +12,7 @@ import {
 import { Close } from '@element-plus/icons-vue';
 import { IExam } from '@/common/models/exam';
 import { http } from '@/common/utils/http';
-import { ExamAddAndDelete } from '@/services/exam';
+import { ExamAddAndDeleteApi } from '@/services/exam';
 import Copyable from '@/components/copyable/copyable.vue';
 
 const emits = defineEmits<{
@@ -30,7 +30,7 @@ const handleDeleteExam = async () => {
       confirmButtonText: '确定'
     }).then(async () => {
       const { examCode } = props.exam;
-      await http.deleteRequest(ExamAddAndDelete, {
+      await http.deleteRequest(ExamAddAndDeleteApi, {
         params: { list: examCode }
       });
       emits('onDelete');
