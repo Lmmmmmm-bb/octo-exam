@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "axios": "^0.25.0",
+    "crypto-ts": "^1.0.2",
     "element-plus": "^2.0.1",
     "pinia": "^2.0.11",
     "vue": "^3.2.25",

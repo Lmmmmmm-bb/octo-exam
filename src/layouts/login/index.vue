@@ -14,7 +14,8 @@ import {
   ElMain,
   ElAside,
   ElImage,
-  ElDivider
+  ElDivider,
+  ElCheckbox
 } from 'element-plus';
 import styles from './index.module.scss';
 import { formRules } from './config';
@@ -24,21 +25,42 @@ import { UserRoleEnum } from '@/common/models/user-config';
 import { http } from '@/common/utils/http';
 import { LoginApi, ILoginData, ILoginResponse } from '@/services/login';
 import { useToggle } from '@/common/hooks';
-import { setLocalItem } from '@/common/utils/local-storage';
-import { LocalTokenKey } from '@/common/models/store-keys';
+import {
+  getLocalItem,
+  removeLocalItem,
+  setLocalItem
+} from '@/common/utils/local-storage';
+import { LocalTokenKey, LocalLoginInfoKey } from '@/common/models/store-keys';
 import { FormInstanceType } from '@/common/models/element';
 import loginImg from '@/assets/login-illustration.webp';
+import { encrypt, decrypt } from '@/common/utils/crypto';
 
 const router = useRouter();
 const userConfigStore = useUserConfigStore();
 const loginInputRef = ref<HTMLInputElement>();
 const formRef = ref<FormInstanceType>();
+const { isActive: isSavePwd } = useToggle();
 const { isActive: isLoading, onToggle: onLoadingToggle } = useToggle();
 const info = reactive<ILoginData>({
   role: UserRoleEnum.Student,
   userId: '',
   password: ''
 });
+
+const initInfo = () => {
+  try {
+    const localInfo = getLocalItem(LocalLoginInfoKey);
+    if (localInfo) {
+      const o: ILoginData = JSON.parse(localInfo);
+      isSavePwd.value = true;
+      info.role = o.role;
+      info.userId = o.userId;
+      info.password = decrypt(o.password);
+    }
+  } catch (error) {
+    // no-console
+  }
+};
 
 const handleUserRoleChange = (role: UserRoleEnum) => {
   info.role = role;
@@ -55,6 +77,15 @@ const handleLogin = async () => {
     );
     if (status) {
       const { res: userConfig, token } = data;
+      isSavePwd.value
+        ? setLocalItem(
+            LocalLoginInfoKey,
+            JSON.stringify({
+              ...info,
+              password: encrypt(info.password)
+            })
+          )
+        : removeLocalItem(LocalLoginInfoKey);
       setLocalItem(LocalTokenKey, token);
       userConfigStore.patchUserConfig(userConfig);
       router.push('/space');
@@ -66,7 +97,10 @@ const handleLogin = async () => {
   }
 };
 
-onMounted(() => loginInputRef.value && loginInputRef.value.focus());
+onMounted(() => {
+  initInfo();
+  loginInputRef.value && loginInputRef.value.focus();
+});
 </script>
 
 <template>
@@ -106,6 +140,7 @@ onMounted(() => loginInputRef.value && loginInputRef.value.focus());
                   v-model="info.userId"
                   :prefix-icon="User"
                   clearable
+                  @keyup.enter="handleLogin"
                 />
               </ElFormItem>
               <ElFormItem label="密码" for="password" prop="password">
@@ -119,6 +154,9 @@ onMounted(() => loginInputRef.value && loginInputRef.value.focus());
                 />
               </ElFormItem>
             </ElForm>
+            <div class="flex -mt-2">
+              <ElCheckbox v-model="isSavePwd" label="记住密码" size="small" />
+            </div>
             <ElButton
               type="primary"
               :class="styles.loginLoginBtn"

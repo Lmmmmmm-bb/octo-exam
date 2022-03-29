@@ -11,6 +11,7 @@ specifiers:
   autoprefixer: ^10.4.2
   axios: ^0.25.0
   commitlint-config-cz: ^0.13.3
+  crypto-ts: ^1.0.2
   cz-customizable: ^6.3.0
   element-plus: ^2.0.1
   eslint: ^8.10.0
@@ -35,6 +36,7 @@ specifiers:
 
 dependencies:
   axios: 0.25.0
+  crypto-ts: 1.0.2
   element-plus: 2.0.1_vue@3.2.30
   pinia: 2.0.11_typescript@4.5.5+vue@3.2.30
   vue: 3.2.30
@@ -1284,6 +1286,15 @@ packages:
       shebang-command: 2.0.0
       which: 2.0.2
     dev: true
+
+  /crypto-ts/1.0.2:
+    resolution: {integrity: sha1-wq5HtC8aiv/PM73b4yg5gxUMigU=}
+    peerDependencies:
+      '@angular/common': '>= 5.0.0'
+      '@angular/core': '>= 5.0.0'
+    dependencies:
+      tslib: 1.14.1
+    dev: false
 
   /css-modules-loader-core/1.1.0:
     resolution: {integrity: sha1-WQhmgpShvs0mGuCkziGwtVHyHRY=}
@@ -3707,7 +3718,6 @@ packages:
 
   /tslib/1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
-    dev: true
 
   /tslib/2.3.1:
     resolution: {integrity: sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==}
