@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import { ElTooltip, ElSelect, ElOption } from 'element-plus';
 import { useMenuConfigStore, MenuModeType } from '@/store';
-import { computed } from 'vue';
 
 const menuModeStore = useMenuConfigStore();
 
