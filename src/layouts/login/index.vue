@@ -15,7 +15,8 @@ import {
   ElAside,
   ElImage,
   ElDivider,
-  ElCheckbox
+  ElCheckbox,
+  ElBadge
 } from 'element-plus';
 import styles from './index.module.scss';
 import { formRules } from './config';
@@ -108,7 +109,9 @@ onMounted(() => {
     <ElCard :class="styles.loginCard" shadow="hover">
       <ElContainer>
         <ElHeader>
-          <h3 :class="styles.cardHeader">Octo</h3>
+          <h3 :class="styles.cardHeader">
+            <ElBadge value="EXAM" type="success">OCTO</ElBadge>
+          </h3>
         </ElHeader>
         <ElContainer>
           <ElAside width="400px" style="flex: 2">
