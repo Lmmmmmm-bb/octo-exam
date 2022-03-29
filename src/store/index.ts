@@ -1,9 +1,10 @@
 import { clearLocal } from '@/common/utils/local-storage';
 import { acceptHMRUpdate, createPinia } from 'pinia';
 import { useUserConfigStore } from './user-config';
+import { useMenuConfigStore } from './menu-config';
 
 const pinia = createPinia();
-const stores = [useUserConfigStore];
+const stores = [useUserConfigStore, useMenuConfigStore];
 
 const metaHot = import.meta.hot;
 if (metaHot) {
@@ -16,5 +17,6 @@ export const resetStore = () => {
 };
 
 export * from './user-config';
+export * from './menu-config';
 
 export default pinia;

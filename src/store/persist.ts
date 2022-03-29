@@ -1,5 +1,6 @@
-import { userConfigStorePersist } from './user-config';
+import { userConfigStorePersist, menuConfigStorePersist } from './index';
 
 export const piniaPersist = () => {
   userConfigStorePersist();
+  menuConfigStorePersist();
 };

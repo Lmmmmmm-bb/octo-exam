@@ -103,7 +103,7 @@ onMounted(() => {
       <ElTableColumn type="selection" width="40" align="center" />
       <ElTableColumn label="姓名" prop="studentName" width="120" />
       <ElTableColumn label="个人信息">
-        <ElTableColumn label="学号" prop="studentId" sortable />
+        <ElTableColumn label="学号" prop="studentId" width="120" sortable />
         <ElTableColumn label="基本信息">
           <ElTableColumn label="性别" prop="sex" width="70" align="center">
             <template #default="scope">
@@ -126,30 +126,28 @@ onMounted(() => {
           <ElTableColumn label="班级" prop="clazz" width="100" />
         </ElTableColumn>
       </ElTableColumn>
-      <ElTableColumn label="操作">
+      <ElTableColumn label="操作" align="center">
         <template #default="scope">
-          <div style="text-align: center">
-            <ElButton
-              size="small"
-              type="primary"
-              plain
-              @click="emits('onCellDbClick', scope.row)"
-            >
-              编 辑
-            </ElButton>
-            <ElPopconfirm
-              :icon="Warning"
-              icon-color="red"
-              title="确定要删除该学生吗"
-              confirm-button-text="确定"
-              cancel-button-text="取消"
-              @confirm="handleDeleteStudent(scope.row)"
-            >
-              <template #reference>
-                <ElButton size="small" type="danger" plain>删 除</ElButton>
-              </template>
-            </ElPopconfirm>
-          </div>
+          <ElButton
+            size="small"
+            type="primary"
+            plain
+            @click="emits('onCellDbClick', scope.row)"
+          >
+            编 辑
+          </ElButton>
+          <ElPopconfirm
+            :icon="Warning"
+            icon-color="red"
+            title="确定要删除该学生吗"
+            confirm-button-text="确定"
+            cancel-button-text="取消"
+            @confirm="handleDeleteStudent(scope.row)"
+          >
+            <template #reference>
+              <ElButton size="small" type="danger" plain>删 除</ElButton>
+            </template>
+          </ElPopconfirm>
         </template>
       </ElTableColumn>
     </ElTable>
