@@ -12,9 +12,13 @@ export type UserConfigType =
   | (IAdminConfig & IStudentConfig)
   | Record<string, never>;
 
-const initUserConfig = () => {
-  const init = getLocalItem(LocalUserInfoKey) || '{}';
-  return JSON.parse(init);
+export const initUserConfig = () => {
+  try {
+    const init = getLocalItem(LocalUserInfoKey) || '{}';
+    return JSON.parse(init);
+  } catch (error) {
+    return '{}';
+  }
 };
 
 export const useUserConfigStore = defineStore('user-config', {

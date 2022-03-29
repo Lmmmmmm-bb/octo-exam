@@ -4,13 +4,12 @@ import {
   createWebHistory
 } from 'vue-router';
 import { useTitle } from '@/common/hooks';
-import { LocalUserInfoKey } from '@/common/models/store-keys';
 import { http } from '@/common/utils/http';
-import { getLocalItem } from '@/common/utils/local-storage';
 import { LoginCheckDataType, LoginCheckApi } from '@/services/login';
 import { notSensitiveRoute } from './config';
 import { RouterNameEnum } from './type';
 import { routes } from './routes';
+import { initUserConfig as getUserConfig } from '@/store';
 
 const history = import.meta.env.DEV
   ? createWebHistory()
@@ -23,7 +22,7 @@ const router = createRouter({
 
 router.beforeEach(async (next) => {
   if (!notSensitiveRoute.includes(next.name as RouterNameEnum)) {
-    const config = JSON.parse(getLocalItem(LocalUserInfoKey) || '{}');
+    const config = getUserConfig();
     await http.postRequest<null, LoginCheckDataType>(LoginCheckApi, {
       ...config,
       userId: config.studentId || config.adminId
