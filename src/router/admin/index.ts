@@ -3,15 +3,6 @@ import { RouterNameEnum } from '../type';
 
 export const adminRouter: RouteRecordRaw[] = [
   {
-    path: '/space/exam-list',
-    name: RouterNameEnum.ExamList,
-    component: () => import('@/layouts/exam-list/index.vue'),
-    meta: {
-      title: '在线考试系统 - 试卷列表',
-      activeMenu: RouterNameEnum.ExamList
-    }
-  },
-  {
     path: '/space/exam-manage',
     name: RouterNameEnum.ExamManage,
     component: () => import('@/layouts/exam-manage/index.vue'),
