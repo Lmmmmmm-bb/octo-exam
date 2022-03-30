@@ -16,6 +16,15 @@ export const routes: RouteRecordRaw[] = [
     meta: { title: '在线考试系统 - 登陆', activeMenu: RouterNameEnum.Login }
   },
   {
+    path: '/space/exam/:id',
+    name: RouterNameEnum.Exam,
+    component: () => import('@/layouts/exam/index.vue'),
+    meta: {
+      title: '在线考试系统 - 我的考试',
+      activeMenu: RouterNameEnum.Exam
+    }
+  },
+  {
     path: '/space',
     name: RouterNameEnum.Space,
     component: () => import('@/layouts/space/index.vue'),
