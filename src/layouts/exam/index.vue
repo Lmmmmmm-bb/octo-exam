@@ -5,7 +5,6 @@ import {
   ElContainer,
   ElAside,
   ElMain,
-  ElMessageBox,
   ElEmpty,
   ElMessage,
   ElButton
@@ -22,7 +21,7 @@ import {
 import { IPaperQuestion } from '@/common/models/paper';
 import styles from './index.module.scss';
 import AsideButton from './components/aside-button.vue';
-import { CurrentQuestionStatusType } from './type';
+import { CurrentQuestionStatusType, ArrowKeyEnum } from './type';
 import {
   FillQuestionByIdApi,
   JudgeQuestionByIdApi,
@@ -35,7 +34,7 @@ import { useToggle } from '@/common/hooks';
 import HeaderSwitch from './components/header-switch.vue';
 import { LocalExamDriverKey } from '@/common/models/store-keys';
 import { getLocalItem, setLocalItem } from '@/common/utils/local-storage';
-import { ArrowKeyEnum, driverStepConfig } from './config';
+import { driverStepConfig } from './config';
 
 const route = useRoute();
 const {
@@ -67,7 +66,10 @@ const answerSheetComponent = computed(() =>
     : FillAnswerSheet
 );
 
-const handleWindowUnload = () => '离开页面当前进度将不会保存！';
+const handleWindowUnload = (e) => {
+  e.returnValue = '';
+  return '离开页面当前进度将不会保存！';
+};
 
 const handleQuestionChange = (info: CurrentQuestionStatusType) => {
   currentState.questionId = info.questionId;
@@ -124,6 +126,14 @@ const handleKeyUp = (e: KeyboardEvent) => {
   console.log(e.code === ArrowKeyEnum.LeftKey);
 };
 
+const handleClickPrev = () => {
+  console.log('prev');
+};
+
+const handleClickNext = () => {
+  console.log('next');
+};
+
 const showExamDriver = () => {
   const driver = new Driver();
   driver.defineSteps(driverStepConfig);
@@ -132,10 +142,9 @@ const showExamDriver = () => {
 };
 
 onBeforeRouteLeave(async () => {
-  await ElMessageBox.confirm('离开页面当前进度将不会保存！', '警告', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消'
-  });
+  // eslint-disable-next-line no-alert
+  const answer = window.confirm('离开页面当前的题目进度将不会保存！');
+  if (!answer) return false;
 });
 
 onMounted(async () => {
@@ -160,7 +169,12 @@ onUnmounted(() =>
 </script>
 
 <template>
-  <div class="h-full bg-gray-50" tabindex="0" @keyup="handleKeyUp">
+  <div
+    class="h-full bg-gray-50 outline-none"
+    tabindex="0"
+    @keyup.arrow-left="handleKeyUp"
+    @keyup.arrow-right="handleKeyUp"
+  >
     <ElContainer class="h-full">
       <ElAside
         id="question-select"
@@ -180,14 +194,16 @@ onUnmounted(() =>
       <ElContainer id="answer-sheet">
         <ElMain
           v-loading="isLoading"
-          class="bg-white m-4"
+          class="bg-white m-4 min-w-fit"
           element-loading-text="正在加载题目"
         >
           <template v-if="currentQuestion.questionId && !hasError">
             <HeaderSwitch
+              class="mb-6"
               :current-length="studentAnswers.length"
               :total="questions.length"
-              class="mb-6"
+              @on-click-prev="handleClickPrev"
+              @on-click-next="handleClickNext"
             />
             <Component
               :is="answerSheetComponent"
