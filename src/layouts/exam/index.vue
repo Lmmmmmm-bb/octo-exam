@@ -86,8 +86,10 @@ const handleWindowRefresh = (e) => {
 };
 
 const handleWindowKeyUp = (e: KeyboardEvent) => {
-  e.code === ArrowKeyEnum.LeftKey && handleClickPrev();
-  e.code === ArrowKeyEnum.RightKey && handleClickNext();
+  if (e.target !== document.querySelector('.el-textarea__inner')) {
+    e.code === ArrowKeyEnum.LeftKey && handleClickPrev();
+    e.code === ArrowKeyEnum.RightKey && handleClickNext();
+  }
 };
 
 const fetchQuestionData = async () => {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, defineEmits, ref, onMounted } from 'vue';
+import { defineProps, defineEmits, ref } from 'vue';
 import { ElDescriptions, ElDescriptionsItem, ElInput } from 'element-plus';
 import { IFillQuestion } from '@/common/models/question';
 
@@ -12,14 +12,11 @@ const props = defineProps<{
   studentAnswer?: string;
 }>();
 
-const inputRef = ref<HTMLInputElement>();
 const answer = ref(props.studentAnswer || '');
 
 const handleInputChange = () => {
   emits('onSelected', answer.value);
 };
-
-onMounted(() => inputRef.value && inputRef.value.focus());
 </script>
 
 <template>
@@ -29,7 +26,6 @@ onMounted(() => inputRef.value && inputRef.value.focus());
     </ElDescriptionsItem>
     <ElDescriptionsItem>
       <ElInput
-        ref="inputRef"
         v-model="answer"
         type="textarea"
         placeholder="在这里输入答案"
