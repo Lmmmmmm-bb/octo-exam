@@ -5,6 +5,6 @@ export type CurrentQuestionStatusType = Omit<IPaperQuestion, 'paperId'> & {
 };
 
 export enum ArrowKeyEnum {
-  LeftKey = 'ArrowLeft',
-  RightKey = 'ArrowRight'
+  LeftKey = 'KeyA',
+  RightKey = 'KeyD'
 }

@@ -23,7 +23,7 @@ const examList = ref<IExam[]>([]);
 const handleExamCardClick = (exam: IExam) => {
   router.push({
     name: RouterNameEnum.Exam,
-    params: { id: exam.paperId }
+    params: { paperId: exam.paperId, examCode: exam.examCode }
   });
 };
 

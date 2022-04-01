@@ -6,8 +6,8 @@ export enum QuestionLevelEnum {
 
 export enum QuestionTypeEnum {
   Multi = 1,
-  Judge = 2,
-  Fill = 3
+  Fill = 2,
+  Judge = 3
 }
 
 export type QuestionType = 1 | 2 | 3;

@@ -13,7 +13,8 @@ export const driverStepConfig: Step[] = [
     element: '#question-select',
     popover: {
       ...baseDriverStepConfig,
-      description: '在这里可以切换题目，可以通过左右方向键控制题目',
+      description:
+        '在这里可以切换题目，可以通过 A 键切换到上一题，D 键切换到下一题',
       position: 'right-center'
     }
   },

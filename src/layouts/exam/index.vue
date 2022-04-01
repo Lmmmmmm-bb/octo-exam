@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, reactive, ref } from 'vue';
-import { useRoute, onBeforeRouteLeave } from 'vue-router';
+import { useRoute, onBeforeRouteLeave, useRouter } from 'vue-router';
 import {
   ElContainer,
   ElAside,
@@ -13,7 +13,11 @@ import Driver from 'driver.js';
 import 'driver.js/dist/driver.min.css';
 import { Refresh } from '@element-plus/icons-vue';
 import { http } from '@/common/utils/http';
-import { ExamSubmitRequestType } from '@/services/exam';
+import {
+  ExamSubmitRequestType,
+  ExamAnswerSheetSubmitApi,
+  IExamAnswerSheetSubmitResponse
+} from '@/services/exam';
 import {
   PaperQuestionListApi,
   PaperQuestionListResponseType
@@ -36,8 +40,12 @@ import { LocalExamDriverKey } from '@/common/models/store-keys';
 import { getLocalItem, setLocalItem } from '@/common/utils/local-storage';
 import { driverStepConfig } from './config';
 import { QuestionTypeEnum } from '@/common/models/question';
+import { useUserConfigStore } from '@/store';
+import { RouterNameEnum } from '@/router/type';
 
+const userConfigStore = useUserConfigStore();
 const route = useRoute();
+const router = useRouter();
 const {
   isActive: hasError,
   onActive: onHasError,
@@ -45,6 +53,9 @@ const {
 } = useToggle();
 const { isActive: isChecked, onActive: onIsChecked } = useToggle();
 const { isActive: isLoading, onToggle: onLoadingToggle } = useToggle(true);
+const { isActive: isContainerLoading, onToggle: onContainerLoadingToggle } =
+  useToggle();
+const score = ref(-1);
 const studentAnswers = ref<ExamSubmitRequestType[]>([]);
 const questions = ref<IPaperQuestion[]>([]);
 const currentQuestion = ref<any>({});
@@ -64,9 +75,9 @@ const selectedAnswer = computed(() => {
 const answerSheetComponent = computed(() =>
   currentState.questionType === QuestionTypeEnum.Multi
     ? MultiAnswerSheet
-    : currentState.questionType === QuestionTypeEnum.Judge
-    ? JudgeAnswerSheet
-    : FillAnswerSheet
+    : currentState.questionType === QuestionTypeEnum.Fill
+    ? FillAnswerSheet
+    : JudgeAnswerSheet
 );
 
 const handleWindowRefresh = (e) => {
@@ -75,16 +86,8 @@ const handleWindowRefresh = (e) => {
 };
 
 const handleWindowKeyUp = (e: KeyboardEvent) => {
-  switch (e.code) {
-    case ArrowKeyEnum.LeftKey:
-      handleClickPrev();
-      break;
-    case ArrowKeyEnum.RightKey:
-      handleClickNext();
-      break;
-    default:
-      console.log();
-  }
+  e.code === ArrowKeyEnum.LeftKey && handleClickPrev();
+  e.code === ArrowKeyEnum.RightKey && handleClickNext();
 };
 
 const fetchQuestionData = async () => {
@@ -104,7 +107,6 @@ const fetchQuestionData = async () => {
   } catch (error) {
     onHasError();
     ElMessage.error('获取题目失败，请稍后重试');
-    // no-console
   } finally {
     onLoadingToggle();
   }
@@ -158,8 +160,30 @@ const handleClickNext = () => {
   fetchQuestionData();
 };
 
-const handleSubmitAnswer = () => {
-  onIsChecked();
+const handleSubmitAnswer = async () => {
+  if (questions.value.length !== studentAnswers.value.length) {
+    onIsChecked();
+    ElMessage.warning('请完成全部题目后提交！');
+    return;
+  }
+  try {
+    onContainerLoadingToggle();
+    const { examCode } = route.params;
+    const { userConfig } = userConfigStore;
+    const { data } = await http.postRequest<IExamAnswerSheetSubmitResponse>(
+      ExamAnswerSheetSubmitApi(examCode as string, userConfig.studentId),
+      studentAnswers.value
+    );
+    score.value = data.score;
+    router.replace({
+      name: RouterNameEnum.ExamResult,
+      params: { result: data.score }
+    });
+  } catch (error) {
+    // no-console
+  } finally {
+    onContainerLoadingToggle();
+  }
 };
 
 const startExamDriver = () => {
@@ -170,6 +194,9 @@ const startExamDriver = () => {
 };
 
 onBeforeRouteLeave(async () => {
+  if (score.value !== -1) {
+    return true;
+  }
   // eslint-disable-next-line no-alert
   const answer = window.confirm('离开页面当前的题目进度将不会保存！');
   if (!answer) return false;
@@ -180,9 +207,9 @@ onMounted(async () => {
   window.addEventListener('keyup', handleWindowKeyUp);
   try {
     onLoadingToggle();
-    const { id } = route.params;
+    const { paperId } = route.params;
     const { data } = await http.getRequest<PaperQuestionListResponseType>(
-      `${PaperQuestionListApi}/${id}`
+      `${PaperQuestionListApi}/${paperId}`
     );
     questions.value = data;
     currentState.questionType = data[0].questionType;
@@ -200,7 +227,11 @@ onUnmounted(() => {
 
 <template>
   <div class="h-full bg-gray-50 outline-none" tabindex="0">
-    <ElContainer class="h-full">
+    <ElContainer
+      v-loading="isContainerLoading"
+      class="h-full"
+      element-loading-text="正在提交答题卡"
+    >
       <ElAside
         id="question-select"
         :class="styles.examAside"

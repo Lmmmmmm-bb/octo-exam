@@ -7,3 +7,12 @@ export type ExamListResponseType = IBasePaginationResponse<IExam>;
 export type ExamSubmitRequestType = Omit<IPaperQuestion, 'paperId'> & {
   studentAnswer: string;
 };
+
+export interface IExamAnswerSheetSubmitResponse {
+  answerDate: string;
+  examCode: number;
+  score: number;
+  subject: string;
+  studentId: number;
+  scoreId?: number;
+}
