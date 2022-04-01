@@ -26,8 +26,3 @@ export const driverStepConfig: Step[] = [
     }
   }
 ];
-
-export enum ArrowKeyEnum {
-  LeftKey = 'ArrowLeft',
-  RightKey = 'ArrowRight'
-}

@@ -4,6 +4,12 @@ export enum QuestionLevelEnum {
   Hard = '3'
 }
 
+export enum QuestionTypeEnum {
+  Multi = 1,
+  Judge = 2,
+  Fill = 3
+}
+
 export type QuestionType = 1 | 2 | 3;
 
 export interface IBaseQuestion {

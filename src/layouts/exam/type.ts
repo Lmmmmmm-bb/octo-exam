@@ -1,3 +1,10 @@
 import { IPaperQuestion } from '@/common/models/paper';
 
-export type CurrentQuestionStatusType = Omit<IPaperQuestion, 'paperId'>;
+export type CurrentQuestionStatusType = Omit<IPaperQuestion, 'paperId'> & {
+  index: number;
+};
+
+export enum ArrowKeyEnum {
+  LeftKey = 'ArrowLeft',
+  RightKey = 'ArrowRight'
+}

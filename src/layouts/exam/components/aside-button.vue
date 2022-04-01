@@ -14,6 +14,7 @@ const props = defineProps<{
   current: CurrentQuestionStatusType;
   studentAnswers: ExamSubmitRequestType[];
   question: IPaperQuestion;
+  isChecked: boolean;
 }>();
 
 const isCurrentQuestion = computed(() => {
@@ -31,21 +32,29 @@ const hasAnswer = computed(() => {
       item.questionId === question.questionId &&
       item.questionType === question.questionType
   );
-  return !!ans;
+  return !!ans && ans.studentAnswer.length !== 0;
+});
+
+const buttonType = computed(() => {
+  if (props.isChecked && !hasAnswer.value) {
+    return 'danger';
+  }
+  return isCurrentQuestion.value || hasAnswer.value ? 'primary' : 'default';
 });
 
 const handleBtnClick = () =>
   emits('onClick', {
     questionId: props.question.questionId,
-    questionType: props.question.questionType
+    questionType: props.question.questionType,
+    index: props.index - 1
   });
 </script>
 
 <template>
   <ElButton
     style="width: 32px; height: 32px"
-    :type="isCurrentQuestion || hasAnswer ? 'primary' : 'default'"
-    :plain="!isCurrentQuestion && hasAnswer"
+    :type="buttonType"
+    :plain="!isCurrentQuestion"
     circle
     @click="handleBtnClick"
   >

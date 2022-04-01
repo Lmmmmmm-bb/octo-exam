@@ -6,3 +6,9 @@
   align-items: center;
   justify-items: center;
 }
+
+:global {
+  .el-radio__label {
+    display: flex;
+  }
+}

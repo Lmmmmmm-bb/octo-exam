@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, reactive, ref, watch } from 'vue';
+import { computed, onMounted, onUnmounted, reactive, ref } from 'vue';
 import { useRoute, onBeforeRouteLeave } from 'vue-router';
 import {
   ElContainer,
@@ -35,6 +35,7 @@ import HeaderSwitch from './components/header-switch.vue';
 import { LocalExamDriverKey } from '@/common/models/store-keys';
 import { getLocalItem, setLocalItem } from '@/common/utils/local-storage';
 import { driverStepConfig } from './config';
+import { QuestionTypeEnum } from '@/common/models/question';
 
 const route = useRoute();
 const {
@@ -42,13 +43,15 @@ const {
   onActive: onHasError,
   onUnActive: onHasNotError
 } = useToggle();
+const { isActive: isChecked, onActive: onIsChecked } = useToggle();
 const { isActive: isLoading, onToggle: onLoadingToggle } = useToggle(true);
 const studentAnswers = ref<ExamSubmitRequestType[]>([]);
 const questions = ref<IPaperQuestion[]>([]);
 const currentQuestion = ref<any>({});
 const currentState = reactive<CurrentQuestionStatusType>({
   questionId: 0,
-  questionType: 1
+  questionType: 1,
+  index: -1
 });
 const selectedAnswer = computed(() => {
   const ans = studentAnswers.value.find(
@@ -59,82 +62,107 @@ const selectedAnswer = computed(() => {
   return ans;
 });
 const answerSheetComponent = computed(() =>
-  currentState.questionType === 1
+  currentState.questionType === QuestionTypeEnum.Multi
     ? MultiAnswerSheet
-    : currentState.questionType === 2
+    : currentState.questionType === QuestionTypeEnum.Judge
     ? JudgeAnswerSheet
     : FillAnswerSheet
 );
 
-const handleWindowUnload = (e) => {
+const handleWindowRefresh = (e) => {
   e.returnValue = '';
   return '离开页面当前进度将不会保存！';
+};
+
+const handleWindowKeyUp = (e: KeyboardEvent) => {
+  switch (e.code) {
+    case ArrowKeyEnum.LeftKey:
+      handleClickPrev();
+      break;
+    case ArrowKeyEnum.RightKey:
+      handleClickNext();
+      break;
+    default:
+      console.log();
+  }
+};
+
+const fetchQuestionData = async () => {
+  try {
+    onLoadingToggle();
+    const { questionType } = currentState;
+    const question = questions.value[currentState.index];
+    const api =
+      questionType === QuestionTypeEnum.Multi
+        ? MultiQuestionByIdApi
+        : questionType === QuestionTypeEnum.Judge
+        ? JudgeQuestionByIdApi
+        : FillQuestionByIdApi;
+    const { data } = await http.getRequest(`${api}/${question?.questionId}`);
+    currentQuestion.value = data;
+    onHasNotError();
+  } catch (error) {
+    onHasError();
+    ElMessage.error('获取题目失败，请稍后重试');
+    // no-console
+  } finally {
+    onLoadingToggle();
+  }
 };
 
 const handleQuestionChange = (info: CurrentQuestionStatusType) => {
   currentState.questionId = info.questionId;
   currentState.questionType = info.questionType;
+  currentState.index = info.index;
+  fetchQuestionData();
 };
-
-watch(
-  () => [currentState.questionId, currentState.questionType],
-  async () => {
-    try {
-      onLoadingToggle();
-      const { questionType, questionId } = currentState;
-      const question = questions.value.find(
-        (item) =>
-          item.questionType === questionType && item.questionId === questionId
-      );
-      const api =
-        questionType === 1
-          ? MultiQuestionByIdApi
-          : questionType === 2
-          ? JudgeQuestionByIdApi
-          : FillQuestionByIdApi;
-      const { data } = await http.getRequest(`${api}/${question?.questionId}`);
-      currentQuestion.value = data;
-      onHasNotError();
-    } catch (error) {
-      onHasError();
-      ElMessage.error({
-        message: '获取题目失败'
-      });
-      // no-console
-    } finally {
-      onLoadingToggle();
-    }
-  }
-);
 
 const handleSelectedAnswer = (answer: string) => {
   const ans = studentAnswers.value.find(
     (item) =>
-      item.questionId === currentQuestion.value.questionId &&
+      item.questionId === currentState.questionId &&
       item.questionType === currentState.questionType
   );
   ans
     ? (ans.studentAnswer = answer)
     : studentAnswers.value.push({
         studentAnswer: answer,
-        questionId: currentQuestion.value.questionId,
+        questionId: currentState.questionId,
         questionType: currentState.questionType
       });
 };
 
-const handleKeyUp = (e: KeyboardEvent) => {
-  console.log(e.code === ArrowKeyEnum.LeftKey);
-};
-
 const handleClickPrev = () => {
-  console.log('prev');
+  const { index } = currentState;
+  if (index === 0 || index === -1) {
+    ElMessage.warning('这就是第一题啦！');
+    return;
+  }
+  const nextQuestion = questions.value[currentState.index - 1];
+  currentState.questionId = nextQuestion.questionId;
+  currentState.questionType = nextQuestion.questionType;
+  currentState.index = currentState.index - 1;
+  fetchQuestionData();
 };
 
 const handleClickNext = () => {
-  console.log('next');
+  const { index } = currentState;
+  if (index === questions.value.length - 1) {
+    ElMessage.warning('已经最后一题啦！');
+    return;
+  }
+  const nextQuestion = questions.value[index + 1];
+  currentState.questionId = nextQuestion.questionId;
+  currentState.questionType = nextQuestion.questionType;
+  currentState.index = currentState.index + 1;
+  fetchQuestionData();
 };
 
-const showExamDriver = () => {
+const handleSubmitAnswer = () => {
+  onIsChecked();
+};
+
+const startExamDriver = () => {
   const driver = new Driver();
   driver.defineSteps(driverStepConfig);
   driver.start();
@@ -148,7 +176,8 @@ onBeforeRouteLeave(async () => {
 });
 
 onMounted(async () => {
-  window.addEventListener('beforeunload', handleWindowUnload);
+  window.addEventListener('beforeunload', handleWindowRefresh);
+  window.addEventListener('keyup', handleWindowKeyUp);
   try {
     onLoadingToggle();
     const { id } = route.params;
@@ -160,21 +189,17 @@ onMounted(async () => {
   } catch (error) {
     // no-console
   }
-  !getLocalItem(LocalExamDriverKey) && showExamDriver();
+  !getLocalItem(LocalExamDriverKey) && startExamDriver();
 });
 
-onUnmounted(() =>
-  window.removeEventListener('beforeunload', handleWindowUnload)
-);
+onUnmounted(() => {
+  window.removeEventListener('beforeunload', handleWindowRefresh);
+  window.removeEventListener('keyup', handleWindowKeyUp);
+});
 </script>
 
 <template>
-  <div
-    class="h-full bg-gray-50 outline-none"
-    tabindex="0"
-    @keyup.arrow-left="handleKeyUp"
-    @keyup.arrow-right="handleKeyUp"
-  >
+  <div class="h-full bg-gray-50 outline-none" tabindex="0">
     <ElContainer class="h-full">
       <ElAside
         id="question-select"
@@ -183,6 +208,7 @@ onUnmounted(() =>
       >
         <span v-for="(question, index) in questions" :key="index">
           <AsideButton
+            :is-checked="isChecked"
             :index="index + 1"
             :current="currentState"
             :question="question"
@@ -200,21 +226,28 @@ onUnmounted(() =>
           <template v-if="currentQuestion.questionId && !hasError">
             <HeaderSwitch
               class="mb-6"
-              :current-length="studentAnswers.length"
               :total="questions.length"
+              :current-index="currentState.index"
+              :current-length="studentAnswers.length"
               @on-click-prev="handleClickPrev"
               @on-click-next="handleClickNext"
+              @on-submit-answer="handleSubmitAnswer"
             />
             <Component
               :is="answerSheetComponent"
-              :key="+new Date()"
+              :key="currentQuestion"
               :question="currentQuestion"
               :student-answer="selectedAnswer?.studentAnswer"
               @on-selected="handleSelectedAnswer"
             />
           </template>
           <ElEmpty v-else-if="hasError" description="请尝试重新获取题目">
-            <ElButton :icon="Refresh" type="warning" plain>
+            <ElButton
+              :icon="Refresh"
+              type="warning"
+              plain
+              @click="fetchQuestionData"
+            >
               重新获取题目
             </ElButton>
           </ElEmpty>

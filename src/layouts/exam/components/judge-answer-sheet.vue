@@ -33,14 +33,14 @@ watch(
     </ElDescriptionsItem>
     <ElDescriptionsItem>
       <ElRadio v-model="answer" label="T" border>
-        <ElIcon>
+        <ElIcon color="#46a655" :size="18">
           <Check />
         </ElIcon>
       </ElRadio>
     </ElDescriptionsItem>
     <ElDescriptionsItem>
       <ElRadio v-model="answer" label="F" border>
-        <ElIcon>
+        <ElIcon color="#b92222" :size="18">
           <Close />
         </ElIcon>
       </ElRadio>
