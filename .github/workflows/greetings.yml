@@ -9,8 +9,8 @@ jobs:
       issues: write
       pull-requests: write
     steps:
-    - uses: actions/first-interaction@v1
-      with:
-        repo-token: ${{ secrets.OCTO_X_TOKEN }}
-        issue-message: '👏 欢迎为 Octo Exam 提出你的问题！'
-        pr-message: '👏 欢迎你为 Octo Exam 贡献的 PR！'
+      - uses: actions/first-interaction@v1
+        with:
+          repo-token: ${{ secrets.OCTO_X_TOKEN }}
+          issue-message: '👏 感谢你为 Octo Exam 提出的 issue！'
+          pr-message: '👏 感谢你为 Octo Exam 贡献的 PR！'
