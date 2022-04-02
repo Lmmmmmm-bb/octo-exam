@@ -6,6 +6,7 @@ export const enum RouterNameEnum {
   Exam = 'space-exam',
   ExamList = 'space-exam-list',
   ExamManage = 'space-exam-manage',
+  ExamResult = 'space-exam-result',
 
   QuestionManage = 'space-question-manage',
   QuestionAdd = 'question-add',

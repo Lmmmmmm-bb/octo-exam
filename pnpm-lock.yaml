@@ -13,6 +13,7 @@ specifiers:
   commitlint-config-cz: ^0.13.3
   crypto-ts: ^1.0.2
   cz-customizable: ^6.3.0
+  driver.js: ^0.9.8
   element-plus: ^2.0.1
   eslint: ^8.10.0
   eslint-config-prettier: ^8.3.0
@@ -53,6 +54,7 @@ devDependencies:
   autoprefixer: 10.4.2_postcss@8.4.6
   commitlint-config-cz: 0.13.3
   cz-customizable: 6.3.0
+  driver.js: 0.9.8
   eslint: 8.10.0
   eslint-config-prettier: 8.3.0_eslint@8.10.0
   eslint-plugin-prettier: 4.0.0_d4445cd17d05542ab48b8c51a25c8510
@@ -1471,6 +1473,10 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       is-obj: 2.0.0
+    dev: true
+
+  /driver.js/0.9.8:
+    resolution: {integrity: sha512-bczjyKdX6XmFyCDkwtRmlaORDwfBk1xXmRO0CAe5VwNQTM98aWaG2LAIiIdTe53iV/B7W5lXlIy2xYtf0JRb7Q==}
     dev: true
 
   /eastasianwidth/0.2.0:

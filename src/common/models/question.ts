@@ -4,28 +4,36 @@ export enum QuestionLevelEnum {
   Hard = '3'
 }
 
-export interface IMultiQuestion {
-  questionId: number;
-  subject: string;
-  section: string;
-  answerA: string;
-  answerB: string;
-  answerC: string;
-  answerD: string;
-  question: string;
-  level: QuestionLevelEnum;
-  rightAnswer: 'A' | 'B' | 'C' | 'D';
-  analysis: null | string;
-  score: number;
+export enum QuestionTypeEnum {
+  Multi = 1,
+  Fill = 2,
+  Judge = 3
 }
 
-export interface IJudgeQuestion {
+export type QuestionType = 1 | 2 | 3;
+
+export interface IBaseQuestion {
   questionId: number;
-  subject: string;
   question: string;
-  answer: 'T' | 'F';
+  subject: string;
   score: number;
   level: QuestionLevelEnum;
   section?: string;
   analysis?: string;
+}
+
+export interface IMultiQuestion extends IBaseQuestion {
+  answerA: string;
+  answerB: string;
+  answerC: string;
+  answerD: string;
+  rightAnswer: 'A' | 'B' | 'C' | 'D';
+}
+
+export interface IJudgeQuestion extends IBaseQuestion {
+  answer: 'T' | 'F';
+}
+
+export interface IFillQuestion extends IBaseQuestion {
+  answer: string;
 }
