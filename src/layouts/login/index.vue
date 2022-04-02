@@ -115,7 +115,7 @@ onMounted(() => {
         </ElHeader>
         <ElContainer>
           <ElAside width="400px" style="flex: 2">
-            <ElImage :src="loginImg" />
+            <ElImage :src="loginImg" alt="Login-Image" :draggable="false" />
           </ElAside>
           <ElDivider direction="vertical" style="height: auto" />
           <ElMain style="flex-basis: 0">
