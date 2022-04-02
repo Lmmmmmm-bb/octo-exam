@@ -7,7 +7,8 @@ import {
   ElMain,
   ElEmpty,
   ElMessage,
-  ElButton
+  ElButton,
+  ElMessageBox
 } from 'element-plus';
 import Driver from 'driver.js';
 import 'driver.js/dist/driver.min.css';
@@ -86,7 +87,7 @@ const handleWindowRefresh = (e) => {
 };
 
 const handleWindowKeyUp = (e: KeyboardEvent) => {
-  if (e.target !== document.querySelector('.el-textarea__inner')) {
+  if (e.target !== document.querySelector('#fill-input')) {
     e.code === ArrowKeyEnum.LeftKey && handleClickPrev();
     e.code === ArrowKeyEnum.RightKey && handleClickNext();
   }
@@ -163,11 +164,16 @@ const handleClickNext = () => {
 };
 
 const handleSubmitAnswer = async () => {
-  if (questions.value.length !== studentAnswers.value.length) {
-    onIsChecked();
-    ElMessage.warning('请完成全部题目后提交！');
-    return;
-  }
+  const isAllDone = questions.value.length === studentAnswers.value.length;
+  onIsChecked();
+  await ElMessageBox.confirm(
+    `${isAllDone ? '' : '题目未全部完成，'}确定要提交答题卡吗？`,
+    '提示',
+    {
+      cancelButtonText: '取消',
+      confirmButtonText: '确定'
+    }
+  );
   try {
     onContainerLoadingToggle();
     const { examCode } = route.params;
@@ -200,13 +206,13 @@ onBeforeRouteLeave(async () => {
     return true;
   }
   // eslint-disable-next-line no-alert
-  const answer = window.confirm('离开页面当前的题目进度将不会保存！');
-  if (!answer) return false;
+  const result = window.confirm('离开页面当前的题目进度将不会保存！');
+  if (!result) return false;
 });
 
 onMounted(async () => {
-  window.addEventListener('beforeunload', handleWindowRefresh);
   window.addEventListener('keyup', handleWindowKeyUp);
+  window.addEventListener('beforeunload', handleWindowRefresh);
   try {
     onLoadingToggle();
     const { paperId } = route.params;
@@ -222,8 +228,8 @@ onMounted(async () => {
 });
 
 onUnmounted(() => {
-  window.removeEventListener('beforeunload', handleWindowRefresh);
   window.removeEventListener('keyup', handleWindowKeyUp);
+  window.removeEventListener('beforeunload', handleWindowRefresh);
 });
 </script>
 

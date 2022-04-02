@@ -26,6 +26,7 @@ const handleInputChange = () => {
     </ElDescriptionsItem>
     <ElDescriptionsItem>
       <ElInput
+        id="fill-input"
         v-model="answer"
         type="textarea"
         placeholder="在这里输入答案"
