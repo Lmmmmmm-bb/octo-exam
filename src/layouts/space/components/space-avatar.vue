@@ -19,9 +19,9 @@ const { isActive: isModifyDrawerVisible, onToggle: onToggleModifyVisible } =
 const { isActive: isInfoDrawerVisible, onToggle: onToggleInfoVisible } =
   useToggle();
 
-const handleLogout = () => {
+const handleLogout = async () => {
+  await router.push('/login');
   resetStore();
-  router.push('/login');
 };
 </script>
 
