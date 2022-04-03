@@ -94,7 +94,7 @@ const handleLogin = async () => {
         : removeLocalItem(LocalLoginInfoKey);
       setLocalItem(LocalTokenKey, token);
       userConfigStore.patchUserConfig(userConfig);
-      motionInstance.leave(() => router.push({ name: RouterNameEnum.Space }));
+      motionInstance.leave(() => router.push({ name: RouterNameEnum.Home }));
     }
   } catch (error) {
     // no-console
