@@ -214,7 +214,6 @@ onMounted(async () => {
   window.addEventListener('keyup', handleWindowKeyUp);
   window.addEventListener('beforeunload', handleWindowRefresh);
   try {
-    onLoadingToggle();
     const { paperId } = route.params;
     const { data } = await http.getRequest<PaperQuestionListResponseType>(
       `${PaperQuestionListApi}/${paperId}`
@@ -222,7 +221,9 @@ onMounted(async () => {
     questions.value = data;
     currentState.questionType = data[0].questionType;
   } catch (error) {
-    // no-console
+    ElMessage.error('获取题目信息失败，请稍后刷新重试！');
+  } finally {
+    onLoadingToggle();
   }
   !getLocalItem(LocalExamDriverKey) && startExamDriver();
 });

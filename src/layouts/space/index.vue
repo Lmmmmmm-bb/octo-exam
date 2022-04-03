@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { reactive, ref, shallowRef } from 'vue';
 import { ElContainer, ElMain } from 'element-plus';
+import { useMotion } from '@vueuse/motion';
 import styles from './index.module.scss';
 import { useMenuConfigStore } from '@/store';
 import HeaderMenu from './components/header-menu.vue';
 import AsideMenu from './components/aside-menu.vue';
+import { baseMotionConfig } from '@/common/configs';
 
 const menuConfigStore = useMenuConfigStore();
 
+const spaceWrapperRef = ref<HTMLElement>();
 const isShow = ref(true);
 const menuComponent = shallowRef(
   menuConfigStore.isMenuModeVertical ? AsideMenu : HeaderMenu
@@ -15,6 +18,8 @@ const menuComponent = shallowRef(
 const containerStyle = reactive({
   flexDirection: menuConfigStore.isMenuModeVertical ? 'row' : 'column'
 });
+
+useMotion(spaceWrapperRef, baseMotionConfig);
 
 menuConfigStore.$subscribe(() => {
   const { isMenuModeVertical } = menuConfigStore;
@@ -31,6 +36,7 @@ menuConfigStore.$subscribe(() => {
   <Transition name="el-fade-in-linear">
     <ElContainer
       v-show="isShow"
+      ref="spaceWrapperRef"
       :class="styles.spaceWrapper"
       :style="containerStyle"
     >
