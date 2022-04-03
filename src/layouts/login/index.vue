@@ -36,6 +36,7 @@ import { LocalTokenKey, LocalLoginInfoKey } from '@/common/models/store-keys';
 import { FormInstanceType } from '@/common/models/element';
 import loginImg from '@/assets/login-illustration.webp';
 import { encrypt, decrypt } from '@/common/utils/crypto';
+import { RouterNameEnum } from '@/router/type';
 
 const router = useRouter();
 const userConfigStore = useUserConfigStore();
@@ -93,7 +94,7 @@ const handleLogin = async () => {
         : removeLocalItem(LocalLoginInfoKey);
       setLocalItem(LocalTokenKey, token);
       userConfigStore.patchUserConfig(userConfig);
-      motionInstance.leave(() => router.push('/space'));
+      motionInstance.leave(() => router.push({ name: RouterNameEnum.Home }));
     }
   } catch (error) {
     // no-console
@@ -119,7 +120,7 @@ onMounted(() => {
         </ElHeader>
         <ElContainer>
           <ElAside width="400px" style="flex: 2">
-            <ElImage :src="loginImg" />
+            <ElImage :src="loginImg" alt="Login-Image" :draggable="false" />
           </ElAside>
           <ElDivider direction="vertical" style="height: auto" />
           <ElMain style="flex-basis: 0">

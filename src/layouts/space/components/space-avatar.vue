@@ -11,6 +11,7 @@ import { useToggle } from '@/common/hooks';
 import ModifyDrawer from './modify-drawer.vue';
 import InfoDrawer from './info-drawer.vue';
 import { resetStore, useUserConfigStore } from '@/store';
+import { RouterNameEnum } from '@/router/type';
 
 const router = useRouter();
 const userConfigStore = useUserConfigStore();
@@ -19,9 +20,9 @@ const { isActive: isModifyDrawerVisible, onToggle: onToggleModifyVisible } =
 const { isActive: isInfoDrawerVisible, onToggle: onToggleInfoVisible } =
   useToggle();
 
-const handleLogout = () => {
+const handleLogout = async () => {
+  await router.push({ name: RouterNameEnum.Login });
   resetStore();
-  router.push('/login');
 };
 </script>
 
