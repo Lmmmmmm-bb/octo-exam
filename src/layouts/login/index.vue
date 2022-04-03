@@ -20,7 +20,7 @@ import {
 } from 'element-plus';
 import { useMotion } from '@vueuse/motion';
 import styles from './index.module.scss';
-import { formRules, loginWrapperMotionConfig } from './config';
+import { formRules } from './config';
 import { roleMap } from './type';
 import { useUserConfigStore } from '@/store';
 import { UserRoleEnum } from '@/common/models/user-config';
@@ -37,6 +37,7 @@ import { FormInstanceType } from '@/common/models/element';
 import loginImg from '@/assets/login-illustration.webp';
 import { encrypt, decrypt } from '@/common/utils/crypto';
 import { RouterNameEnum } from '@/router/type';
+import { baseMotionConfig } from '@/common/configs';
 
 const router = useRouter();
 const userConfigStore = useUserConfigStore();
@@ -51,7 +52,7 @@ const info = reactive<ILoginData>({
   password: ''
 });
 
-const motionInstance = useMotion(loginWrapperRef, loginWrapperMotionConfig);
+const motionInstance = useMotion(loginWrapperRef, baseMotionConfig);
 
 const initInfo = () => {
   try {

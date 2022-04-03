@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { inject } from 'vue';
 import {
   ElDropdown,
   ElDropdownItem,
@@ -12,6 +13,9 @@ import ModifyDrawer from './modify-drawer.vue';
 import InfoDrawer from './info-drawer.vue';
 import { resetStore, useUserConfigStore } from '@/store';
 import { RouterNameEnum } from '@/router/type';
+import { MotionInstance } from '@vueuse/motion';
+
+const motionInstance = inject<MotionInstance>('motion-instance');
 
 const router = useRouter();
 const userConfigStore = useUserConfigStore();
@@ -20,9 +24,12 @@ const { isActive: isModifyDrawerVisible, onToggle: onToggleModifyVisible } =
 const { isActive: isInfoDrawerVisible, onToggle: onToggleInfoVisible } =
   useToggle();
 
-const handleLogout = async () => {
-  await router.push({ name: RouterNameEnum.Login });
-  resetStore();
+const handleLogout = () => {
+  motionInstance &&
+    motionInstance.leave(async () => {
+      await router.push({ name: RouterNameEnum.Login });
+      resetStore();
+    });
 };
 </script>
 

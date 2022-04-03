@@ -1,10 +1,10 @@
 import { createApp } from 'vue';
+import { ElLoading } from 'element-plus';
 import App from './app/index.vue';
 import router from './router';
 import './index.scss';
 import pinia from './store';
 import { piniaPersist } from './store/persist';
-import { ElLoading } from 'element-plus';
 
 const app = createApp(App);
 
