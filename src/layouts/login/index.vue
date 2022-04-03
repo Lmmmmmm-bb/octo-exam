@@ -18,8 +18,9 @@ import {
   ElCheckbox,
   ElBadge
 } from 'element-plus';
+import { useMotion } from '@vueuse/motion';
 import styles from './index.module.scss';
-import { formRules } from './config';
+import { formRules, loginWrapperMotionConfig } from './config';
 import { roleMap } from './type';
 import { useUserConfigStore } from '@/store';
 import { UserRoleEnum } from '@/common/models/user-config';
@@ -38,6 +39,7 @@ import { encrypt, decrypt } from '@/common/utils/crypto';
 
 const router = useRouter();
 const userConfigStore = useUserConfigStore();
+const loginWrapperRef = ref<HTMLDivElement>();
 const loginInputRef = ref<HTMLInputElement>();
 const formRef = ref<FormInstanceType>();
 const { isActive: isSavePwd } = useToggle();
@@ -47,6 +49,8 @@ const info = reactive<ILoginData>({
   userId: '',
   password: ''
 });
+
+const motionInstance = useMotion(loginWrapperRef, loginWrapperMotionConfig);
 
 const initInfo = () => {
   try {
@@ -89,7 +93,7 @@ const handleLogin = async () => {
         : removeLocalItem(LocalLoginInfoKey);
       setLocalItem(LocalTokenKey, token);
       userConfigStore.patchUserConfig(userConfig);
-      router.push('/space');
+      motionInstance.leave(() => router.push('/space'));
     }
   } catch (error) {
     // no-console
@@ -105,7 +109,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div :class="styles.loginWrapper">
+  <div ref="loginWrapperRef" :class="styles.loginWrapper">
     <ElCard :class="styles.loginCard" shadow="hover">
       <ElContainer>
         <ElHeader>

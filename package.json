@@ -15,6 +15,7 @@
     "style:watch": "./node_modules/.bin/typed-scss-modules src --watch --ignore \"**/index.scss\" \"**/styles/*.scss\""
   },
   "dependencies": {
+    "@vueuse/motion": "^2.0.0-beta.12",
     "axios": "^0.25.0",
     "crypto-ts": "^1.0.2",
     "element-plus": "^2.0.1",
