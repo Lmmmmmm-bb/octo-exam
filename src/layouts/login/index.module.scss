@@ -38,7 +38,8 @@
 }
 
 :global {
-  .el-input__prefix {
+  .el-input__prefix,
+  .el-input__suffix {
     align-items: center;
   }
 
