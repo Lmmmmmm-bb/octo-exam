@@ -12,12 +12,12 @@ export type UserConfigType =
   | (IAdminConfig & IStudentConfig)
   | Record<string, never>;
 
-export const initUserConfig = () => {
+export const initUserConfig = (): UserConfigType => {
   try {
     const init = getLocalItem(LocalUserInfoKey) || '{}';
     return JSON.parse(init);
   } catch (error) {
-    return '{}';
+    return {};
   }
 };
 
