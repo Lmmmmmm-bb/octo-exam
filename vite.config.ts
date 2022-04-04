@@ -1,3 +1,5 @@
+/// <reference types="vitest" />
+
 import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import ElementPlusUnplugin from 'unplugin-element-plus/vite';
@@ -20,6 +22,13 @@ export default defineConfig(({ mode }) => {
         scss: {
           additionalData: `@use "@/common/styles/theme.scss" as *;`
         }
+      }
+    },
+    test: {
+      global: true,
+      environment: 'happy-dom',
+      deps: {
+        inline: ['element-plus']
       }
     }
   };
