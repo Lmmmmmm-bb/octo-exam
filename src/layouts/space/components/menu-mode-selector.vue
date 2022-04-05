@@ -2,7 +2,9 @@
 import { computed } from 'vue';
 import { ElTooltip, ElSelect, ElOption } from 'element-plus';
 import { useMenuConfigStore, MenuModeType } from '@/store';
+import { useLocale } from '@/common/hooks';
 
+const { t } = useLocale();
 const menuModeStore = useMenuConfigStore();
 
 const tipPlacement = computed(() =>
@@ -16,17 +18,17 @@ const handleModeChange = (mode: MenuModeType) =>
 <template>
   <ElTooltip
     effect="light"
-    content="切换菜单展示模式"
+    :content="t('menuMode.modeTip')"
     :placement="tipPlacement"
   >
     <ElSelect
       v-model="menuModeStore.menuMode"
-      style="width: 82px"
+      style="width: 91px"
       size="small"
       @change="handleModeChange"
     >
-      <ElOption label="顶部菜单" value="horizontal" />
-      <ElOption label="侧边菜单" value="vertical" />
+      <ElOption :label="t('menuMode.horizontalMode')" value="horizontal" />
+      <ElOption :label="t('menuMode.verticalMode')" value="vertical" />
     </ElSelect>
   </ElTooltip>
 </template>

@@ -14,12 +14,14 @@ import {
   RoleMap,
   StudentUserInfoMap
 } from '../config';
+import { useLocale } from '@/common/hooks';
 
 const props = defineProps<{ visible: boolean }>();
 const emits = defineEmits<{
   (e: 'onClose'): void;
 }>();
 
+const { t } = useLocale();
 const userConfigStore = useUserConfigStore();
 
 const extraInfo = computed(() => {
@@ -33,26 +35,26 @@ const extraInfo = computed(() => {
 <template>
   <ElDrawer :model-value="props.visible" :before-close="() => emits('onClose')">
     <template #title>
-      <h4 class="text-lg">个人信息</h4>
+      <h4 class="text-lg">{{ t('profile.personal') }}</h4>
     </template>
-    <ElDescriptions title="基本信息" :column="1">
-      <ElDescriptionsItem label="标识" :span="2">
+    <ElDescriptions :title="t('profile.basic')" :column="1">
+      <ElDescriptionsItem :label="t('profile.account')" :span="2">
         <ElTag>{{ RoleMap.get(userConfigStore.userConfig.role) }}</ElTag>
       </ElDescriptionsItem>
       <ElDescriptionsItem
-        v-for="[key, name] in BasicUserInfoMap"
+        v-for="[key] in BasicUserInfoMap"
         :key="key"
-        :label="name"
+        :label="t(`profile.${key}`)"
         :min-width="260"
       >
         {{ userConfigStore.userConfig[key] || '-' }}
       </ElDescriptionsItem>
     </ElDescriptions>
-    <ElDescriptions class="mt-5" title="其他信息" :column="2">
+    <ElDescriptions class="mt-5" :title="t('profile.other')" :column="2">
       <ElDescriptionsItem
-        v-for="[key, name] in extraInfo"
+        v-for="[key] in extraInfo"
         :key="key"
-        :label="name"
+        :label="t(`profile.${key}`)"
       >
         {{ userConfigStore.userConfig[key] || '-' }}
       </ElDescriptionsItem>
