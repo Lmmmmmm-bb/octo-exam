@@ -26,7 +26,7 @@ import { useUserConfigStore } from '@/store';
 import { UserRoleEnum } from '@/common/models/user-config';
 import { http } from '@/common/utils/http';
 import { LoginApi, ILoginData, ILoginResponse } from '@/services/login';
-import { useToggle } from '@/common/hooks';
+import { useLocale, useToggle } from '@/common/hooks';
 import {
   getLocalItem,
   removeLocalItem,
@@ -38,7 +38,9 @@ import loginImg from '@/assets/login-illustration.webp';
 import { encrypt, decrypt } from '@/common/utils/crypto';
 import { RouterNameEnum } from '@/router/type';
 import { baseMotionConfig } from '@/common/configs';
+import LanguageSelector from '@/components/language-selector/index.vue';
 
+const { t } = useLocale();
 const router = useRouter();
 const userConfigStore = useUserConfigStore();
 const loginWrapperRef = ref<HTMLDivElement>();
@@ -132,7 +134,7 @@ onMounted(() => {
                 :checked="info.role === value"
                 @click="handleUserRoleChange(value as UserRoleEnum)"
               >
-                {{ label }}
+                {{ t(label) }}
               </ElCheckTag>
             </div>
             <ElForm
@@ -142,7 +144,11 @@ onMounted(() => {
               :rules="formRules"
               hide-required-asterisk
             >
-              <ElFormItem label="用户名" for="username" prop="userId">
+              <ElFormItem
+                :label="t('login.account')"
+                for="username"
+                prop="userId"
+              >
                 <ElInput
                   id="username"
                   ref="loginInputRef"
@@ -152,7 +158,11 @@ onMounted(() => {
                   @keyup.enter="handleLogin"
                 />
               </ElFormItem>
-              <ElFormItem label="密码" for="password" prop="password">
+              <ElFormItem
+                :label="t('login.password')"
+                for="password"
+                prop="password"
+              >
                 <ElInput
                   id="password"
                   v-model="info.password"
@@ -163,8 +173,13 @@ onMounted(() => {
                 />
               </ElFormItem>
             </ElForm>
-            <div class="flex -mt-2">
-              <ElCheckbox v-model="isSavePwd" label="记住密码" size="small" />
+            <div class="flex -mt-2 justify-between">
+              <ElCheckbox
+                v-model="isSavePwd"
+                :label="t('login.remember')"
+                size="small"
+              />
+              <LanguageSelector />
             </div>
             <ElButton
               type="primary"
@@ -172,7 +187,7 @@ onMounted(() => {
               :loading="isLoading"
               @click="handleLogin"
             >
-              登 陆
+              {{ t('login.login') }}
             </ElButton>
           </ElMain>
         </ElContainer>
