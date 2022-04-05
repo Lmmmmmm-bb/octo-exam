@@ -9,14 +9,15 @@ import {
 } from 'element-plus';
 import { Refresh, Search, Delete } from '@element-plus/icons-vue';
 import Breadcrumb from '@/components/breadcrumb/index.vue';
-import { breadcrumbConfig } from './config';
 import ScoreTable from './components/score-table.vue';
 import TooltipIconButton from '@/components/tooltip-icon-button/index.vue';
 import { IScoreTableExpose } from './type';
-import { useToggle } from '@/common/hooks';
+import { useLocale, useToggle } from '@/common/hooks';
 import { http } from '@/common/utils/http';
 import { ScoreDeleteByIdApi } from '@/services/score';
+import { RouterNameEnum } from '@/router/type';
 
+const { t } = useLocale();
 const tableRef = ref<IScoreTableExpose>();
 const {
   isActive: isSearch,
@@ -52,9 +53,9 @@ const handleSearch = () => {
 const handleDelete = async () => {
   if (tableRef.value) {
     const rows = tableRef.value.selectedRows;
-    ElMessageBox.confirm(`确定要删除 ${rows.length} 位学生吗？`, '提示', {
-      cancelButtonText: '取消',
-      confirmButtonText: '确定'
+    ElMessageBox.confirm(t('exam.deleteConfirm'), t('common.tip'), {
+      cancelButtonText: t('common.cancel'),
+      confirmButtonText: t('common.confirm')
     }).then(async () => {
       const list = rows.map((item) => item.scoreId.toString());
       await http.deleteRequest(ScoreDeleteByIdApi, {
@@ -77,18 +78,18 @@ const handleRefresh = () => {
 
 <template>
   <div class="outerWrapper">
-    <Breadcrumb :path="breadcrumbConfig" />
+    <Breadcrumb :path="[{ text: t(`menu.${RouterNameEnum.ScoreManage}`) }]" />
     <ElDivider />
     <div class="w-full flex justify-between mb-2">
       <ElSpace size="large">
         <ElInput
           v-model="inputExamCode"
-          placeholder="通过考试编号查询"
+          :placeholder="t('score.searchByCode')"
           clearable
           @clear="handleClearInput"
         />
         <ElButton type="primary" :icon="Search" @click="handleSearch">
-          搜 索
+          {{ t('common.search') }}
         </ElButton>
       </ElSpace>
       <div>
@@ -96,13 +97,13 @@ const handleRefresh = () => {
           :icon="Delete"
           :disabled="isDeleteDisabled"
           type="danger"
-          content="批量删除"
+          :content="t('common.delete')"
           @on-click="handleDelete"
         />
         <TooltipIconButton
           :icon="Refresh"
           type="primary"
-          content="点击刷新"
+          :content="t('common.refresh')"
           @on-click="handleRefresh"
         />
       </div>

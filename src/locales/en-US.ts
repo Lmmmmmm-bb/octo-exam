@@ -8,7 +8,11 @@ export const enUS = {
     tip: 'Tip',
     warn: 'Warning',
     notice: 'Notice',
-    minutes: 'minutes'
+    minutes: 'minutes',
+    search: 'Search',
+    refresh: 'Refresh',
+    delete: 'Delete',
+    operate: 'Operate'
   },
   role: {
     admin: 'Admin',
@@ -66,5 +70,13 @@ export const enUS = {
     duration: 'Duration',
     tips: 'Tip',
     deleteConfirm: 'Are you sure you want to delete this exam'
+  },
+  score: {
+    empty: 'No Score Data',
+    subject: 'Subject',
+    score: 'Score',
+    date: 'Date',
+    searchByCode: 'Search Score By Code',
+    deleteComfirm: 'Are you sure you want to delete this score'
   }
 };

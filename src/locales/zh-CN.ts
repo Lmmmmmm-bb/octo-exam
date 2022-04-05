@@ -8,7 +8,11 @@ export const zhCN = {
     tip: '提示',
     warn: '警告',
     notice: '注意',
-    minutes: '分钟'
+    minutes: '分钟',
+    search: '搜索',
+    refresh: '刷新',
+    delete: '删除',
+    operate: '操作'
   },
   role: {
     admin: '管理员',
@@ -66,5 +70,13 @@ export const zhCN = {
     duration: '考试时长',
     tips: '备注',
     deleteConfirm: '确认删除该考试吗'
+  },
+  score: {
+    empty: '暂无成绩数据',
+    subject: '科目',
+    score: '分数',
+    date: '提交时间',
+    searchByCode: '通过考试码查询',
+    deleteComfirm: '确定要删除成绩吗'
   }
 };
