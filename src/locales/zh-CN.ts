@@ -3,7 +3,12 @@ import { RouterNameEnum } from '@/router/type';
 export const zhCN = {
   common: {
     locale: '切换语言',
-    confirm: '确认'
+    confirm: '确认',
+    cancel: '取消',
+    tip: '提示',
+    warn: '警告',
+    notice: '注意',
+    minutes: '分钟'
   },
   role: {
     admin: '管理员',
@@ -52,5 +57,14 @@ export const zhCN = {
     modeTip: '切换菜单展示模式',
     horizontalMode: '顶部菜单',
     verticalMode: '侧边菜单'
+  },
+  exam: {
+    delete: '删除考试',
+    code: '考试码',
+    copyCode: '点击复制考试码',
+    date: '考试时间',
+    duration: '考试时长',
+    tips: '备注',
+    deleteConfirm: '确认删除该考试吗'
   }
 };

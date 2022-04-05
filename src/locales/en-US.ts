@@ -3,7 +3,12 @@ import { RouterNameEnum } from '@/router/type';
 export const enUS = {
   common: {
     locale: 'Language',
-    confirm: 'Confirm'
+    confirm: 'Confirm',
+    cancel: 'Cancel',
+    tip: 'Tip',
+    warn: 'Warning',
+    notice: 'Notice',
+    minutes: 'minutes'
   },
   role: {
     admin: 'Admin',
@@ -52,5 +57,14 @@ export const enUS = {
     modeTip: 'Change Menu Mode',
     horizontalMode: 'Horizontal',
     verticalMode: 'Vertical'
+  },
+  exam: {
+    delete: 'Delete Exam',
+    code: 'Exam Code',
+    copyCode: 'Click To Copy Exam Code',
+    date: 'Date',
+    duration: 'Duration',
+    tips: 'Tip',
+    deleteConfirm: 'Are you sure you want to delete this exam'
   }
 };
