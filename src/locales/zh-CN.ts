@@ -12,7 +12,8 @@ export const zhCN = {
     search: '搜索',
     refresh: '刷新',
     delete: '删除',
-    operate: '操作'
+    operate: '操作',
+    copyable: '点击复制{target}'
   },
   role: {
     admin: '管理员',
@@ -31,6 +32,7 @@ export const zhCN = {
     [RouterNameEnum.ScoreManage]: '成绩管理',
     [RouterNameEnum.QuestionManage]: '题库管理',
     [RouterNameEnum.QuestionMultipleChoice]: '选择题题库',
+    [RouterNameEnum.QuestionMultipleChoiceDetail]: '选择题详情',
     [RouterNameEnum.QuestionTrueFalse]: '判断题题库',
     [RouterNameEnum.QuestionFillBlank]: '填空题题库',
     [RouterNameEnum.StudentManage]: '学生管理',
@@ -65,7 +67,6 @@ export const zhCN = {
   exam: {
     delete: '删除考试',
     code: '考试码',
-    copyCode: '点击复制考试码',
     date: '考试时间',
     duration: '考试时长',
     tips: '备注',
@@ -78,5 +79,23 @@ export const zhCN = {
     date: '提交时间',
     searchByCode: '通过考试码查询',
     deleteComfirm: '确定要删除成绩吗'
+  },
+  question: {
+    viewDetail: '点击查看题目详情',
+    id: '题目 ID',
+    name: '题目',
+    section: '章节',
+    answer: '答案',
+    analysis: '解析',
+    noAnalysis: '暂无解析',
+    return: '返回题库',
+    level: '难度',
+    noSection: '暂无章节信息'
+  },
+  level: {
+    easy: '简单',
+    medium: '中等',
+    hard: '困难',
+    unknown: '未知'
   }
 };

@@ -12,7 +12,8 @@ export const enUS = {
     search: 'Search',
     refresh: 'Refresh',
     delete: 'Delete',
-    operate: 'Operate'
+    operate: 'Operate',
+    copyable: 'Click To Copy {target}'
   },
   role: {
     admin: 'Admin',
@@ -31,6 +32,7 @@ export const enUS = {
     [RouterNameEnum.ScoreManage]: 'Score Manage',
     [RouterNameEnum.QuestionManage]: 'Question Manage',
     [RouterNameEnum.QuestionMultipleChoice]: 'Choice Question',
+    [RouterNameEnum.QuestionMultipleChoiceDetail]: 'Choice Question Detail',
     [RouterNameEnum.QuestionTrueFalse]: 'Judge Question',
     [RouterNameEnum.QuestionFillBlank]: 'Fill Blank Question',
     [RouterNameEnum.StudentManage]: 'Student Manage',
@@ -78,5 +80,23 @@ export const enUS = {
     date: 'Date',
     searchByCode: 'Search Score By Code',
     deleteComfirm: 'Are you sure you want to delete this score'
+  },
+  question: {
+    viewDetail: 'Click to view details',
+    id: 'Question ID',
+    name: 'Question',
+    section: 'Section',
+    answer: 'Answer',
+    analysis: 'Analysis',
+    noAnalysis: 'No Analysis',
+    return: 'Back to Question Manage',
+    level: 'Level',
+    noSection: 'No Section Information'
+  },
+  level: {
+    easy: 'Easy',
+    medium: 'Medium',
+    hard: 'Hard',
+    unknown: 'Unknown'
   }
 };

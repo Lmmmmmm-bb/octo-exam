@@ -67,7 +67,7 @@ const handleDeleteExam = async () => {
         </ElTag>
         <Copyable
           :copy-text="props.exam.examCode.toString()"
-          :tip="t('exam.copyCode')"
+          :tip="t('common.copyable', { target: t('exam.code') })"
         />
       </ElDescriptionsItem>
       <ElDescriptionsItem :label="t('exam.date')">

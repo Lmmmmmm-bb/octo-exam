@@ -2,7 +2,6 @@
 import { onMounted, reactive, ref } from 'vue';
 import { ElDivider } from 'element-plus';
 import Breadcrumb from '@/components/breadcrumb/index.vue';
-import { breadcrumbConfig } from './config';
 import TrueFalseCollapse from './components/true-false-collapse.vue';
 import { http } from '@/common/utils/http';
 import {
@@ -11,8 +10,11 @@ import {
 } from '@/services/question';
 import Pagination from '@/components/pagination/index.vue';
 import { IJudgeQuestion } from '@/common/models/question';
-import { useToggle } from '@/common/hooks';
+import { useLocale, useToggle } from '@/common/hooks';
+import { IBreadcrumnInfo } from '@/components/breadcrumb/type';
+import { RouterNameEnum } from '@/router/type';
 
+const { t } = useLocale();
 const { isActive: isLoading, onToggle: onToggleLoading } = useToggle();
 const questionList = ref<IJudgeQuestion[]>([]);
 const totalQuestion = ref(0);
@@ -20,6 +22,11 @@ const pageState = reactive({
   current: 1,
   pageSize: 10
 });
+
+const breadcrumbConfig: IBreadcrumnInfo[] = [
+  { text: t(`menu.${RouterNameEnum.QuestionManage}`) },
+  { text: t(`menu.${RouterNameEnum.QuestionTrueFalse}`) }
+];
 
 const fetchQuestionList = async () => {
   try {

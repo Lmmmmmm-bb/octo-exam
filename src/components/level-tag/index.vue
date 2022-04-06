@@ -3,9 +3,11 @@ import { computed, defineProps } from 'vue';
 import { ElTag } from 'element-plus';
 import { questionLevelMap } from './config';
 import { QuestionLevelEnum } from '@/common/models/question';
+import { useLocale } from '@/common/hooks';
 
 const props = defineProps<{ level: QuestionLevelEnum }>();
 
+const { t } = useLocale();
 const type = computed(() => {
   const { level } = props;
   switch (level) {
@@ -22,5 +24,11 @@ const type = computed(() => {
 </script>
 
 <template>
-  <ElTag :type="type">{{ questionLevelMap[props.level] || '未知' }}</ElTag>
+  <ElTag :type="type">
+    {{
+      questionLevelMap[props.level]
+        ? t(`level.${questionLevelMap[props.level]}`)
+        : t('level.unknown')
+    }}
+  </ElTag>
 </template>

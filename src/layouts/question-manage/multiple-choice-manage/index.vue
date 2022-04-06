@@ -18,12 +18,18 @@ import {
   MultiQuestionListResponseType
 } from '@/services/question';
 import { RouterNameEnum } from '@/router/type';
-import { useToggle } from '@/common/hooks';
-import { breadcrumbConfig } from './config';
+import { useLocale, useToggle } from '@/common/hooks';
+import { IBreadcrumnInfo } from '@/components/breadcrumb/type';
 
+const { t } = useLocale();
 const router = useRouter();
 const { isActive: isLoading, onUnActive: onUnLoading } = useToggle(true);
 const multiQuestionsList = ref<IMultiQuestion[]>([]);
+
+const breadcrumbConfig: IBreadcrumnInfo[] = [
+  { text: t(`menu.${RouterNameEnum.QuestionManage}`) },
+  { text: t(`menu.${RouterNameEnum.QuestionMultipleChoice}`) }
+];
 
 const handleQuestionClick = (question: IMultiQuestion) => {
   router.push({
@@ -54,7 +60,7 @@ onMounted(async () => {
           v-for="question of multiQuestionsList"
           :key="question.questionId"
           effect="light"
-          content="点击查看题目详情"
+          :content="t('question.viewDetail')"
           placement="top"
         >
           <MultipleChoiceCard
