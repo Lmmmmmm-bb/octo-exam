@@ -6,7 +6,7 @@ import {
   UserRoleEnum
 } from '@/common/models/user-config';
 import { getLocalItem, setLocalItem } from '@/common/utils/local-storage';
-import { LocalUserInfoKey } from '@/common/models/store-keys';
+import { LocalUserInfoKey } from '@/common/configs';
 
 export type UserConfigType =
   | (IAdminConfig & IStudentConfig)
