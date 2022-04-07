@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref, shallowRef, provide, readonly } from 'vue';
+import { reactive, ref, shallowRef, provide } from 'vue';
 import { ElContainer, ElMain } from 'element-plus';
 import { useMotion } from '@vueuse/motion';
 import styles from './index.module.scss';
@@ -7,6 +7,7 @@ import { useMenuConfigStore } from '@/store';
 import HeaderMenu from './components/header-menu.vue';
 import AsideMenu from './components/aside-menu.vue';
 import { baseMotionConfig } from '@/common/configs';
+import { motionInstanceInjectKey } from './config';
 
 const menuConfigStore = useMenuConfigStore();
 
@@ -30,7 +31,7 @@ menuConfigStore.$subscribe(async () => {
   await motionInstance.apply('enter');
 });
 
-provide('motion-instance', readonly(motionInstance));
+provide(motionInstanceInjectKey, motionInstance);
 </script>
 
 <template>

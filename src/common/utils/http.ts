@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { ElMessage } from 'element-plus';
 import { IBaseResponse } from '../models/base-response';
-import { LocalTokenKey } from '../models/store-keys';
+import { LocalTokenKey } from '../configs';
 import { getLocalItem } from './local-storage';
 import router from '@/router';
 import { RouterNameEnum } from '@/router/type';

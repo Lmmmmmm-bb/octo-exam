@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import { LocalMenuModeKey } from '@/common/models/store-keys';
+import { LocalMenuModeKey } from '@/common/configs';
 import { getLocalItem, setLocalItem } from '@/common/utils/local-storage';
 
 export type MenuModeType = 'horizontal' | 'vertical';

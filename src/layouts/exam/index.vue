@@ -37,7 +37,7 @@ import JudgeAnswerSheet from './components/judge-answer-sheet.vue';
 import FillAnswerSheet from './components/fill-answer-sheet.vue';
 import { useToggle } from '@/common/hooks';
 import HeaderSwitch from './components/header-switch.vue';
-import { LocalExamDriverKey } from '@/common/models/store-keys';
+import { LocalExamDriverKey } from '@/common/configs';
 import { getLocalItem, setLocalItem } from '@/common/utils/local-storage';
 import { driverStepConfig } from './config';
 import { QuestionTypeEnum } from '@/common/models/question';

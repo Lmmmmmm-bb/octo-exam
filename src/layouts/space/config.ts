@@ -1,6 +1,11 @@
+import { InjectionKey } from 'vue';
 import { UserRoleEnum } from '@/common/models/user-config';
 import { RouterNameEnum } from '@/router/type';
 import { IMenuItem } from './type';
+import { MotionInstance } from '@vueuse/motion';
+
+export const motionInstanceInjectKey: InjectionKey<MotionInstance> =
+  Symbol('motionInstance');
 
 export const StudentMenuNavList: Record<string, IMenuItem> = {
   [RouterNameEnum.Home]: { label: '主页' },
