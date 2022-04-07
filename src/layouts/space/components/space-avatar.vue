@@ -13,9 +13,9 @@ import ModifyDrawer from './modify-drawer.vue';
 import InfoDrawer from './info-drawer.vue';
 import { resetStore, useUserConfigStore } from '@/store';
 import { RouterNameEnum } from '@/router/type';
-import { MotionInstance } from '@vueuse/motion';
+import { motionInstanceInjectKey } from '../config';
 
-const motionInstance = inject<MotionInstance>('motion-instance');
+const motionInstance = inject(motionInstanceInjectKey);
 
 const router = useRouter();
 const userConfigStore = useUserConfigStore();
