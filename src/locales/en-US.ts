@@ -67,7 +67,6 @@ export const enUS = {
   exam: {
     delete: 'Delete Exam',
     code: 'Exam Code',
-    copyCode: 'Click To Copy Exam Code',
     date: 'Date',
     duration: 'Duration',
     tips: 'Tip',
