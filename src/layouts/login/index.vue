@@ -32,7 +32,7 @@ import {
   removeLocalItem,
   setLocalItem
 } from '@/common/utils/local-storage';
-import { LocalTokenKey, LocalLoginInfoKey } from '@/common/models/store-keys';
+import { LocalTokenKey, LocalLoginInfoKey } from '@/common/configs';
 import { FormInstanceType } from '@/common/models/element';
 import loginImg from '@/assets/login-illustration.webp';
 import { encrypt, decrypt } from '@/common/utils/crypto';
