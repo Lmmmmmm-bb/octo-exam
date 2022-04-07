@@ -3,7 +3,7 @@ import { LocaleType, LocaleTypeEnum } from './type';
 import { enUS } from './en-US';
 import { zhCN } from './zh-CN';
 import { getLocalItem } from '@/common/utils/local-storage';
-import { LocalLocaleKey } from '@/common/models/store-keys';
+import { LocalLocaleKey } from '@/common/configs';
 
 type MessageSchema = typeof enUS;
 

@@ -11,7 +11,7 @@ import { ArrowDown } from '@element-plus/icons-vue';
 import { useLocale } from '@/common/hooks';
 import { LocaleType, LocaleTypeEnum } from '@/locales/type';
 import { setLocalItem } from '@/common/utils/local-storage';
-import { LocalLocaleKey } from '@/common/models/store-keys';
+import { LocalLocaleKey } from '@/common/configs';
 import { localeMap } from './config';
 
 const props = withDefaults(
