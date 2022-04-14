@@ -51,10 +51,9 @@ export const adminRouter: RouteRecordRaw[] = [
     }
   },
   {
-    path: '/space/question-manage/true-false',
+    path: '/space/question-manage/judge',
     name: RouterNameEnum.QuestionTrueFalse,
-    component: () =>
-      import('@/layouts/question-manage/ture-false-manage/index.vue'),
+    component: () => import('@/layouts/question-manage/judge-manage/index.vue'),
     meta: {
       title: '在线考试系统 - 判断题题库',
       activeMenu: RouterNameEnum.QuestionTrueFalse
