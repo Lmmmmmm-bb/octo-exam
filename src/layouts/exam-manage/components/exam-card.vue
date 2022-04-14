@@ -14,6 +14,7 @@ import { IExam } from '@/common/models/exam';
 import { http } from '@/common/utils/http';
 import { ExamAddAndDeleteApi } from '@/services/exam';
 import Copyable from '@/components/copyable/copyable.vue';
+import { useLocale } from '@/common/hooks';
 
 const emits = defineEmits<{
   (e: 'onDelete'): void;
@@ -23,11 +24,13 @@ const props = defineProps<{
   exam: IExam;
 }>();
 
+const { t } = useLocale();
+
 const handleDeleteExam = async () => {
   try {
-    ElMessageBox.confirm('确定要删除该考试吗？', '提示', {
-      cancelButtonText: '取消',
-      confirmButtonText: '确定'
+    ElMessageBox.confirm(t('exam.deleteConfirm'), t('common.tip'), {
+      cancelButtonText: t('common.cancel'),
+      confirmButtonText: t('common.confirm')
     }).then(async () => {
       const { examCode } = props.exam;
       await http.deleteRequest(ExamAddAndDeleteApi, {
@@ -46,7 +49,7 @@ const handleDeleteExam = async () => {
     <template #header>
       <div class="flex justify-between">
         <p>{{ props.exam.source }} - {{ props.exam.description }}</p>
-        <ElTooltip placement="top" effect="light" content="删除考试">
+        <ElTooltip placement="top" effect="light" :content="t('exam.delete')">
           <ElIcon
             class="cursor-pointer"
             color="#b92222"
@@ -58,31 +61,31 @@ const handleDeleteExam = async () => {
       </div>
     </template>
     <ElDescriptions :column="2">
-      <ElDescriptionsItem label="考试码" :span="2">
+      <ElDescriptionsItem :label="t('exam.code')" :span="2">
         <ElTag class="mr-1">
           {{ props.exam.examCode }}
         </ElTag>
         <Copyable
           :copy-text="props.exam.examCode.toString()"
-          tip="点击复制考试码"
+          :tip="t('common.copyable', { target: t('exam.code') })"
         />
       </ElDescriptionsItem>
-      <ElDescriptionsItem label="考试时间">
+      <ElDescriptionsItem :label="t('exam.date')">
         {{ props.exam.examDate }}
       </ElDescriptionsItem>
-      <ElDescriptionsItem label="考试时长">
-        {{ props.exam.totalTime }} 分钟
+      <ElDescriptionsItem :label="t('exam.duration')">
+        {{ props.exam.totalTime }} {{ t('common.minutes') }}
       </ElDescriptionsItem>
-      <ElDescriptionsItem :span="2" label="备注">
+      <ElDescriptionsItem :span="2" :label="t('exam.tips')">
         {{ props.exam.tips }}
       </ElDescriptionsItem>
-      <ElDescriptionsItem label="学院">
+      <ElDescriptionsItem :label="t('profile.institute')">
         {{ props.exam.institute }}
       </ElDescriptionsItem>
-      <ElDescriptionsItem label="专业">
+      <ElDescriptionsItem :label="t('profile.major')">
         {{ props.exam.major }}
       </ElDescriptionsItem>
-      <ElDescriptionsItem label="年级">
+      <ElDescriptionsItem :label="t('profile.grade')">
         <ElTag>{{ props.exam.grade }}</ElTag>
       </ElDescriptionsItem>
     </ElDescriptions>

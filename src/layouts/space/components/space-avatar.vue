@@ -8,7 +8,7 @@ import {
 } from 'element-plus';
 import { useRouter } from 'vue-router';
 import { Back, Key, Document } from '@element-plus/icons-vue';
-import { useToggle } from '@/common/hooks';
+import { useLocale, useToggle } from '@/common/hooks';
 import ModifyDrawer from './modify-drawer.vue';
 import InfoDrawer from './info-drawer.vue';
 import { resetStore, useUserConfigStore } from '@/store';
@@ -17,6 +17,7 @@ import { motionInstanceInjectKey } from '../config';
 
 const motionInstance = inject(motionInstanceInjectKey);
 
+const { t } = useLocale();
 const router = useRouter();
 const userConfigStore = useUserConfigStore();
 const { isActive: isModifyDrawerVisible, onToggle: onToggleModifyVisible } =
@@ -43,17 +44,17 @@ const handleLogout = () => {
     <template #dropdown>
       <ElDropdownMenu>
         <ElDropdownItem :icon="Document" @click="onToggleInfoVisible">
-          个人信息
+          {{ t('profile.personal') }}
         </ElDropdownItem>
         <ElDropdownItem
           v-if="!userConfigStore.isAdminAccount"
           :icon="Key"
           @click="onToggleModifyVisible"
         >
-          修改密码
+          {{ t('profile.modifyPwd') }}
         </ElDropdownItem>
         <ElDropdownItem :icon="Back" divided @click="handleLogout">
-          退出登陆
+          {{ t('profile.signOut') }}
         </ElDropdownItem>
       </ElDropdownMenu>
     </template>

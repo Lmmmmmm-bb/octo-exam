@@ -2,7 +2,7 @@
 import { reactive, onMounted, defineExpose, defineProps, ref } from 'vue';
 import { ElTable, ElTableColumn, ElButton, ElPopconfirm } from 'element-plus';
 import { Warning } from '@element-plus/icons-vue';
-import { useToggle } from '@/common/hooks';
+import { useLocale, useToggle } from '@/common/hooks';
 import { IScore } from '@/common/models/score';
 import {
   ScoreListApi,
@@ -15,6 +15,7 @@ import Pagination from '@/components/pagination/index.vue';
 
 const props = defineProps<{ isHidePagination: boolean }>();
 
+const { t } = useLocale();
 const selectedRows = ref<IScore[]>([]);
 const { isActive: isLoading, onToggle: onToggleLoading } = useToggle();
 const tableState = reactive({
@@ -92,7 +93,7 @@ onMounted(() => {
   <div class="w-full flex justify-center items-center flex-col">
     <ElTable
       v-loading="isLoading"
-      empty-text="暂无成绩数据"
+      :empty-text="t('score.empty')"
       size="large"
       row-key="scoreId"
       :data="tableState.data"
@@ -100,23 +101,25 @@ onMounted(() => {
       @selection-change="handleSelectedRow"
     >
       <ElTableColumn type="selection" width="50" align="center" />
-      <ElTableColumn label="考生号" prop="studentId" />
-      <ElTableColumn label="考试编号" prop="examCode" />
-      <ElTableColumn label="科目" prop="subject" />
-      <ElTableColumn label="分数" prop="score" />
-      <ElTableColumn label="提交时间" prop="answerDate" />
-      <ElTableColumn label="操作">
+      <ElTableColumn :label="t('profile.studentId')" prop="studentId" />
+      <ElTableColumn :label="t('exam.code')" prop="examCode" />
+      <ElTableColumn :label="t('score.subject')" prop="subject" />
+      <ElTableColumn :label="t('score.score')" prop="score" />
+      <ElTableColumn :label="t('score.date')" prop="answerDate" />
+      <ElTableColumn :label="t('common.operate')">
         <template #default="scope">
           <ElPopconfirm
             :icon="Warning"
             icon-color="red"
-            title="确定要删除该成绩吗"
-            confirm-button-text="确定"
-            cancel-button-text="取消"
+            :title="t('score.deleteComfirm')"
+            :confirm-button-text="t('common.confirm')"
+            :cancel-button-text="t('common.cancel')"
             @confirm="handleDeleteScore(scope.row)"
           >
             <template #reference>
-              <ElButton size="small" type="danger" plain>删除</ElButton>
+              <ElButton size="small" type="danger" plain>
+                {{ t('common.delete') }}
+              </ElButton>
             </template>
           </ElPopconfirm>
         </template>

@@ -24,18 +24,21 @@ import {
   MultiQuestionListResponseType
 } from '@/services/question';
 import { RouterNameEnum } from '@/router/type';
-import { useToggle } from '@/common/hooks';
-import {
-  breadcrumbConfig,
-  QUESTION_TEMPLATE_URL,
-  QUESTION_UPLOAD_URL
-} from './config';
+import { useLocale, useToggle } from '@/common/hooks';
+import { IBreadcrumnInfo } from '@/components/breadcrumb/type';
+import { QUESTION_TEMPLATE_URL, QUESTION_UPLOAD_URL } from './config';
 import { IBaseResponse } from '@/common/models/base-response';
 
+const { t } = useLocale();
 const router = useRouter();
 const { isActive: isLoading, onUnActive: onUnLoading } = useToggle(true);
 const { isActive: isFetching, onToggle: onFetchToggle } = useToggle();
 const multiQuestionsList = ref<IMultiQuestion[]>([]);
+
+const breadcrumbConfig: IBreadcrumnInfo[] = [
+  { text: t(`menu.${RouterNameEnum.QuestionManage}`) },
+  { text: t(`menu.${RouterNameEnum.QuestionMultipleChoice}`) }
+];
 
 const fetchMultiQuestionList = async () => {
   try {
@@ -87,6 +90,7 @@ onMounted(async () => {
       <Breadcrumb :path="breadcrumbConfig" />
       <ElSpace>
         <ElUpload
+          accept=".csv"
           :action="QUESTION_UPLOAD_URL"
           :show-file-list="false"
           :on-success="handleUploadSuccess"
@@ -110,7 +114,7 @@ onMounted(async () => {
           v-for="question of multiQuestionsList"
           :key="question.questionId"
           effect="light"
-          content="点击查看题目详情"
+          :content="t('question.viewDetail')"
           placement="top"
         >
           <MultipleChoiceCard

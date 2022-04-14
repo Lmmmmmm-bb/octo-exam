@@ -23,7 +23,7 @@ const router = createRouter({
 router.beforeEach(async (next) => {
   if (!notSensitiveRoute.includes(next.name as RouterNameEnum)) {
     const config = getUserConfig();
-    await http.postRequest<null, LoginCheckDataType>(LoginCheckApi, {
+    await http.postRequest<LoginCheckDataType>(LoginCheckApi, {
       ...config,
       userId: config.studentId || config.adminId
     });

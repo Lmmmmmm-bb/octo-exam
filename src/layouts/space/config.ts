@@ -28,7 +28,7 @@ export const AdminMenuNavList: Record<string, IMenuItem> = {
     label: '学生管理',
     children: [
       { key: RouterNameEnum.StudentManageList, label: '学生列表' },
-      { key: RouterNameEnum.StudentManageEnroll, label: '录入学生' }
+      { key: RouterNameEnum.StudentManageEnroll, label: '录入学生信息' }
     ]
   }
 };

@@ -12,21 +12,31 @@ import {
 } from 'element-plus';
 import { http } from '@/common/utils/http';
 import Breadcrumb from '@/components/breadcrumb/index.vue';
-import { breadcrumbConfig } from './config';
 import styles from './index.module.scss';
 import {
   MultiQuestionByIdApi,
   MultiQuestionResponseType
 } from '@/services/question';
 import { IMultiQuestion } from '@/common/models/question';
-import { useToggle } from '@/common/hooks';
+import { useLocale, useToggle } from '@/common/hooks';
 import { RouterNameEnum } from '@/router/type';
 import EmptyLink from '@/components/empty-link/index.vue';
 import LevelTag from '@/components/level-tag/index.vue';
+import { IBreadcrumnInfo } from '@/components/breadcrumb/type';
 
+const { t } = useLocale();
 const route = useRoute();
 const { isActive: isLoading, onUnActive: onUnLoading } = useToggle(true);
 const question = ref({} as IMultiQuestion);
+
+const breadcrumbConfig: IBreadcrumnInfo[] = [
+  { text: t(`menu.${RouterNameEnum.QuestionManage}`) },
+  {
+    text: t(`menu.${RouterNameEnum.QuestionMultipleChoice}`),
+    to: { name: RouterNameEnum.QuestionMultipleChoice }
+  },
+  { text: t(`menu.${RouterNameEnum.QuestionMultipleChoiceDetail}`) }
+];
 
 onMounted(async () => {
   const { id } = route.params;
@@ -54,21 +64,21 @@ onMounted(async () => {
         <ElDescriptions
           :column="2"
           size="large"
-          :title="`题目 ID： ${question.questionId}`"
+          :title="`${t('question.id')}： ${question.questionId}`"
         >
           <template #extra>
             <LevelTag :level="question.level" />
           </template>
-          <ElDescriptionsItem :span="2" label="题目">
+          <ElDescriptionsItem :span="2" :label="t('question.name')">
             {{ question.question }}
           </ElDescriptionsItem>
-          <ElDescriptionsItem label="考试科目">
+          <ElDescriptionsItem :label="t('score.subject')">
             {{ question.subject }}
           </ElDescriptionsItem>
-          <ElDescriptionsItem label="所属章节">
+          <ElDescriptionsItem :label="t('question.section')">
             {{ question.section }}
           </ElDescriptionsItem>
-          <ElDescriptionsItem :span="2" label="分值">
+          <ElDescriptionsItem :span="2" :label="t('score.score')">
             {{ question.score }}
           </ElDescriptionsItem>
           <ElDescriptionsItem label="A">
@@ -84,18 +94,18 @@ onMounted(async () => {
             {{ question.answerD }}
           </ElDescriptionsItem>
 
-          <ElDescriptionsItem :span="2" label="正确答案">
+          <ElDescriptionsItem :span="2" :label="t('question.answer')">
             <ElTag>{{ question.rightAnswer }}</ElTag>
           </ElDescriptionsItem>
-          <ElDescriptionsItem :span="2" label="题目解析">
-            {{ question.analysis || '暂无解析' }}
+          <ElDescriptionsItem :span="2" :label="t('question.analysis')">
+            {{ question.analysis || t('question.noAnalysis') }}
           </ElDescriptionsItem>
         </ElDescriptions>
       </ElCard>
       <EmptyLink
         v-else
         :link-props="{
-          text: '返回题库',
+          text: t('question.return'),
           to: { name: RouterNameEnum.QuestionMultipleChoice }
         }"
       />

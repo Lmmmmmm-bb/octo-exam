@@ -6,11 +6,13 @@ import { AdminMenuNavList, StudentMenuNavList } from '../config';
 import { useUserConfigStore } from '@/store';
 import { UserRoleEnum } from '@/common/models/user-config';
 import { RouterNameEnum } from '@/router/type';
+import { useLocale } from '@/common/hooks';
 
 const props = defineProps<{
   mode: 'vertical' | 'horizontal';
 }>();
 
+const { t } = useLocale();
 const route = useRoute();
 const userConfigStore = useUserConfigStore();
 const activeKey = ref(RouterNameEnum.Home);
@@ -37,18 +39,18 @@ watchEffect(() => {
   >
     <template v-for="[key, val] in Object.entries(userNav)" :key="key">
       <ElSubMenu v-if="val.children" :index="key">
-        <template #title>{{ val.label }}</template>
+        <template #title>{{ t(`menu.${key}`) }}</template>
         <ElMenuItem
           v-for="item in val.children"
           :key="item.key"
           :index="item.key"
           :route="{ name: item.key }"
         >
-          {{ item.label }}
+          {{ t(`menu.${item.key}`) }}
         </ElMenuItem>
       </ElSubMenu>
       <ElMenuItem v-else :index="key" :route="{ name: key }">
-        {{ val.label }}
+        {{ t(`menu.${key}`) }}
       </ElMenuItem>
     </template>
   </ElMenu>

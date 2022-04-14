@@ -2,14 +2,16 @@
 import { onMounted, reactive, ref } from 'vue';
 import { ElDivider, ElSkeleton, ElSkeletonItem, ElBacktop } from 'element-plus';
 import Breadcrumb from '@/components/breadcrumb/index.vue';
-import { useToggle } from '@/common/hooks';
+import { useLocale, useToggle } from '@/common/hooks';
 import ExamCard from './components/exam-card.vue';
 import styles from './index.module.scss';
 import { http } from '@/common/utils/http';
 import { ExamListApi, ExamListResponseType } from '@/services/exam';
 import { IExam } from '@/common/models/exam';
 import Pagination from '@/components/pagination/index.vue';
+import { RouterNameEnum } from '@/router/type';
 
+const { t } = useLocale();
 const examList = ref<IExam[]>([]);
 const totalExam = ref(0);
 const {
@@ -47,7 +49,7 @@ onMounted(() => {
 
 <template>
   <div class="outerWrapper">
-    <Breadcrumb :path="[{ text: '考试管理' }, { text: '考试列表' }]" />
+    <Breadcrumb :path="[{ text: t(`menu.${RouterNameEnum.ExamManage}`) }]" />
     <ElDivider />
     <ElSkeleton :loading="isLoading" :count="3" :throttle="500" animated>
       <template #template>
