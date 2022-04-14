@@ -1,12 +1,18 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { Download, Upload } from '@element-plus/icons-vue';
 import {
   ElBacktop,
   ElTooltip,
   ElDivider,
   ElSkeleton,
-  ElSkeletonItem
+  ElSkeletonItem,
+  ElButton,
+  ElUpload,
+  ElIcon,
+  ElSpace,
+  ElMessage
 } from 'element-plus';
 import { IMultiQuestion } from '@/common/models/question';
 import Breadcrumb from '@/components/breadcrumb/index.vue';
@@ -20,16 +26,30 @@ import {
 import { RouterNameEnum } from '@/router/type';
 import { useLocale, useToggle } from '@/common/hooks';
 import { IBreadcrumnInfo } from '@/components/breadcrumb/type';
+import { QUESTION_TEMPLATE_URL, QUESTION_UPLOAD_URL } from './config';
+import { IBaseResponse } from '@/common/models/base-response';
 
 const { t } = useLocale();
 const router = useRouter();
 const { isActive: isLoading, onUnActive: onUnLoading } = useToggle(true);
+const { isActive: isFetching, onToggle: onFetchToggle } = useToggle();
 const multiQuestionsList = ref<IMultiQuestion[]>([]);
 
 const breadcrumbConfig: IBreadcrumnInfo[] = [
   { text: t(`menu.${RouterNameEnum.QuestionManage}`) },
   { text: t(`menu.${RouterNameEnum.QuestionMultipleChoice}`) }
 ];
+
+const fetchMultiQuestionList = async () => {
+  try {
+    const { data } = await http.getRequest<MultiQuestionListResponseType>(
+      MultiQuestionListApi
+    );
+    multiQuestionsList.value = data;
+  } catch (error) {
+    // no-console
+  }
+};
 
 const handleQuestionClick = (question: IMultiQuestion) => {
   router.push({
@@ -38,24 +58,58 @@ const handleQuestionClick = (question: IMultiQuestion) => {
   });
 };
 
+const handleDownloadTemplate = () => open(QUESTION_TEMPLATE_URL);
+
+const handleUploadSuccess = async (response: IBaseResponse) => {
+  if (!response.status) {
+    ElMessage.error('上传失败');
+    return;
+  }
+  try {
+    onFetchToggle();
+    await fetchMultiQuestionList();
+    ElMessage.success('上传题目成功');
+  } catch (error) {
+    // no-console
+  } finally {
+    onFetchToggle();
+  }
+};
+
+const handleUploadError = () => ElMessage.error('上传失败');
+
 onMounted(async () => {
-  const { data } = await http.getRequest<MultiQuestionListResponseType>(
-    MultiQuestionListApi
-  );
-  multiQuestionsList.value = data;
+  await fetchMultiQuestionList();
   onUnLoading();
 });
 </script>
 
 <template>
   <div class="outerWrapper">
-    <Breadcrumb :path="breadcrumbConfig" />
+    <div class="flex justify-between items-center">
+      <Breadcrumb :path="breadcrumbConfig" />
+      <ElSpace>
+        <ElUpload
+          accept=".csv"
+          :action="QUESTION_UPLOAD_URL"
+          :show-file-list="false"
+          :on-success="handleUploadSuccess"
+          :on-error="handleUploadError"
+        >
+          <ElButton type="primary" :icon="Upload">导入题目</ElButton>
+        </ElUpload>
+        <ElButton type="primary" @click="handleDownloadTemplate">
+          下载模版
+          <ElIcon class="el-icon--right"><Download /></ElIcon>
+        </ElButton>
+      </ElSpace>
+    </div>
     <ElDivider />
     <ElSkeleton :loading="isLoading" :count="3" animated>
       <template #template>
         <ElSkeletonItem :class="styles.cardSkeleton" variant="rect" />
       </template>
-      <div :class="styles.questionCardWrapper">
+      <div v-loading="isFetching" :class="styles.questionCardWrapper">
         <ElTooltip
           v-for="question of multiQuestionsList"
           :key="question.questionId"
