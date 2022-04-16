@@ -7,7 +7,7 @@ export const studentRouter: RouteRecordRaw[] = [
     name: RouterNameEnum.ExamList,
     component: () => import('@/layouts/exam-list/index.vue'),
     meta: {
-      title: '在线考试系统 - 试卷列表',
+      title: 'Octo Exam - 试卷列表',
       activeMenu: RouterNameEnum.ExamList
     }
   }
