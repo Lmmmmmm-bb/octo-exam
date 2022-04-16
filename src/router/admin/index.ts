@@ -7,7 +7,7 @@ export const adminRouter: RouteRecordRaw[] = [
     name: RouterNameEnum.ExamManage,
     component: () => import('@/layouts/exam-manage/index.vue'),
     meta: {
-      title: '在线考试系统 - 考试管理',
+      title: 'Octo Exam - 考试管理',
       activeMenu: RouterNameEnum.ExamManage
     }
   },
@@ -16,7 +16,7 @@ export const adminRouter: RouteRecordRaw[] = [
     name: RouterNameEnum.StudentManageList,
     component: () => import('@/layouts/student-manage/student-list/index.vue'),
     meta: {
-      title: '在线考试系统 - 学生列表',
+      title: 'Octo Exam - 学生列表',
       activeMenu: RouterNameEnum.StudentManageList
     }
   },
@@ -26,7 +26,7 @@ export const adminRouter: RouteRecordRaw[] = [
     component: () =>
       import('@/layouts/student-manage/student-enroll/index.vue'),
     meta: {
-      title: '在线考试系统 - 录入学生信息',
+      title: 'Octo Exam - 录入学生信息',
       activeMenu: RouterNameEnum.StudentManageEnroll
     }
   },
@@ -36,7 +36,7 @@ export const adminRouter: RouteRecordRaw[] = [
     component: () =>
       import('@/layouts/question-manage/multiple-choice-manage/index.vue'),
     meta: {
-      title: '在线考试系统 - 选择题题库',
+      title: 'Octo Exam - 选择题题库',
       activeMenu: RouterNameEnum.QuestionMultipleChoice
     }
   },
@@ -46,7 +46,7 @@ export const adminRouter: RouteRecordRaw[] = [
     component: () =>
       import('@/layouts/question-manage/multiple-choice-detail/index.vue'),
     meta: {
-      title: '在线考试系统 - 选择题详情',
+      title: 'Octo Exam - 选择题详情',
       activeMenu: RouterNameEnum.QuestionMultipleChoice
     }
   },
@@ -55,7 +55,7 @@ export const adminRouter: RouteRecordRaw[] = [
     name: RouterNameEnum.QuestionTrueFalse,
     component: () => import('@/layouts/question-manage/judge-manage/index.vue'),
     meta: {
-      title: '在线考试系统 - 判断题题库',
+      title: 'Octo Exam - 判断题题库',
       activeMenu: RouterNameEnum.QuestionTrueFalse
     }
   },
@@ -65,7 +65,7 @@ export const adminRouter: RouteRecordRaw[] = [
     component: () =>
       import('@/layouts/question-manage/fill-blank-manage/index.vue'),
     meta: {
-      title: '在线考试系统 - 填空题题库',
+      title: 'Octo Exam - 填空题题库',
       activeMenu: RouterNameEnum.QuestionFillBlank
     }
   },
@@ -74,7 +74,7 @@ export const adminRouter: RouteRecordRaw[] = [
     name: RouterNameEnum.ScoreManage,
     component: () => import('@/layouts/score-manage/index.vue'),
     meta: {
-      title: '在线考试系统 - 成绩列表',
+      title: 'Octo Exam - 成绩列表',
       activeMenu: RouterNameEnum.ScoreManage
     }
   }

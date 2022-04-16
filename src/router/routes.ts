@@ -13,19 +13,19 @@ export const routes: RouteRecordRaw[] = [
     path: '/login',
     name: RouterNameEnum.Login,
     component: () => import('@/layouts/login/index.vue'),
-    meta: { title: '在线考试系统 - 登陆', activeMenu: RouterNameEnum.Login }
+    meta: { title: 'Octo Exam - 登陆', activeMenu: RouterNameEnum.Login }
   },
   {
     path: '/space/exam/:examCode/paper/:paperId',
     name: RouterNameEnum.Exam,
     component: () => import('@/layouts/exam/index.vue'),
-    meta: { title: '在线考试系统 - 我的考试', activeMenu: RouterNameEnum.Exam }
+    meta: { title: 'Octo Exam - 我的考试', activeMenu: RouterNameEnum.Exam }
   },
   {
     path: '/space/exam/result',
     name: RouterNameEnum.ExamResult,
     component: () => import('@/layouts/exam-result/index.vue'),
-    meta: { title: '在线考试系统 - 考试结果', activeMenu: RouterNameEnum.Exam },
+    meta: { title: 'Octo Exam - 考试结果', activeMenu: RouterNameEnum.Exam },
     beforeEnter: (to) => {
       const { result } = to.params;
       if (Number(result) || Number(result) === 0) {
@@ -43,7 +43,7 @@ export const routes: RouteRecordRaw[] = [
         path: '/space',
         name: RouterNameEnum.Home,
         component: () => import('@/layouts/home/index.vue'),
-        meta: { title: '在线考试系统 - 主页', activeMenu: RouterNameEnum.Home }
+        meta: { title: 'Octo Exam - 主页', activeMenu: RouterNameEnum.Home }
       },
       ...studentRouter,
       ...adminRouter
