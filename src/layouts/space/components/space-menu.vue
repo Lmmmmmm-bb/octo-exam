@@ -33,6 +33,7 @@ watchEffect(() => {
 <template>
   <ElMenu
     :class="{ 'w-2/3': props.mode === 'horizontal' }"
+    style="border: none"
     :mode="props.mode"
     :default-active="activeKey"
     router
