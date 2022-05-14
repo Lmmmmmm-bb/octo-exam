@@ -24,3 +24,6 @@ dist-ssr
 
 # CSS Module Type Declare
 **/*.scss.d.ts
+
+# Deploy shell
+deploy.sh
