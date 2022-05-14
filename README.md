@@ -28,10 +28,10 @@
 ```shell
 # 开发调试
 > pnpm install # 安装依赖
-> pnpm run dev # 启动开发服务器
+> pnpm dev # 启动开发服务器
 # 生产环境
-> pnpm run build # 构建生产环境
-> pnpm run preview # 本地预览
+> pnpm build # 构建生产环境
+> pnpm preview # 本地预览
 ```
 
 ## 一些问题的解答
@@ -42,4 +42,4 @@
 
 ### Commit Lint Friendly
 
-仓库使用了 `commit-lint` 和 `cz-customizable`，请使用 `pnpm run commit` 代替 `git commit`。
+仓库使用了 `commit-lint` 和 `cz-customizable`，请使用 `pnpm commit` 代替 `git commit`。
