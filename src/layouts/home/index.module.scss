@@ -1,0 +1,9 @@
+$primary: #569cba;
+
+.mainWrapper {
+  @apply w-full min-w-fit px-4 py-2;
+  .homeTitle {
+    @apply text-4xl font-semibold;
+    color: $primary;
+  }
+}

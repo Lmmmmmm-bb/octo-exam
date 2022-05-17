@@ -34,7 +34,7 @@ import {
 } from '@/common/utils/local-storage';
 import { LocalTokenKey, LocalLoginInfoKey } from '@/common/configs';
 import { FormInstanceType } from '@/common/models/element';
-import loginImg from '@/assets/login-illustration.webp';
+import LoginImg from '@/assets/login-illustration.webp';
 import { encrypt, decrypt } from '@/common/utils/crypto';
 import { RouterNameEnum } from '@/router/type';
 import { baseMotionConfig } from '@/common/configs';
@@ -123,7 +123,7 @@ onMounted(() => {
         </ElHeader>
         <ElContainer>
           <ElAside width="400px" style="flex: 2">
-            <ElImage :src="loginImg" alt="Login-Image" :draggable="false" />
+            <ElImage :src="LoginImg" alt="Login-Image" :draggable="false" />
           </ElAside>
           <ElDivider direction="vertical" style="height: auto" />
           <ElMain style="flex-basis: 0">
