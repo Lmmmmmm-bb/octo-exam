@@ -87,6 +87,7 @@ const handleRefresh = () => {
           :placeholder="t('score.searchByCode')"
           clearable
           @clear="handleClearInput"
+          @keyup.enter="handleSearch"
         />
         <ElButton type="primary" :icon="Search" @click="handleSearch">
           {{ t('common.search') }}
