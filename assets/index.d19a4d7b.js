@@ -1,0 +1,1 @@
+import{o as c,n as a}from"./vendor.2a757ea6.js";var _=(e,n)=>{const r=e.__vccOpts||e;for(const[t,o]of n)r[t]=o;return r};const l={};function s(e,n){return c(),a("div",null,"Student Manage Enroll")}var d=_(l,[["render",s]]);export{d as default};
