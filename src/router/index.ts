@@ -13,7 +13,7 @@ import { initUserConfig as getUserConfig } from '@/store';
 
 const history = import.meta.env.DEV
   ? createWebHistory()
-  : createWebHashHistory('/Octo-Exam/');
+  : createWebHashHistory('/octo-exam/');
 
 const router = createRouter({
   history,

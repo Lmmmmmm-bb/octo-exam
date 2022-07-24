@@ -1,14 +1,14 @@
-![Octo-Exam](https://socialify.git.ci/Lmmmmmm-bb/Octo-Exam/image?description=1&language=1&name=1&theme=Light)
+![octo-exam](https://socialify.git.ci/Lmmmmmm-bb/octo-exam/image?description=1&language=1&name=1&theme=Light)
 
 <p align="center">
-<a href="https://github.com/Lmmmmmm-bb/Octo-Exam/actions/workflows/codeql-analysis.yml"><img alt="Octo-Exam-Codeql-Action" src="https://github.com/Lmmmmmm-bb/Octo-Exam/actions/workflows/codeql-analysis.yml/badge.svg"></a>
+<a href="https://github.com/Lmmmmmm-bb/octo-exam/actions/workflows/codeql-analysis.yml"><img alt="octo-exam-Codeql-Action" src="https://github.com/Lmmmmmm-bb/octo-exam/actions/workflows/codeql-analysis.yml/badge.svg"></a>
 </p>
 <p align="center">
-<a href="https://github.com/Lmmmmmm-bb/Octo-Exam/blob/main/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/Lmmmmmm-bb/Octo-Exam"></a>
+<a href="https://github.com/Lmmmmmm-bb/octo-exam/blob/main/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/Lmmmmmm-bb/octo-exam"></a>
 <a href="http://commitizen.github.io/cz-cli/"><img alt="Commitizen friendly" src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg"></a>
-<a href="https://github.com/Lmmmmmm-bb/Octo-Exam/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/Lmmmmmm-bb/Octo-Exam"></a>
-<a href="https://github.com/Lmmmmmm-bb/Octo-Exam/pulls"><img alt="GitHub PR" src="https://img.shields.io/badge/PR-Welcome-%2345A2FF"></a>
-<a href="https://github.com/Xujingling927/OnlineExamSystem"><img alt="Octo-Exam-BE" src="https://img.shields.io/badge/BE-Xujingling927-blue"></a>
+<a href="https://github.com/Lmmmmmm-bb/octo-exam/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/Lmmmmmm-bb/octo-exam"></a>
+<a href="https://github.com/Lmmmmmm-bb/octo-exam/pulls"><img alt="GitHub PR" src="https://img.shields.io/badge/PR-Welcome-%2345A2FF"></a>
+<a href="https://github.com/Xujingling927/OnlineExamSystem"><img alt="octo-exam-BE" src="https://img.shields.io/badge/BE-Xujingling927-blue"></a>
 <a href="mailto:lmmmmmm12138@gmail.com"><img alt="Email" src="https://img.shields.io/badge/Email-Google-%23d95040"></a>
 </p>
 
