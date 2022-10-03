@@ -1,6 +1,6 @@
-import { FormRulesMap } from 'element-plus/es/components/form/src/form.type';
+import { FormRules } from 'element-plus';
 
-export const formRules: FormRulesMap<'userId' | 'password'> = {
+export const formRules: FormRules = {
   userId: {
     message: '请输入用户名',
     required: true,

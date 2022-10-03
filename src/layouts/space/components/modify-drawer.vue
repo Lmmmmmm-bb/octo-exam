@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import { ref, reactive, defineProps, defineEmits } from 'vue';
-import { ElDrawer, ElForm, ElFormItem, ElInput, ElButton } from 'element-plus';
-import { FormRulesMap } from 'element-plus/es/components/form/src/form.type';
+import {
+  ElDrawer,
+  ElForm,
+  ElFormItem,
+  ElInput,
+  ElButton,
+  FormRules
+} from 'element-plus';
 import { useToggle } from '@/common/hooks';
 import { http } from '@/common/utils/http';
 import { StudentPwdModifyApi } from '@/services/student';
 import { useUserConfigStore } from '@/store';
 import { FormInstanceType } from '@/common/models/element';
-import { ModifyDrawerFormPropsType } from '../config';
 
 const props = defineProps<{ visible: boolean }>();
 const emits = defineEmits<{
@@ -22,7 +27,7 @@ const confirmPwd = reactive({
 });
 const { isActive: isLoading, onToggle: onToggleLoading } = useToggle();
 
-const formRules: FormRulesMap<ModifyDrawerFormPropsType> = {
+const formRules: FormRules = {
   pwd: {
     message: '请输入修改的密码',
     required: true,

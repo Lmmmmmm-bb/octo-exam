@@ -59,5 +59,3 @@ export const StudentUserInfoMap = new Map([
   ['institute', '学院'],
   ['major', '专业']
 ]);
-
-export type ModifyDrawerFormPropsType = 'pwd' | 'confirmPwd';

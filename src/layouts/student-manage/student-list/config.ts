@@ -1,14 +1,6 @@
-import { FormRulesMap } from 'element-plus/es/components/form/src/form.type';
+import { FormRules } from 'element-plus';
 
-type infoDrawerFormProps =
-  | 'studentId'
-  | 'studentName'
-  | 'sex'
-  | 'tel'
-  | 'email'
-  | 'cardId';
-
-export const infoDrawerFormRules: FormRulesMap<infoDrawerFormProps> = {
+export const infoDrawerFormRules: FormRules = {
   studentId: { message: '请输入学号', required: true },
   studentName: { message: '请输入姓名', required: true },
   sex: { message: '请选择性别', required: true },
