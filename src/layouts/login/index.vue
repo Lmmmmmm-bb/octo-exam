@@ -154,7 +154,6 @@ onMounted(() => {
                   ref="loginInputRef"
                   v-model="info.userId"
                   :prefix-icon="User"
-                  clearable
                   @keyup.enter="handleLogin"
                 />
               </ElFormItem>
